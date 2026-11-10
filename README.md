@@ -20,7 +20,7 @@
 
 ## Quick Start (Local Setup)
 
-> **Important**: This Git repository excludes heavy dependencies, binary releases (~35 GB), and point cloud caches. Please refer to **[`BUILD_EXCLUSIONS.md`](./BUILD_EXCLUSIONS.md)** for a complete breakdown of excluded items and instructions on regenerating them.
+> **Important**: This Git repository excludes heavy dependencies, binary releases (~35 GB), and point cloud caches. Please refer to **[`EXCLUSIONS.md`](./EXCLUSIONS.md)** (or **[`BUILD_EXCLUSIONS.md`](./BUILD_EXCLUSIONS.md)**) for a complete breakdown of excluded operational components and step-by-step instructions on rebuilding and regenerating them locally.
 
 ### Prerequisites
 1. **Node.js**: `v18.x` or `v20.x` LTS
