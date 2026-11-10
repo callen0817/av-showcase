@@ -1,0 +1,26 @@
+﻿==================================================
+DIAGNOSING E57 FILE: C:\Users\ChristopherAllen\Downloads\ex\av_walkthrough\mp_e57_920-5th-Ave-5A-Interior_rkpAXm3RY7k\cloud_0.e57
+==================================================
+
+1. Root level keys:
+  - formatName [Node]
+  - guid [Node]
+  - versionMajor [Node]
+  - versionMinor [Node]
+  - data3D [Node]
+  - images2D [Node]
+
+2. data3D section:
+  - data3D node is ABSENT
+
+3. images2D section:
+  - images2D node is ABSENT
+
+4. Full E57 node tree dump:
+-  [StructureNode] at root
+  - formatName [Node] at root/formatName
+  - guid [Node] at root/guid
+  - versionMajor [Node] at root/versionMajor
+  - versionMinor [Node] at root/versionMinor
+  - data3D [Node] at root/data3D
+  - images2D [Node] at root/images2D

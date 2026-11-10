@@ -1,0 +1,803 @@
+:root {
+    --radius: 0.375rem;
+    --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+    /* Artificial Vision Design System (prevdc.artificialviz.com) */
+    --background: #fafafa;
+    --background-oklch: oklch(98.5% 0 0);
+    --foreground: #171717;
+    --foreground-oklch: oklch(21% 0 0);
+    --card: #ffffff;
+    --card-foreground: #171717;
+    --popover: #ffffff;
+    --popover-foreground: #171717;
+    --primary: #bfa365;
+    --primary-oklch: oklch(71.4455% 0.0838495 87.1018);
+    --primary-hover: #ae9152;
+    --primary-foreground: #171717;
+    --secondary: #f2f2f2;
+    --secondary-foreground: #2e2e2e;
+    --muted: #f2f2f2;
+    --muted-foreground: #616161;
+    --accent: #f3eee3;
+    --accent-foreground: #332e24;
+    --destructive: #c82828;
+    --destructive-foreground: #fcfcfc;
+    --border: #e2e2e2;
+    --input: #e2e2e2;
+    --ring: #bfa365;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+}
+
+body, html {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+h1, h2, h3, h4 {
+    letter-spacing: -0.015em;
+    color: var(--foreground);
+}
+
+.label-mono {
+    font-family: var(--font-mono);
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    font-size: 0.6875rem;
+    font-weight: 500;
+}
+
+/* --- Artificial Vision Brand Lockup & Header --- */
+.av-header {
+    width: 100%;
+    height: 56px;
+    border-bottom: 1px solid var(--border);
+    background: rgba(250, 250, 250, 0.92);
+    backdrop-filter: blur(8px);
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    flex-shrink: 0;
+}
+
+.av-header-inner {
+    max-width: 1120px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-lockup {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand-logo {
+    width: 34px;
+    height: 34px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-logo-lg {
+    width: 48px;
+    height: 48px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-logo-sm {
+    width: 26px;
+    height: 26px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.brand-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--foreground);
+}
+
+.brand-subtitle {
+    font-size: 0.6875rem;
+    color: var(--muted-foreground);
+    margin-top: 2px;
+}
+
+#app {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#viewer-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    background-color: #171717;
+}
+
+#ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+}
+
+#splash-screen {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    background: var(--card);
+    color: var(--foreground);
+    padding: 2.5rem 3rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.12), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    pointer-events: auto;
+    z-index: 1200;
+}
+
+#main-ui {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+/* --- Viewer Top Bar (prevdc.artificialviz.com Header Style) --- */
+.top-bar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    background: rgba(250, 250, 250, 0.94);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    pointer-events: auto;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.06);
+}
+
+.project-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.viewer-brand-name {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+    color: var(--foreground);
+}
+
+.viewer-divider {
+    width: 1px;
+    height: 18px;
+    background: var(--border);
+    margin: 0 4px;
+}
+
+#project-name {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent-foreground);
+    background: var(--accent);
+    border: 1px solid rgba(191, 163, 101, 0.35);
+    padding: 3px 10px;
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.controls select {
+    background: var(--card);
+    border: 1px solid var(--input);
+    color: var(--foreground);
+    font-size: 0.85rem;
+    font-weight: 500;
+    height: 34px;
+    padding: 0 12px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.controls select:hover {
+    border-color: var(--ring);
+}
+
+.controls select:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 2px rgba(191, 163, 101, 0.25);
+}
+
+/* --- Viewer Key Plan Side Panel --- */
+.side-panel {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 290px;
+    height: 275px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.side-panel h3 {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+#keyplan-container {
+    flex: 1;
+    position: relative;
+    background: #171717;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+}
+
+#keyplan-canvas {
+    width: 100%;
+    height: 100%;
+}
+
+.floor-level-bar {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    bottom: 8px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+    z-index: 5;
+    pointer-events: auto;
+    overflow-y: auto;
+    max-height: calc(100% - 16px);
+}
+
+.floor-level-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid var(--border);
+    color: var(--foreground);
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    padding: 4px 8px;
+    min-width: 36px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.floor-level-btn:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+    border-color: var(--primary);
+}
+
+.floor-level-btn.active {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border-color: #9e8247;
+    font-weight: 600;
+    box-shadow: 0 0 0 2px rgba(191, 163, 101, 0.35);
+}
+
+/* --- Home Dashboard Styles (prevdc.artificialviz.com Layout) --- */
+#home-screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--background);
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    pointer-events: auto;
+    overflow-y: auto;
+}
+
+.home-container {
+    max-width: 1120px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 40px 24px 64px 24px;
+    text-align: left;
+    animation: fadeIn 0.35s ease-out forwards;
+}
+
+.home-hero {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 32px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+}
+
+.home-hero-brand {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.hero-logo {
+    width: 56px;
+    height: 56px;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+h1.home-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin: 4px 0 6px 0;
+    color: var(--foreground);
+    letter-spacing: -0.025em;
+}
+
+.home-subtitle {
+    font-size: 0.95rem;
+    color: var(--muted-foreground);
+}
+
+.action-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 24px;
+    cursor: pointer;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+    text-align: left;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.card-primary-accent {
+    border-top: 3px solid var(--primary);
+}
+
+.card:hover {
+    border-color: var(--ring);
+    box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.08);
+    transform: translateY(-2px);
+}
+
+.card h3 {
+    margin: 0 0 8px 0;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.card p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+    line-height: 1.5;
+}
+
+/* --- Modal Styles (prevdc.artificialviz.com Dialogs) --- */
+#create-modal, #folder-modal, #move-project-modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1100;
+    pointer-events: auto;
+}
+
+.modal-content {
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    width: 480px;
+    max-height: 88vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.08);
+    animation: slideUp 0.2s ease-out forwards;
+}
+
+.modal-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.form-group {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--foreground);
+    font-size: 0.825rem;
+    font-weight: 500;
+    text-align: left;
+}
+
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group select {
+    width: 100%;
+    height: 36px;
+    padding: 6px 12px;
+    background: var(--background);
+    border: 1px solid var(--input);
+    border-radius: var(--radius);
+    color: var(--foreground);
+    font-size: 0.875rem;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--ring);
+    box-shadow: 0 0 0 2px rgba(191, 163, 101, 0.25);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+/* --- Buttons (prevdc.artificialviz.com Variants) --- */
+.btn-primary, .btn-home {
+    background: var(--primary);
+    color: var(--primary-foreground);
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    height: 36px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary:hover, .btn-home:hover {
+    background: var(--primary-hover);
+}
+
+.btn-secondary {
+    background: var(--secondary);
+    color: var(--secondary-foreground);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    height: 36px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-secondary:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+    border-color: var(--primary);
+}
+
+.btn-cancel {
+    background: var(--card);
+    color: var(--foreground);
+    border: 1px solid var(--input);
+    padding: 8px 16px;
+    height: 36px;
+    border-radius: var(--radius);
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-cancel:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+}
+
+.btn-mini {
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--card);
+    border: 1px solid var(--input);
+    border-radius: calc(var(--radius) - 2px);
+    color: var(--foreground);
+    height: 28px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.btn-mini:hover {
+    background: var(--accent);
+    color: var(--accent-foreground);
+    border-color: var(--primary);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Recent Projects Section --- */
+#recent-projects-section {
+    margin-top: 44px;
+    width: 100%;
+}
+
+.section-header {
+    margin-bottom: 16px;
+}
+
+#recent-projects-section h2 {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--foreground);
+    margin-top: 2px;
+    text-align: left;
+}
+
+#recent-projects-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.project-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    text-align: left;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03);
+}
+
+.project-card-info {
+    flex: 1;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.project-card:hover {
+    border-color: var(--ring);
+    box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+}
+
+.project-card h4 {
+    margin: 0 0 4px 0;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.project-card p {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-delete-project {
+    background: transparent;
+    border: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-delete-project:hover {
+    background: rgba(200, 40, 40, 0.1);
+    color: var(--destructive);
+}
+
+.empty-msg {
+    grid-column: 1 / -1;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    padding: 20px;
+    background: var(--card);
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
+    text-align: center;
+}
+
+/* Nav Markers / Pano Bubbles */
+.nav-marker-ring {
+    pointer-events: none;
+}
+
+/* Folder Sections & Headers */
+.folder-section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    transition: all 0.15s;
+    text-align: left;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
+}
+
+.folder-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 16px;
+}
+
+.folder-title-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.folder-title {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+}
+
+.folder-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-delete-folder {
+    background: transparent;
+    border: none;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+
+.btn-delete-folder:hover {
+    background: rgba(200, 40, 40, 0.1);
+    color: var(--destructive);
+}
+
+.folder-toggle-icon {
+    transition: transform 0.2s;
+    color: var(--muted-foreground);
+    display: flex;
+    align-items: center;
+}
+
+.folder-section.collapsed .folder-toggle-icon {
+    transform: rotate(-90deg);
+}
+
+.folder-section.collapsed .folder-header {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.folder-projects {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+}
+
+.folder-section.collapsed .folder-projects {
+    display: none;
+}

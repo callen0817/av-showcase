@@ -1,0 +1,7709 @@
+{
+  "name": "22 Downing",
+  "description": "",
+  "scans": [
+    {
+      "scan_date": "2026-07-02",
+      "description": "E57+Panos Import",
+      "import_mode": "linked",
+      "source_path": "C:\\Users\\ChristopherAllen\\Downloads\\ex\\av_structure\\555_w_22_w_pano.e57",
+      "source_hash": "561d28a301bd2553150390b2eae0192b98167572424135367cdc2386fa16f3eb",
+      "source_modified": 1772749598.2637784,
+      "point_cloud_cache": "Scans/2026-07-02/cache/lod0.bin",
+      "floors": [
+        {
+          "id": 1,
+          "min_z": 1.99807,
+          "max_z": 2.4741210000000002
+        }
+      ],
+      "panos": [
+        {
+          "id": "pano_000",
+          "position": [
+            -1.450973,
+            -1.151666,
+            2.042951
+          ],
+          "rotation": [
+            0.052797,
+            0.029724,
+            -0.671383,
+            0.73863
+          ],
+          "image_path": "panos/pano_000.jpg",
+          "neighbors": [
+            "pano_008",
+            "pano_007",
+            "pano_001",
+            "pano_027"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_001",
+          "position": [
+            -1.209728,
+            -2.572728,
+            2.038504
+          ],
+          "rotation": [
+            0.001844,
+            0.025824,
+            -0.687878,
+            0.725365
+          ],
+          "image_path": "panos/pano_001.jpg",
+          "neighbors": [
+            "pano_007",
+            "pano_002",
+            "pano_028",
+            "pano_047"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_002",
+          "position": [
+            -1.228094,
+            -3.358813,
+            2.048826
+          ],
+          "rotation": [
+            0.008037,
+            0.025408,
+            -0.750435,
+            0.660407
+          ],
+          "image_path": "panos/pano_002.jpg",
+          "neighbors": [
+            "pano_001",
+            "pano_007",
+            "pano_003",
+            "pano_029"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_003",
+          "position": [
+            -2.380367,
+            -3.907011,
+            2.049888
+          ],
+          "rotation": [
+            -0.034506,
+            -0.015973,
+            0.999146,
+            -0.016186
+          ],
+          "image_path": "panos/pano_003.jpg",
+          "neighbors": [
+            "pano_004",
+            "pano_002",
+            "pano_007",
+            "pano_005"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_004",
+          "position": [
+            -3.467946,
+            -3.934997,
+            2.049365
+          ],
+          "rotation": [
+            -0.062587,
+            0.006943,
+            0.864786,
+            0.498177
+          ],
+          "image_path": "panos/pano_004.jpg",
+          "neighbors": [
+            "pano_005",
+            "pano_006",
+            "pano_003",
+            "pano_007"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_005",
+          "position": [
+            -3.855013,
+            -3.159756,
+            2.048397
+          ],
+          "rotation": [
+            -0.037695,
+            0.012702,
+            0.7192,
+            0.693663
+          ],
+          "image_path": "panos/pano_005.jpg",
+          "neighbors": [
+            "pano_006",
+            "pano_004",
+            "pano_003",
+            "pano_007"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_006",
+          "position": [
+            -3.865525,
+            -2.954878,
+            2.040634
+          ],
+          "rotation": [
+            -0.050034,
+            0.023768,
+            0.734164,
+            0.676709
+          ],
+          "image_path": "panos/pano_006.jpg",
+          "neighbors": [
+            "pano_005",
+            "pano_004",
+            "pano_003",
+            "pano_007"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_007",
+          "position": [
+            -1.820017,
+            -2.520435,
+            2.029649
+          ],
+          "rotation": [
+            -0.043655,
+            -0.002085,
+            0.749469,
+            0.660595
+          ],
+          "image_path": "panos/pano_007.jpg",
+          "neighbors": [
+            "pano_001",
+            "pano_002",
+            "pano_000",
+            "pano_003"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_008",
+          "position": [
+            -1.72405,
+            -0.588984,
+            2.037195
+          ],
+          "rotation": [
+            -0.050955,
+            -0.005852,
+            0.755531,
+            0.653102
+          ],
+          "image_path": "panos/pano_008.jpg",
+          "neighbors": [
+            "pano_000",
+            "pano_009",
+            "pano_026",
+            "pano_007"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_009",
+          "position": [
+            -1.824459,
+            1.085674,
+            2.037579
+          ],
+          "rotation": [
+            -0.033869,
+            -0.009429,
+            0.72959,
+            0.68298
+          ],
+          "image_path": "panos/pano_009.jpg",
+          "neighbors": [
+            "pano_010",
+            "pano_008",
+            "pano_026",
+            "pano_025"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_010",
+          "position": [
+            -1.585872,
+            2.176241,
+            2.034666
+          ],
+          "rotation": [
+            -0.051896,
+            0.010035,
+            0.693303,
+            0.718705
+          ],
+          "image_path": "panos/pano_010.jpg",
+          "neighbors": [
+            "pano_009",
+            "pano_011",
+            "pano_025",
+            "pano_024"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_011",
+          "position": [
+            -1.516666,
+            3.35367,
+            2.040538
+          ],
+          "rotation": [
+            -0.027781,
+            -0.002463,
+            0.752894,
+            0.657551
+          ],
+          "image_path": "panos/pano_011.jpg",
+          "neighbors": [
+            "pano_024",
+            "pano_010",
+            "pano_012",
+            "pano_014"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_012",
+          "position": [
+            -1.797202,
+            4.750563,
+            2.043239
+          ],
+          "rotation": [
+            -0.042312,
+            -0.007668,
+            0.829067,
+            0.557493
+          ],
+          "image_path": "panos/pano_012.jpg",
+          "neighbors": [
+            "pano_013",
+            "pano_023",
+            "pano_018",
+            "pano_014"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_013",
+          "position": [
+            -2.748672,
+            5.154217,
+            2.040434
+          ],
+          "rotation": [
+            -0.025119,
+            -0.021199,
+            0.997059,
+            -0.069229
+          ],
+          "image_path": "panos/pano_013.jpg",
+          "neighbors": [
+            "pano_012",
+            "pano_017",
+            "pano_014",
+            "pano_082"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_014",
+          "position": [
+            -2.953213,
+            3.961677,
+            2.043809
+          ],
+          "rotation": [
+            0.001477,
+            0.049918,
+            -0.706912,
+            0.705536
+          ],
+          "image_path": "panos/pano_014.jpg",
+          "neighbors": [
+            "pano_015",
+            "pano_013",
+            "pano_012",
+            "pano_011"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_015",
+          "position": [
+            -4.009139,
+            3.835788,
+            2.045702
+          ],
+          "rotation": [
+            0.017546,
+            0.044059,
+            -0.673257,
+            0.737886
+          ],
+          "image_path": "panos/pano_015.jpg",
+          "neighbors": [
+            "pano_014",
+            "pano_016",
+            "pano_017",
+            "pano_013"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_016",
+          "position": [
+            -4.091475,
+            2.424197,
+            2.034974
+          ],
+          "rotation": [
+            0.02263,
+            0.049765,
+            -0.788956,
+            0.612013
+          ],
+          "image_path": "panos/pano_016.jpg",
+          "neighbors": [
+            "pano_015",
+            "pano_014",
+            "pano_010",
+            "pano_009"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_017",
+          "position": [
+            -3.823098,
+            5.264554,
+            2.050108
+          ],
+          "rotation": [
+            -0.071243,
+            0.020147,
+            0.943475,
+            0.323068
+          ],
+          "image_path": "panos/pano_017.jpg",
+          "neighbors": [
+            "pano_013",
+            "pano_015",
+            "pano_014",
+            "pano_083"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_018",
+          "position": [
+            -1.044216,
+            5.863896,
+            2.03833
+          ],
+          "rotation": [
+            -0.030478,
+            0.036467,
+            0.632979,
+            0.772709
+          ],
+          "image_path": "panos/pano_018.jpg",
+          "neighbors": [
+            "pano_019",
+            "pano_079",
+            "pano_078",
+            "pano_023"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_019",
+          "position": [
+            0.067452,
+            6.215319,
+            2.038354
+          ],
+          "rotation": [
+            -0.014773,
+            0.061187,
+            0.071429,
+            0.995458
+          ],
+          "image_path": "panos/pano_019.jpg",
+          "neighbors": [
+            "pano_078",
+            "pano_079",
+            "pano_020",
+            "pano_080"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_020",
+          "position": [
+            0.670013,
+            5.825409,
+            2.028593
+          ],
+          "rotation": [
+            0.04623,
+            0.048785,
+            -0.696432,
+            0.714469
+          ],
+          "image_path": "panos/pano_020.jpg",
+          "neighbors": [
+            "pano_019",
+            "pano_078",
+            "pano_079",
+            "pano_073"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_021",
+          "position": [
+            0.919066,
+            4.65432,
+            2.030935
+          ],
+          "rotation": [
+            0.021969,
+            0.057235,
+            -0.705677,
+            0.705877
+          ],
+          "image_path": "panos/pano_021.jpg",
+          "neighbors": [
+            "pano_073",
+            "pano_074",
+            "pano_020",
+            "pano_023"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_022",
+          "position": [
+            0.857325,
+            3.187861,
+            2.035265
+          ],
+          "rotation": [
+            0.02876,
+            0.054907,
+            -0.741847,
+            0.667699
+          ],
+          "image_path": "panos/pano_022.jpg",
+          "neighbors": [
+            "pano_051",
+            "pano_059",
+            "pano_056",
+            "pano_021"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_023",
+          "position": [
+            -0.54446,
+            4.711559,
+            2.04021
+          ],
+          "rotation": [
+            -0.071004,
+            -0.010219,
+            0.979381,
+            0.188858
+          ],
+          "image_path": "panos/pano_023.jpg",
+          "neighbors": [
+            "pano_012",
+            "pano_018",
+            "pano_024",
+            "pano_021"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_024",
+          "position": [
+            -0.602719,
+            3.340253,
+            2.036824
+          ],
+          "rotation": [
+            0.036782,
+            0.054585,
+            -0.65725,
+            0.750793
+          ],
+          "image_path": "panos/pano_024.jpg",
+          "neighbors": [
+            "pano_011",
+            "pano_025",
+            "pano_023",
+            "pano_022"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_025",
+          "position": [
+            -0.402948,
+            2.10423,
+            2.032574
+          ],
+          "rotation": [
+            0.028437,
+            0.062714,
+            -0.694631,
+            0.716063
+          ],
+          "image_path": "panos/pano_025.jpg",
+          "neighbors": [
+            "pano_010",
+            "pano_024",
+            "pano_056",
+            "pano_026"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_026",
+          "position": [
+            -0.238339,
+            0.533088,
+            2.039648
+          ],
+          "rotation": [
+            0.016665,
+            0.051896,
+            -0.669043,
+            0.741222
+          ],
+          "image_path": "panos/pano_026.jpg",
+          "neighbors": [
+            "pano_027",
+            "pano_025",
+            "pano_009",
+            "pano_008"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_027",
+          "position": [
+            0.32512,
+            -0.901095,
+            2.048367
+          ],
+          "rotation": [
+            0.01759,
+            0.042387,
+            -0.697883,
+            0.71474
+          ],
+          "image_path": "panos/pano_027.jpg",
+          "neighbors": [
+            "pano_047",
+            "pano_028",
+            "pano_048",
+            "pano_026"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_028",
+          "position": [
+            0.03773,
+            -2.274412,
+            2.082857
+          ],
+          "rotation": [
+            0.033701,
+            0.056856,
+            -0.677458,
+            0.732586
+          ],
+          "image_path": "panos/pano_028.jpg",
+          "neighbors": [
+            "pano_047",
+            "pano_001",
+            "pano_048",
+            "pano_027"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_029",
+          "position": [
+            0.197154,
+            -3.943212,
+            2.067052
+          ],
+          "rotation": [
+            0.018327,
+            0.043964,
+            -0.662532,
+            0.747517
+          ],
+          "image_path": "panos/pano_029.jpg",
+          "neighbors": [
+            "pano_030",
+            "pano_002",
+            "pano_028",
+            "pano_047"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_030",
+          "position": [
+            0.389841,
+            -5.238217,
+            2.066892
+          ],
+          "rotation": [
+            0.007153,
+            0.042845,
+            -0.668679,
+            0.742281
+          ],
+          "image_path": "panos/pano_030.jpg",
+          "neighbors": [
+            "pano_031",
+            "pano_029",
+            "pano_033",
+            "pano_002"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_031",
+          "position": [
+            0.535608,
+            -6.501912,
+            2.127433
+          ],
+          "rotation": [
+            0.014679,
+            0.044969,
+            -0.690403,
+            0.721877
+          ],
+          "image_path": "panos/pano_031.jpg",
+          "neighbors": [
+            "pano_033",
+            "pano_030",
+            "pano_032",
+            "pano_034"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_032",
+          "position": [
+            0.626325,
+            -7.869474,
+            2.12784
+          ],
+          "rotation": [
+            0.00557,
+            0.041672,
+            -0.67912,
+            0.732823
+          ],
+          "image_path": "panos/pano_032.jpg",
+          "neighbors": [
+            "pano_033",
+            "pano_035",
+            "pano_034",
+            "pano_031"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_033",
+          "position": [
+            0.523906,
+            -7.65586,
+            2.135437
+          ],
+          "rotation": [
+            -0.035295,
+            0.003652,
+            0.998349,
+            -0.045159
+          ],
+          "image_path": "panos/pano_033.jpg",
+          "neighbors": [
+            "pano_032",
+            "pano_035",
+            "pano_034",
+            "pano_031"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_034",
+          "position": [
+            -0.491752,
+            -7.783455,
+            2.127537
+          ],
+          "rotation": [
+            -0.004835,
+            0.048379,
+            -0.675305,
+            0.735934
+          ],
+          "image_path": "panos/pano_034.jpg",
+          "neighbors": [
+            "pano_033",
+            "pano_035",
+            "pano_032",
+            "pano_046"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_035",
+          "position": [
+            0.329078,
+            -8.425023,
+            2.134765
+          ],
+          "rotation": [
+            -0.022259,
+            -0.013007,
+            0.998032,
+            -0.057166
+          ],
+          "image_path": "panos/pano_035.jpg",
+          "neighbors": [
+            "pano_032",
+            "pano_033",
+            "pano_036",
+            "pano_034"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_036",
+          "position": [
+            0.757835,
+            -9.285659,
+            2.118269
+          ],
+          "rotation": [
+            0.022063,
+            0.042745,
+            -0.649153,
+            0.759135
+          ],
+          "image_path": "panos/pano_036.jpg",
+          "neighbors": [
+            "pano_035",
+            "pano_044",
+            "pano_037",
+            "pano_046"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_037",
+          "position": [
+            0.899723,
+            -10.575091,
+            2.110153
+          ],
+          "rotation": [
+            0.025335,
+            0.051367,
+            -0.692122,
+            0.719504
+          ],
+          "image_path": "panos/pano_037.jpg",
+          "neighbors": [
+            "pano_038",
+            "pano_043",
+            "pano_045",
+            "pano_036"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_038",
+          "position": [
+            0.824883,
+            -11.539333,
+            2.119129
+          ],
+          "rotation": [
+            0.031891,
+            0.052868,
+            -0.691339,
+            0.719888
+          ],
+          "image_path": "panos/pano_038.jpg",
+          "neighbors": [
+            "pano_037",
+            "pano_043",
+            "pano_039",
+            "pano_045"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_039",
+          "position": [
+            1.069767,
+            -12.900782,
+            2.108384
+          ],
+          "rotation": [
+            0.016662,
+            0.054605,
+            -0.702297,
+            0.709591
+          ],
+          "image_path": "panos/pano_039.jpg",
+          "neighbors": [
+            "pano_040",
+            "pano_038",
+            "pano_043",
+            "pano_113"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_040",
+          "position": [
+            1.04557,
+            -14.101089,
+            2.112792
+          ],
+          "rotation": [
+            0.02906,
+            0.049681,
+            -0.677993,
+            0.732811
+          ],
+          "image_path": "panos/pano_040.jpg",
+          "neighbors": [
+            "pano_039",
+            "pano_041",
+            "pano_324",
+            "pano_323"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_041",
+          "position": [
+            1.133087,
+            -15.455258,
+            2.117876
+          ],
+          "rotation": [
+            0.017971,
+            0.060398,
+            -0.677188,
+            0.733106
+          ],
+          "image_path": "panos/pano_041.jpg",
+          "neighbors": [
+            "pano_042",
+            "pano_040",
+            "pano_324",
+            "pano_323"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_042",
+          "position": [
+            1.168567,
+            -16.685313,
+            2.110113
+          ],
+          "rotation": [
+            0.005626,
+            0.057752,
+            -0.569892,
+            0.819668
+          ],
+          "image_path": "panos/pano_042.jpg",
+          "neighbors": [
+            "pano_041",
+            "pano_317",
+            "pano_318",
+            "pano_323"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_043",
+          "position": [
+            1.895525,
+            -11.087182,
+            2.117464
+          ],
+          "rotation": [
+            -0.020101,
+            0.049472,
+            0.055628,
+            0.997023
+          ],
+          "image_path": "panos/pano_043.jpg",
+          "neighbors": [
+            "pano_113",
+            "pano_037",
+            "pano_038",
+            "pano_115"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_044",
+          "position": [
+            -0.137509,
+            -9.693011,
+            2.125388
+          ],
+          "rotation": [
+            -0.038161,
+            -0.009695,
+            0.995281,
+            0.088685
+          ],
+          "image_path": "panos/pano_044.jpg",
+          "neighbors": [
+            "pano_046",
+            "pano_045",
+            "pano_036",
+            "pano_035"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_045",
+          "position": [
+            -0.258705,
+            -10.568832,
+            2.128092
+          ],
+          "rotation": [
+            0.007165,
+            0.058459,
+            -0.620834,
+            0.781727
+          ],
+          "image_path": "panos/pano_045.jpg",
+          "neighbors": [
+            "pano_044",
+            "pano_037",
+            "pano_046",
+            "pano_038"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_046",
+          "position": [
+            -0.633875,
+            -9.370851,
+            2.142231
+          ],
+          "rotation": [
+            -0.054052,
+            0.010039,
+            0.751573,
+            0.657355
+          ],
+          "image_path": "panos/pano_046.jpg",
+          "neighbors": [
+            "pano_044",
+            "pano_045",
+            "pano_035",
+            "pano_036"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_047",
+          "position": [
+            0.052821,
+            -2.141252,
+            2.073287
+          ],
+          "rotation": [
+            -0.01182,
+            0.036663,
+            0.09876,
+            0.994365
+          ],
+          "image_path": "panos/pano_047.jpg",
+          "neighbors": [
+            "pano_028",
+            "pano_027",
+            "pano_048",
+            "pano_001"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_048",
+          "position": [
+            1.363145,
+            -1.994929,
+            2.125426
+          ],
+          "rotation": [
+            -0.011251,
+            0.038225,
+            0.047496,
+            0.998076
+          ],
+          "image_path": "panos/pano_048.jpg",
+          "neighbors": [
+            "pano_047",
+            "pano_028",
+            "pano_049",
+            "pano_050"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_049",
+          "position": [
+            2.75706,
+            -1.904449,
+            2.129696
+          ],
+          "rotation": [
+            -0.028609,
+            0.031824,
+            0.115183,
+            0.992422
+          ],
+          "image_path": "panos/pano_049.jpg",
+          "neighbors": [
+            "pano_050",
+            "pano_048",
+            "pano_107",
+            "pano_105"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_050",
+          "position": [
+            2.397638,
+            -1.025226,
+            2.130912
+          ],
+          "rotation": [
+            -0.040891,
+            0.010907,
+            0.786758,
+            0.615809
+          ],
+          "image_path": "panos/pano_050.jpg",
+          "neighbors": [
+            "pano_049",
+            "pano_048",
+            "pano_054",
+            "pano_057"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_051",
+          "position": [
+            1.790539,
+            3.304396,
+            2.03291
+          ],
+          "rotation": [
+            -0.018832,
+            0.056488,
+            0.003466,
+            0.99822
+          ],
+          "image_path": "panos/pano_051.jpg",
+          "neighbors": [
+            "pano_059",
+            "pano_022",
+            "pano_074",
+            "pano_052"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_052",
+          "position": [
+            2.378578,
+            2.138764,
+            2.101756
+          ],
+          "rotation": [
+            -0.007949,
+            0.058938,
+            -0.432794,
+            0.899529
+          ],
+          "image_path": "panos/pano_052.jpg",
+          "neighbors": [
+            "pano_058",
+            "pano_053",
+            "pano_055",
+            "pano_059"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_053",
+          "position": [
+            2.942619,
+            2.05052,
+            2.102441
+          ],
+          "rotation": [
+            0.001593,
+            0.05244,
+            -0.191355,
+            0.980118
+          ],
+          "image_path": "panos/pano_053.jpg",
+          "neighbors": [
+            "pano_058",
+            "pano_052",
+            "pano_057",
+            "pano_054"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_054",
+          "position": [
+            2.766275,
+            0.852261,
+            2.122117
+          ],
+          "rotation": [
+            -0.053928,
+            -0.012269,
+            0.99789,
+            0.034011
+          ],
+          "image_path": "panos/pano_054.jpg",
+          "neighbors": [
+            "pano_057",
+            "pano_058",
+            "pano_053",
+            "pano_055"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_055",
+          "position": [
+            1.63213,
+            1.387022,
+            2.111825
+          ],
+          "rotation": [
+            -0.04255,
+            -0.002952,
+            0.932887,
+            0.357634
+          ],
+          "image_path": "panos/pano_055.jpg",
+          "neighbors": [
+            "pano_056",
+            "pano_052",
+            "pano_057",
+            "pano_054"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_056",
+          "position": [
+            1.081468,
+            1.887142,
+            2.0414
+          ],
+          "rotation": [
+            0.007881,
+            0.044764,
+            -0.628714,
+            0.776307
+          ],
+          "image_path": "panos/pano_056.jpg",
+          "neighbors": [
+            "pano_055",
+            "pano_022",
+            "pano_052",
+            "pano_059"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_057",
+          "position": [
+            2.658581,
+            1.0065,
+            2.120186
+          ],
+          "rotation": [
+            -0.028427,
+            0.046717,
+            0.122241,
+            0.990993
+          ],
+          "image_path": "panos/pano_057.jpg",
+          "neighbors": [
+            "pano_054",
+            "pano_058",
+            "pano_053",
+            "pano_055"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_058",
+          "position": [
+            2.701999,
+            2.046677,
+            2.107446
+          ],
+          "rotation": [
+            -0.052826,
+            -0.010348,
+            0.934245,
+            0.352545
+          ],
+          "image_path": "panos/pano_058.jpg",
+          "neighbors": [
+            "pano_053",
+            "pano_052",
+            "pano_057",
+            "pano_054"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_059",
+          "position": [
+            1.891247,
+            3.129515,
+            2.03585
+          ],
+          "rotation": [
+            -0.038296,
+            0.006054,
+            0.661105,
+            0.749291
+          ],
+          "image_path": "panos/pano_059.jpg",
+          "neighbors": [
+            "pano_051",
+            "pano_022",
+            "pano_052",
+            "pano_074"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_060",
+          "position": [
+            3.444973,
+            3.520466,
+            2.031005
+          ],
+          "rotation": [
+            -0.026495,
+            0.064122,
+            0.076548,
+            0.994649
+          ],
+          "image_path": "panos/pano_060.jpg",
+          "neighbors": [
+            "pano_075",
+            "pano_061",
+            "pano_102",
+            "pano_053"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_061",
+          "position": [
+            4.660826,
+            3.543495,
+            2.031823
+          ],
+          "rotation": [
+            -0.018004,
+            0.056562,
+            0.09075,
+            0.994103
+          ],
+          "image_path": "panos/pano_061.jpg",
+          "neighbors": [
+            "pano_102",
+            "pano_060",
+            "pano_062",
+            "pano_075"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_062",
+          "position": [
+            5.904952,
+            3.589325,
+            2.032091
+          ],
+          "rotation": [
+            -0.009269,
+            0.055117,
+            0.096241,
+            0.993788
+          ],
+          "image_path": "panos/pano_062.jpg",
+          "neighbors": [
+            "pano_076",
+            "pano_154",
+            "pano_061",
+            "pano_063"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_063",
+          "position": [
+            7.237778,
+            3.712194,
+            2.029367
+          ],
+          "rotation": [
+            -0.024812,
+            0.070694,
+            0.088875,
+            0.993221
+          ],
+          "image_path": "panos/pano_063.jpg",
+          "neighbors": [
+            "pano_155",
+            "pano_197",
+            "pano_064",
+            "pano_062"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_064",
+          "position": [
+            8.495223,
+            3.814764,
+            2.036938
+          ],
+          "rotation": [
+            -0.021576,
+            0.047058,
+            0.129447,
+            0.990234
+          ],
+          "image_path": "panos/pano_064.jpg",
+          "neighbors": [
+            "pano_196",
+            "pano_197",
+            "pano_077",
+            "pano_155"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_065",
+          "position": [
+            9.811438,
+            3.919275,
+            2.035552
+          ],
+          "rotation": [
+            -0.021925,
+            0.053809,
+            0.122633,
+            0.99075
+          ],
+          "image_path": "panos/pano_065.jpg",
+          "neighbors": [
+            "pano_238",
+            "pano_237",
+            "pano_077",
+            "pano_196"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_066",
+          "position": [
+            11.338225,
+            4.15925,
+            2.037705
+          ],
+          "rotation": [
+            -0.040612,
+            0.050139,
+            0.235663,
+            0.969691
+          ],
+          "image_path": "panos/pano_066.jpg",
+          "neighbors": [
+            "pano_239",
+            "pano_238",
+            "pano_065",
+            "pano_237"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_067",
+          "position": [
+            11.323204,
+            6.045605,
+            2.030588
+          ],
+          "rotation": [
+            -0.064283,
+            -0.027066,
+            0.993998,
+            -0.08428
+          ],
+          "image_path": "panos/pano_067.jpg",
+          "neighbors": [
+            "pano_068",
+            "pano_066",
+            "pano_238",
+            "pano_065"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_068",
+          "position": [
+            9.861981,
+            5.968897,
+            2.032161
+          ],
+          "rotation": [
+            -0.058106,
+            -0.046368,
+            0.994721,
+            -0.070741
+          ],
+          "image_path": "panos/pano_068.jpg",
+          "neighbors": [
+            "pano_067",
+            "pano_077",
+            "pano_238",
+            "pano_065"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_069",
+          "position": [
+            6.971656,
+            5.844253,
+            2.038109
+          ],
+          "rotation": [
+            -0.067858,
+            -0.009191,
+            0.993805,
+            0.087533
+          ],
+          "image_path": "panos/pano_069.jpg",
+          "neighbors": [
+            "pano_070",
+            "pano_076",
+            "pano_197",
+            "pano_063"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_070",
+          "position": [
+            5.936256,
+            6.271064,
+            2.041534
+          ],
+          "rotation": [
+            -0.039988,
+            -0.038282,
+            0.989438,
+            -0.133971
+          ],
+          "image_path": "panos/pano_070.jpg",
+          "neighbors": [
+            "pano_069",
+            "pano_071",
+            "pano_076",
+            "pano_062"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_071",
+          "position": [
+            4.803363,
+            5.204159,
+            2.034981
+          ],
+          "rotation": [
+            -0.055105,
+            -0.032628,
+            0.99701,
+            -0.043238
+          ],
+          "image_path": "panos/pano_071.jpg",
+          "neighbors": [
+            "pano_076",
+            "pano_075",
+            "pano_070",
+            "pano_072"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_072",
+          "position": [
+            3.187623,
+            5.426169,
+            2.036915
+          ],
+          "rotation": [
+            -0.040195,
+            -0.038958,
+            0.993218,
+            -0.101905
+          ],
+          "image_path": "panos/pano_072.jpg",
+          "neighbors": [
+            "pano_075",
+            "pano_074",
+            "pano_071",
+            "pano_073"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_073",
+          "position": [
+            1.322774,
+            5.125299,
+            2.035202
+          ],
+          "rotation": [
+            -0.046377,
+            -0.034509,
+            0.998234,
+            0.013678
+          ],
+          "image_path": "panos/pano_073.jpg",
+          "neighbors": [
+            "pano_021",
+            "pano_020",
+            "pano_074",
+            "pano_019"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_074",
+          "position": [
+            2.079771,
+            4.454294,
+            2.030078
+          ],
+          "rotation": [
+            -0.013331,
+            0.053808,
+            0.039302,
+            0.997689
+          ],
+          "image_path": "panos/pano_074.jpg",
+          "neighbors": [
+            "pano_073",
+            "pano_021",
+            "pano_051",
+            "pano_059"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_075",
+          "position": [
+            3.699093,
+            4.43479,
+            2.032809
+          ],
+          "rotation": [
+            -0.019824,
+            0.050803,
+            0.050818,
+            0.997218
+          ],
+          "image_path": "panos/pano_075.jpg",
+          "neighbors": [
+            "pano_060",
+            "pano_072",
+            "pano_061",
+            "pano_071"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_076",
+          "position": [
+            5.714211,
+            4.577097,
+            2.026459
+          ],
+          "rotation": [
+            -0.035904,
+            0.057302,
+            0.06035,
+            0.995884
+          ],
+          "image_path": "panos/pano_076.jpg",
+          "neighbors": [
+            "pano_062",
+            "pano_071",
+            "pano_061",
+            "pano_070"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_077",
+          "position": [
+            8.846072,
+            4.693256,
+            2.03792
+          ],
+          "rotation": [
+            -0.057572,
+            0.018024,
+            0.721017,
+            0.690286
+          ],
+          "image_path": "panos/pano_077.jpg",
+          "neighbors": [
+            "pano_064",
+            "pano_065",
+            "pano_196",
+            "pano_197"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_078",
+          "position": [
+            0.091422,
+            6.360064,
+            2.040712
+          ],
+          "rotation": [
+            -0.057221,
+            0.019835,
+            0.758781,
+            0.648524
+          ],
+          "image_path": "panos/pano_078.jpg",
+          "neighbors": [
+            "pano_079",
+            "pano_019",
+            "pano_020",
+            "pano_080"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_079",
+          "position": [
+            0.06531,
+            6.391286,
+            2.039012
+          ],
+          "rotation": [
+            -0.060035,
+            0.030303,
+            0.802451,
+            0.592916
+          ],
+          "image_path": "panos/pano_079.jpg",
+          "neighbors": [
+            "pano_078",
+            "pano_019",
+            "pano_080",
+            "pano_020"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_080",
+          "position": [
+            -0.171514,
+            7.127615,
+            2.085931
+          ],
+          "rotation": [
+            -0.075734,
+            0.01001,
+            0.874029,
+            0.47983
+          ],
+          "image_path": "panos/pano_080.jpg",
+          "neighbors": [
+            "pano_079",
+            "pano_078",
+            "pano_019",
+            "pano_081"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_081",
+          "position": [
+            -1.219804,
+            7.24009,
+            2.087422
+          ],
+          "rotation": [
+            -0.049318,
+            -0.023274,
+            0.9946,
+            -0.088298
+          ],
+          "image_path": "panos/pano_081.jpg",
+          "neighbors": [
+            "pano_090",
+            "pano_080",
+            "pano_018",
+            "pano_082"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_082",
+          "position": [
+            -2.638421,
+            6.947959,
+            2.15365
+          ],
+          "rotation": [
+            -0.056614,
+            -0.017712,
+            0.996762,
+            -0.05429
+          ],
+          "image_path": "panos/pano_082.jpg",
+          "neighbors": [
+            "pano_083",
+            "pano_089",
+            "pano_090",
+            "pano_081"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_083",
+          "position": [
+            -3.919441,
+            6.86131,
+            2.134871
+          ],
+          "rotation": [
+            -0.05982,
+            -0.013139,
+            0.993355,
+            0.097446
+          ],
+          "image_path": "panos/pano_083.jpg",
+          "neighbors": [
+            "pano_084",
+            "pano_082",
+            "pano_017",
+            "pano_089"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_084",
+          "position": [
+            -4.036032,
+            8.107976,
+            2.169321
+          ],
+          "rotation": [
+            -0.057714,
+            0.018397,
+            0.766801,
+            0.63902
+          ],
+          "image_path": "panos/pano_084.jpg",
+          "neighbors": [
+            "pano_083",
+            "pano_085",
+            "pano_089",
+            "pano_088"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_085",
+          "position": [
+            -4.119061,
+            9.456758,
+            2.163073
+          ],
+          "rotation": [
+            -0.060261,
+            0.024707,
+            0.753199,
+            0.654561
+          ],
+          "image_path": "panos/pano_085.jpg",
+          "neighbors": [
+            "pano_086",
+            "pano_084",
+            "pano_088",
+            "pano_087"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_086",
+          "position": [
+            -4.094636,
+            10.3796,
+            2.146973
+          ],
+          "rotation": [
+            -0.03311,
+            0.059247,
+            0.162469,
+            0.984377
+          ],
+          "image_path": "panos/pano_086.jpg",
+          "neighbors": [
+            "pano_085",
+            "pano_087",
+            "pano_088",
+            "pano_084"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_087",
+          "position": [
+            -2.998004,
+            10.584651,
+            2.153808
+          ],
+          "rotation": [
+            -0.025238,
+            0.072827,
+            -0.008276,
+            0.996991
+          ],
+          "image_path": "panos/pano_087.jpg",
+          "neighbors": [
+            "pano_086",
+            "pano_088",
+            "pano_085",
+            "pano_092"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_088",
+          "position": [
+            -2.755695,
+            9.099058,
+            2.151717
+          ],
+          "rotation": [
+            0.040739,
+            0.06807,
+            -0.659141,
+            0.747823
+          ],
+          "image_path": "panos/pano_088.jpg",
+          "neighbors": [
+            "pano_089",
+            "pano_085",
+            "pano_087",
+            "pano_084"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_089",
+          "position": [
+            -2.605077,
+            8.256612,
+            2.137312
+          ],
+          "rotation": [
+            0.028503,
+            0.060329,
+            -0.641473,
+            0.764238
+          ],
+          "image_path": "panos/pano_089.jpg",
+          "neighbors": [
+            "pano_088",
+            "pano_090",
+            "pano_082",
+            "pano_084"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_090",
+          "position": [
+            -1.541858,
+            7.732211,
+            2.090371
+          ],
+          "rotation": [
+            -0.034743,
+            0.052973,
+            0.068185,
+            0.995659
+          ],
+          "image_path": "panos/pano_090.jpg",
+          "neighbors": [
+            "pano_081",
+            "pano_089",
+            "pano_091",
+            "pano_082"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_091",
+          "position": [
+            -0.825921,
+            8.852564,
+            2.078007
+          ],
+          "rotation": [
+            -0.070226,
+            0.036113,
+            0.74166,
+            0.666112
+          ],
+          "image_path": "panos/pano_091.jpg",
+          "neighbors": [
+            "pano_092",
+            "pano_090",
+            "pano_094",
+            "pano_095"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_092",
+          "position": [
+            -0.931413,
+            10.170641,
+            2.146832
+          ],
+          "rotation": [
+            -0.057627,
+            0.036352,
+            0.715728,
+            0.695047
+          ],
+          "image_path": "panos/pano_092.jpg",
+          "neighbors": [
+            "pano_093",
+            "pano_091",
+            "pano_094",
+            "pano_087"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_093",
+          "position": [
+            0.144857,
+            10.59787,
+            2.149435
+          ],
+          "rotation": [
+            -0.021908,
+            0.072176,
+            -0.023127,
+            0.996883
+          ],
+          "image_path": "panos/pano_093.jpg",
+          "neighbors": [
+            "pano_094",
+            "pano_092",
+            "pano_100",
+            "pano_091"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_094",
+          "position": [
+            0.433774,
+            9.6596,
+            2.116969
+          ],
+          "rotation": [
+            0.031846,
+            0.057337,
+            -0.6827,
+            0.727749
+          ],
+          "image_path": "panos/pano_094.jpg",
+          "neighbors": [
+            "pano_093",
+            "pano_095",
+            "pano_092",
+            "pano_091"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_095",
+          "position": [
+            0.721707,
+            8.537027,
+            2.085983
+          ],
+          "rotation": [
+            0.029023,
+            0.062455,
+            -0.628427,
+            0.774814
+          ],
+          "image_path": "panos/pano_095.jpg",
+          "neighbors": [
+            "pano_094",
+            "pano_096",
+            "pano_101",
+            "pano_091"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_096",
+          "position": [
+            1.506522,
+            7.567864,
+            2.094136
+          ],
+          "rotation": [
+            -0.039753,
+            0.060822,
+            0.020375,
+            0.997149
+          ],
+          "image_path": "panos/pano_096.jpg",
+          "neighbors": [
+            "pano_095",
+            "pano_097",
+            "pano_101",
+            "pano_080"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_097",
+          "position": [
+            2.847647,
+            7.569812,
+            2.15619
+          ],
+          "rotation": [
+            -0.039307,
+            0.061206,
+            0.159586,
+            0.9845
+          ],
+          "image_path": "panos/pano_097.jpg",
+          "neighbors": [
+            "pano_098",
+            "pano_096",
+            "pano_101",
+            "pano_072"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_098",
+          "position": [
+            3.248808,
+            8.788992,
+            2.169091
+          ],
+          "rotation": [
+            -0.054158,
+            0.01393,
+            0.721278,
+            0.690385
+          ],
+          "image_path": "panos/pano_098.jpg",
+          "neighbors": [
+            "pano_101",
+            "pano_097",
+            "pano_099",
+            "pano_096"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_099",
+          "position": [
+            3.064288,
+            10.464033,
+            2.150092
+          ],
+          "rotation": [
+            -0.081842,
+            0.019803,
+            0.746584,
+            0.659941
+          ],
+          "image_path": "panos/pano_099.jpg",
+          "neighbors": [
+            "pano_100",
+            "pano_098",
+            "pano_101",
+            "pano_094"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_100",
+          "position": [
+            1.708727,
+            10.490618,
+            2.158486
+          ],
+          "rotation": [
+            -0.041138,
+            -0.05219,
+            0.977535,
+            -0.200025
+          ],
+          "image_path": "panos/pano_100.jpg",
+          "neighbors": [
+            "pano_099",
+            "pano_094",
+            "pano_093",
+            "pano_101"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_101",
+          "position": [
+            1.983179,
+            8.890542,
+            2.111734
+          ],
+          "rotation": [
+            0.019122,
+            0.06757,
+            -0.724137,
+            0.686072
+          ],
+          "image_path": "panos/pano_101.jpg",
+          "neighbors": [
+            "pano_098",
+            "pano_095",
+            "pano_096",
+            "pano_097"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_102",
+          "position": [
+            4.586217,
+            2.924632,
+            2.030425
+          ],
+          "rotation": [
+            0.019389,
+            0.044766,
+            -0.661773,
+            0.748116
+          ],
+          "image_path": "panos/pano_102.jpg",
+          "neighbors": [
+            "pano_061",
+            "pano_154",
+            "pano_060",
+            "pano_103"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_103",
+          "position": [
+            4.812929,
+            1.466954,
+            2.035798
+          ],
+          "rotation": [
+            0.01629,
+            0.045024,
+            -0.658707,
+            0.750875
+          ],
+          "image_path": "panos/pano_103.jpg",
+          "neighbors": [
+            "pano_153",
+            "pano_154",
+            "pano_102",
+            "pano_104"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_104",
+          "position": [
+            5.112148,
+            -0.226965,
+            2.038985
+          ],
+          "rotation": [
+            0.009304,
+            0.040301,
+            -0.662548,
+            0.747876
+          ],
+          "image_path": "panos/pano_104.jpg",
+          "neighbors": [
+            "pano_152",
+            "pano_107",
+            "pano_153",
+            "pano_103"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_105",
+          "position": [
+            5.244619,
+            -2.002194,
+            2.041315
+          ],
+          "rotation": [
+            0.008602,
+            0.048366,
+            -0.668779,
+            0.741836
+          ],
+          "image_path": "panos/pano_105.jpg",
+          "neighbors": [
+            "pano_107",
+            "pano_151",
+            "pano_106",
+            "pano_150"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_106",
+          "position": [
+            5.414282,
+            -3.361293,
+            2.037605
+          ],
+          "rotation": [
+            -0.006934,
+            0.011331,
+            -0.695326,
+            0.718572
+          ],
+          "image_path": "panos/pano_106.jpg",
+          "neighbors": [
+            "pano_150",
+            "pano_105",
+            "pano_108",
+            "pano_149"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_107",
+          "position": [
+            4.539987,
+            -1.596036,
+            2.035158
+          ],
+          "rotation": [
+            -0.024784,
+            -0.006749,
+            0.830221,
+            0.556843
+          ],
+          "image_path": "panos/pano_107.jpg",
+          "neighbors": [
+            "pano_105",
+            "pano_104",
+            "pano_151",
+            "pano_049"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_108",
+          "position": [
+            5.311893,
+            -4.803946,
+            2.047152
+          ],
+          "rotation": [
+            0.005423,
+            0.037452,
+            -0.65813,
+            0.751953
+          ],
+          "image_path": "panos/pano_108.jpg",
+          "neighbors": [
+            "pano_149",
+            "pano_106",
+            "pano_148",
+            "pano_150"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_109",
+          "position": [
+            5.564426,
+            -6.691011,
+            2.037123
+          ],
+          "rotation": [
+            0.007604,
+            0.041727,
+            -0.695069,
+            0.717691
+          ],
+          "image_path": "panos/pano_109.jpg",
+          "neighbors": [
+            "pano_148",
+            "pano_119",
+            "pano_147",
+            "pano_118"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_110",
+          "position": [
+            3.757353,
+            -7.502956,
+            2.040693
+          ],
+          "rotation": [
+            -0.034485,
+            -0.021498,
+            0.994768,
+            -0.093731
+          ],
+          "image_path": "panos/pano_110.jpg",
+          "neighbors": [
+            "pano_118",
+            "pano_111",
+            "pano_109",
+            "pano_119"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_111",
+          "position": [
+            3.979254,
+            -9.043626,
+            2.030333
+          ],
+          "rotation": [
+            -0.009269,
+            0.031934,
+            -0.664029,
+            0.746967
+          ],
+          "image_path": "panos/pano_111.jpg",
+          "neighbors": [
+            "pano_117",
+            "pano_118",
+            "pano_112",
+            "pano_110"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_112",
+          "position": [
+            3.215009,
+            -10.245033,
+            2.029411
+          ],
+          "rotation": [
+            -0.033911,
+            -0.04444,
+            0.990762,
+            -0.123558
+          ],
+          "image_path": "panos/pano_112.jpg",
+          "neighbors": [
+            "pano_113",
+            "pano_111",
+            "pano_114",
+            "pano_117"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_113",
+          "position": [
+            2.264866,
+            -11.157211,
+            2.075307
+          ],
+          "rotation": [
+            0.018162,
+            0.061875,
+            -0.628238,
+            0.775344
+          ],
+          "image_path": "panos/pano_113.jpg",
+          "neighbors": [
+            "pano_043",
+            "pano_115",
+            "pano_112",
+            "pano_114"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_114",
+          "position": [
+            3.476467,
+            -11.72977,
+            2.027294
+          ],
+          "rotation": [
+            0.046217,
+            0.085375,
+            -0.831221,
+            0.5474
+          ],
+          "image_path": "panos/pano_114.jpg",
+          "neighbors": [
+            "pano_115",
+            "pano_116",
+            "pano_113",
+            "pano_112"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_115",
+          "position": [
+            3.045358,
+            -11.926341,
+            2.022159
+          ],
+          "rotation": [
+            -0.064363,
+            -0.038759,
+            0.967807,
+            -0.240219
+          ],
+          "image_path": "panos/pano_115.jpg",
+          "neighbors": [
+            "pano_114",
+            "pano_113",
+            "pano_043",
+            "pano_116"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_116",
+          "position": [
+            4.594327,
+            -11.27228,
+            2.036648
+          ],
+          "rotation": [
+            -0.040413,
+            0.043844,
+            0.202445,
+            0.977477
+          ],
+          "image_path": "panos/pano_116.jpg",
+          "neighbors": [
+            "pano_121",
+            "pano_114",
+            "pano_117",
+            "pano_115"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_117",
+          "position": [
+            4.634526,
+            -9.671001,
+            2.029629
+          ],
+          "rotation": [
+            -0.049945,
+            0.009581,
+            0.734014,
+            0.677227
+          ],
+          "image_path": "panos/pano_117.jpg",
+          "neighbors": [
+            "pano_111",
+            "pano_118",
+            "pano_120",
+            "pano_112"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_118",
+          "position": [
+            4.857759,
+            -8.309608,
+            2.020524
+          ],
+          "rotation": [
+            -0.055169,
+            0.027797,
+            0.546244,
+            0.835345
+          ],
+          "image_path": "panos/pano_118.jpg",
+          "neighbors": [
+            "pano_111",
+            "pano_119",
+            "pano_110",
+            "pano_117"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_119",
+          "position": [
+            5.921425,
+            -7.872536,
+            2.029361
+          ],
+          "rotation": [
+            0.021039,
+            0.052654,
+            -0.679644,
+            0.731347
+          ],
+          "image_path": "panos/pano_119.jpg",
+          "neighbors": [
+            "pano_147",
+            "pano_118",
+            "pano_146",
+            "pano_109"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_120",
+          "position": [
+            6.01785,
+            -9.786366,
+            2.032197
+          ],
+          "rotation": [
+            0.019845,
+            0.041328,
+            -0.67917,
+            0.732548
+          ],
+          "image_path": "panos/pano_120.jpg",
+          "neighbors": [
+            "pano_145",
+            "pano_121",
+            "pano_117",
+            "pano_146"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_121",
+          "position": [
+            5.765228,
+            -11.099149,
+            2.022372
+          ],
+          "rotation": [
+            0.026049,
+            0.051916,
+            -0.632267,
+            0.77257
+          ],
+          "image_path": "panos/pano_121.jpg",
+          "neighbors": [
+            "pano_116",
+            "pano_120",
+            "pano_144",
+            "pano_122"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_122",
+          "position": [
+            5.944015,
+            -12.592254,
+            2.029196
+          ],
+          "rotation": [
+            0.018602,
+            0.051598,
+            -0.668103,
+            0.742045
+          ],
+          "image_path": "panos/pano_122.jpg",
+          "neighbors": [
+            "pano_143",
+            "pano_144",
+            "pano_121",
+            "pano_123"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_123",
+          "position": [
+            5.866415,
+            -14.30616,
+            2.041388
+          ],
+          "rotation": [
+            0.020631,
+            0.047793,
+            -0.660797,
+            0.748758
+          ],
+          "image_path": "panos/pano_123.jpg",
+          "neighbors": [
+            "pano_124",
+            "pano_142",
+            "pano_122",
+            "pano_143"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_124",
+          "position": [
+            5.924665,
+            -15.689566,
+            2.037551
+          ],
+          "rotation": [
+            0.028763,
+            0.053224,
+            -0.627328,
+            0.776401
+          ],
+          "image_path": "panos/pano_124.jpg",
+          "neighbors": [
+            "pano_125",
+            "pano_123",
+            "pano_141",
+            "pano_142"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_125",
+          "position": [
+            6.090528,
+            -17.049617,
+            2.030379
+          ],
+          "rotation": [
+            0.011968,
+            0.050338,
+            -0.607404,
+            0.792706
+          ],
+          "image_path": "panos/pano_125.jpg",
+          "neighbors": [
+            "pano_124",
+            "pano_126",
+            "pano_140",
+            "pano_141"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_126",
+          "position": [
+            6.204649,
+            -18.520562,
+            2.034997
+          ],
+          "rotation": [
+            0.004538,
+            0.048663,
+            -0.569605,
+            0.820464
+          ],
+          "image_path": "panos/pano_126.jpg",
+          "neighbors": [
+            "pano_307",
+            "pano_306",
+            "pano_127",
+            "pano_139"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_127",
+          "position": [
+            6.39283,
+            -19.919647,
+            2.033046
+          ],
+          "rotation": [
+            0.010685,
+            0.033238,
+            -0.635789,
+            0.771073
+          ],
+          "image_path": "panos/pano_127.jpg",
+          "neighbors": [
+            "pano_306",
+            "pano_307",
+            "pano_138",
+            "pano_126"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_128",
+          "position": [
+            6.643195,
+            -21.346856,
+            2.034467
+          ],
+          "rotation": [
+            0.01392,
+            0.044907,
+            -0.652879,
+            0.756002
+          ],
+          "image_path": "panos/pano_128.jpg",
+          "neighbors": [
+            "pano_292",
+            "pano_137",
+            "pano_127",
+            "pano_129"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_129",
+          "position": [
+            6.807087,
+            -22.858504,
+            2.02896
+          ],
+          "rotation": [
+            0.009004,
+            0.035254,
+            -0.672034,
+            0.739626
+          ],
+          "image_path": "panos/pano_129.jpg",
+          "neighbors": [
+            "pano_291",
+            "pano_136",
+            "pano_278",
+            "pano_130"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_130",
+          "position": [
+            6.9242,
+            -24.293826,
+            2.031048
+          ],
+          "rotation": [
+            0.011711,
+            0.03643,
+            -0.681869,
+            0.730473
+          ],
+          "image_path": "panos/pano_130.jpg",
+          "neighbors": [
+            "pano_278",
+            "pano_132",
+            "pano_135",
+            "pano_129"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_131",
+          "position": [
+            7.148598,
+            -26.458805,
+            2.033409
+          ],
+          "rotation": [
+            0.006777,
+            0.045615,
+            -0.679819,
+            0.731929
+          ],
+          "image_path": "panos/pano_131.jpg",
+          "neighbors": [
+            "pano_265",
+            "pano_132",
+            "pano_133",
+            "pano_277"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_132",
+          "position": [
+            7.065327,
+            -25.346306,
+            2.026104
+          ],
+          "rotation": [
+            0.004735,
+            0.045587,
+            -0.669887,
+            0.741047
+          ],
+          "image_path": "panos/pano_132.jpg",
+          "neighbors": [
+            "pano_130",
+            "pano_131",
+            "pano_277",
+            "pano_134"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_133",
+          "position": [
+            8.667373,
+            -26.758158,
+            2.03232
+          ],
+          "rotation": [
+            -0.044108,
+            0.029045,
+            0.715014,
+            0.697112
+          ],
+          "image_path": "panos/pano_133.jpg",
+          "neighbors": [
+            "pano_264",
+            "pano_175",
+            "pano_134",
+            "pano_131"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_134",
+          "position": [
+            8.478931,
+            -25.374008,
+            2.039007
+          ],
+          "rotation": [
+            -0.039294,
+            0.019245,
+            0.751665,
+            0.658092
+          ],
+          "image_path": "panos/pano_134.jpg",
+          "neighbors": [
+            "pano_264",
+            "pano_175",
+            "pano_135",
+            "pano_133"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_135",
+          "position": [
+            8.245749,
+            -24.063736,
+            2.036568
+          ],
+          "rotation": [
+            -0.039459,
+            0.009684,
+            0.717237,
+            0.695644
+          ],
+          "image_path": "panos/pano_135.jpg",
+          "neighbors": [
+            "pano_174",
+            "pano_134",
+            "pano_130",
+            "pano_136"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_136",
+          "position": [
+            8.068733,
+            -22.638441,
+            2.032738
+          ],
+          "rotation": [
+            -0.022277,
+            0.005723,
+            0.707772,
+            0.706067
+          ],
+          "image_path": "panos/pano_136.jpg",
+          "neighbors": [
+            "pano_173",
+            "pano_129",
+            "pano_172",
+            "pano_135"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_137",
+          "position": [
+            7.870053,
+            -21.125397,
+            2.028463
+          ],
+          "rotation": [
+            -0.040729,
+            0.012563,
+            0.730091,
+            0.682019
+          ],
+          "image_path": "panos/pano_137.jpg",
+          "neighbors": [
+            "pano_172",
+            "pano_128",
+            "pano_138",
+            "pano_171"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_138",
+          "position": [
+            7.785004,
+            -19.771037,
+            2.030658
+          ],
+          "rotation": [
+            -0.035339,
+            0.015869,
+            0.717846,
+            0.695123
+          ],
+          "image_path": "panos/pano_138.jpg",
+          "neighbors": [
+            "pano_171",
+            "pano_137",
+            "pano_127",
+            "pano_170"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_139",
+          "position": [
+            7.631146,
+            -18.281969,
+            2.034168
+          ],
+          "rotation": [
+            -0.044558,
+            0.026512,
+            0.715737,
+            0.696442
+          ],
+          "image_path": "panos/pano_139.jpg",
+          "neighbors": [
+            "pano_170",
+            "pano_140",
+            "pano_126",
+            "pano_138"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_140",
+          "position": [
+            7.577273,
+            -17.050211,
+            2.057104
+          ],
+          "rotation": [
+            -0.071446,
+            0.027538,
+            0.773802,
+            0.628782
+          ],
+          "image_path": "panos/pano_140.jpg",
+          "neighbors": [
+            "pano_169",
+            "pano_141",
+            "pano_139",
+            "pano_125"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_141",
+          "position": [
+            7.499272,
+            -15.835123,
+            2.05441
+          ],
+          "rotation": [
+            -0.004621,
+            -0.020629,
+            0.745607,
+            0.666051
+          ],
+          "image_path": "panos/pano_141.jpg",
+          "neighbors": [
+            "pano_168",
+            "pano_140",
+            "pano_142",
+            "pano_124"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_142",
+          "position": [
+            7.297955,
+            -14.465275,
+            2.047893
+          ],
+          "rotation": [
+            -0.016394,
+            -0.009154,
+            0.737989,
+            0.674551
+          ],
+          "image_path": "panos/pano_142.jpg",
+          "neighbors": [
+            "pano_167",
+            "pano_141",
+            "pano_143",
+            "pano_123"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_143",
+          "position": [
+            7.13387,
+            -13.069328,
+            2.049928
+          ],
+          "rotation": [
+            -0.041151,
+            0.009357,
+            0.719219,
+            0.693501
+          ],
+          "image_path": "panos/pano_143.jpg",
+          "neighbors": [
+            "pano_122",
+            "pano_142",
+            "pano_144",
+            "pano_166"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_144",
+          "position": [
+            7.019329,
+            -11.66318,
+            2.040021
+          ],
+          "rotation": [
+            -0.026826,
+            0.006133,
+            0.694315,
+            0.719145
+          ],
+          "image_path": "panos/pano_144.jpg",
+          "neighbors": [
+            "pano_121",
+            "pano_143",
+            "pano_122",
+            "pano_165"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_145",
+          "position": [
+            7.025647,
+            -10.198319,
+            2.048957
+          ],
+          "rotation": [
+            -0.037098,
+            0.015794,
+            0.724565,
+            0.688026
+          ],
+          "image_path": "panos/pano_145.jpg",
+          "neighbors": [
+            "pano_120",
+            "pano_164",
+            "pano_165",
+            "pano_144"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_146",
+          "position": [
+            6.871606,
+            -8.647055,
+            2.049165
+          ],
+          "rotation": [
+            -0.029318,
+            0.014234,
+            0.689578,
+            0.723477
+          ],
+          "image_path": "panos/pano_146.jpg",
+          "neighbors": [
+            "pano_119",
+            "pano_147",
+            "pano_163",
+            "pano_120"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_147",
+          "position": [
+            6.816423,
+            -7.361436,
+            2.031849
+          ],
+          "rotation": [
+            -0.023392,
+            0.008797,
+            0.699674,
+            0.714025
+          ],
+          "image_path": "panos/pano_147.jpg",
+          "neighbors": [
+            "pano_119",
+            "pano_162",
+            "pano_146",
+            "pano_148"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_148",
+          "position": [
+            6.578744,
+            -5.999711,
+            2.024979
+          ],
+          "rotation": [
+            -0.03302,
+            0.014353,
+            0.719294,
+            0.693772
+          ],
+          "image_path": "panos/pano_148.jpg",
+          "neighbors": [
+            "pano_109",
+            "pano_149",
+            "pano_161",
+            "pano_147"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_149",
+          "position": [
+            6.531423,
+            -4.710038,
+            2.024346
+          ],
+          "rotation": [
+            -0.033784,
+            0.009287,
+            0.727195,
+            0.685536
+          ],
+          "image_path": "panos/pano_149.jpg",
+          "neighbors": [
+            "pano_108",
+            "pano_160",
+            "pano_148",
+            "pano_150"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_150",
+          "position": [
+            6.38083,
+            -3.330424,
+            2.026551
+          ],
+          "rotation": [
+            -0.038086,
+            0.007944,
+            0.735417,
+            0.676497
+          ],
+          "image_path": "panos/pano_150.jpg",
+          "neighbors": [
+            "pano_106",
+            "pano_159",
+            "pano_149",
+            "pano_151"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_151",
+          "position": [
+            6.145071,
+            -1.703865,
+            2.035105
+          ],
+          "rotation": [
+            -0.039888,
+            0.015009,
+            0.736509,
+            0.675084
+          ],
+          "image_path": "panos/pano_151.jpg",
+          "neighbors": [
+            "pano_105",
+            "pano_152",
+            "pano_158",
+            "pano_107"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_152",
+          "position": [
+            6.022322,
+            -0.347095,
+            2.025194
+          ],
+          "rotation": [
+            -0.052466,
+            0.016982,
+            0.733145,
+            0.677833
+          ],
+          "image_path": "panos/pano_152.jpg",
+          "neighbors": [
+            "pano_104",
+            "pano_151",
+            "pano_153",
+            "pano_157"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_153",
+          "position": [
+            5.827959,
+            1.096875,
+            2.018496
+          ],
+          "rotation": [
+            -0.046263,
+            0.004924,
+            0.727198,
+            0.684849
+          ],
+          "image_path": "panos/pano_153.jpg",
+          "neighbors": [
+            "pano_103",
+            "pano_154",
+            "pano_152",
+            "pano_104"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_154",
+          "position": [
+            5.62507,
+            2.469318,
+            2.033777
+          ],
+          "rotation": [
+            -0.047955,
+            0.008833,
+            0.70425,
+            0.708275
+          ],
+          "image_path": "panos/pano_154.jpg",
+          "neighbors": [
+            "pano_102",
+            "pano_062",
+            "pano_103",
+            "pano_153"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_155",
+          "position": [
+            7.374866,
+            3.591148,
+            2.027657
+          ],
+          "rotation": [
+            0.015536,
+            0.047605,
+            -0.680287,
+            0.731233
+          ],
+          "image_path": "panos/pano_155.jpg",
+          "neighbors": [
+            "pano_063",
+            "pano_197",
+            "pano_064",
+            "pano_196"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_156",
+          "position": [
+            7.227077,
+            2.034352,
+            2.035958
+          ],
+          "rotation": [
+            0.020226,
+            0.057766,
+            -0.669066,
+            0.740679
+          ],
+          "image_path": "panos/pano_156.jpg",
+          "neighbors": [
+            "pano_195",
+            "pano_157",
+            "pano_155",
+            "pano_154"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_157",
+          "position": [
+            7.447045,
+            0.630138,
+            2.032586
+          ],
+          "rotation": [
+            0.003686,
+            0.05007,
+            -0.657304,
+            0.751951
+          ],
+          "image_path": "panos/pano_157.jpg",
+          "neighbors": [
+            "pano_194",
+            "pano_156",
+            "pano_195",
+            "pano_153"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_158",
+          "position": [
+            7.612199,
+            -1.674018,
+            2.033905
+          ],
+          "rotation": [
+            -0.016634,
+            0.043591,
+            -0.668271,
+            0.742453
+          ],
+          "image_path": "panos/pano_158.jpg",
+          "neighbors": [
+            "pano_193",
+            "pano_159",
+            "pano_192",
+            "pano_151"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_159",
+          "position": [
+            7.56439,
+            -3.03589,
+            2.030573
+          ],
+          "rotation": [
+            0.018665,
+            0.030919,
+            -0.67265,
+            0.739079
+          ],
+          "image_path": "panos/pano_159.jpg",
+          "neighbors": [
+            "pano_192",
+            "pano_150",
+            "pano_160",
+            "pano_158"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_160",
+          "position": [
+            7.749778,
+            -4.345748,
+            2.028935
+          ],
+          "rotation": [
+            0.015435,
+            0.044509,
+            -0.681456,
+            0.730342
+          ],
+          "image_path": "panos/pano_160.jpg",
+          "neighbors": [
+            "pano_191",
+            "pano_149",
+            "pano_161",
+            "pano_159"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_161",
+          "position": [
+            7.885909,
+            -5.646422,
+            2.022428
+          ],
+          "rotation": [
+            0.009153,
+            0.043424,
+            -0.679103,
+            0.732701
+          ],
+          "image_path": "panos/pano_161.jpg",
+          "neighbors": [
+            "pano_190",
+            "pano_160",
+            "pano_148",
+            "pano_162"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_162",
+          "position": [
+            8.029568,
+            -7.10678,
+            2.026116
+          ],
+          "rotation": [
+            0.00235,
+            0.039489,
+            -0.672859,
+            0.738713
+          ],
+          "image_path": "panos/pano_162.jpg",
+          "neighbors": [
+            "pano_189",
+            "pano_147",
+            "pano_163",
+            "pano_161"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_163",
+          "position": [
+            8.134302,
+            -8.362356,
+            2.02475
+          ],
+          "rotation": [
+            0.014223,
+            0.057616,
+            -0.656781,
+            0.751742
+          ],
+          "image_path": "panos/pano_163.jpg",
+          "neighbors": [
+            "pano_164",
+            "pano_188",
+            "pano_162",
+            "pano_146"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_164",
+          "position": [
+            8.197524,
+            -9.473256,
+            2.0425
+          ],
+          "rotation": [
+            0.018654,
+            0.067059,
+            -0.63753,
+            0.767275
+          ],
+          "image_path": "panos/pano_164.jpg",
+          "neighbors": [
+            "pano_163",
+            "pano_187",
+            "pano_145",
+            "pano_165"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_165",
+          "position": [
+            8.252741,
+            -10.90545,
+            2.049097
+          ],
+          "rotation": [
+            0.027995,
+            0.061164,
+            -0.654045,
+            0.753459
+          ],
+          "image_path": "panos/pano_165.jpg",
+          "neighbors": [
+            "pano_145",
+            "pano_164",
+            "pano_144",
+            "pano_186"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_166",
+          "position": [
+            8.414455,
+            -12.425594,
+            2.048715
+          ],
+          "rotation": [
+            -0.002482,
+            0.038428,
+            -0.643485,
+            0.764489
+          ],
+          "image_path": "panos/pano_166.jpg",
+          "neighbors": [
+            "pano_185",
+            "pano_167",
+            "pano_143",
+            "pano_165"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_167",
+          "position": [
+            8.531829,
+            -13.847252,
+            2.048006
+          ],
+          "rotation": [
+            0.007389,
+            0.05029,
+            -0.658716,
+            0.750673
+          ],
+          "image_path": "panos/pano_167.jpg",
+          "neighbors": [
+            "pano_185",
+            "pano_142",
+            "pano_166",
+            "pano_184"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_168",
+          "position": [
+            8.52914,
+            -15.411732,
+            2.05199
+          ],
+          "rotation": [
+            0.016182,
+            0.056955,
+            -0.641569,
+            0.764776
+          ],
+          "image_path": "panos/pano_168.jpg",
+          "neighbors": [
+            "pano_141",
+            "pano_184",
+            "pano_183",
+            "pano_169"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_169",
+          "position": [
+            8.670344,
+            -16.942614,
+            2.051188
+          ],
+          "rotation": [
+            0.013027,
+            0.04771,
+            -0.663613,
+            0.74644
+          ],
+          "image_path": "panos/pano_169.jpg",
+          "neighbors": [
+            "pano_140",
+            "pano_183",
+            "pano_182",
+            "pano_168"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_170",
+          "position": [
+            8.720062,
+            -18.670281,
+            2.034844
+          ],
+          "rotation": [
+            0.005745,
+            0.050964,
+            -0.648558,
+            0.759435
+          ],
+          "image_path": "panos/pano_170.jpg",
+          "neighbors": [
+            "pano_139",
+            "pano_171",
+            "pano_181",
+            "pano_138"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_171",
+          "position": [
+            8.883561,
+            -19.999857,
+            2.032888
+          ],
+          "rotation": [
+            0.010304,
+            0.049693,
+            -0.653959,
+            0.754826
+          ],
+          "image_path": "panos/pano_171.jpg",
+          "neighbors": [
+            "pano_138",
+            "pano_181",
+            "pano_170",
+            "pano_180"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_172",
+          "position": [
+            8.911112,
+            -21.557936,
+            2.031165
+          ],
+          "rotation": [
+            0.016756,
+            0.055435,
+            -0.667827,
+            0.742061
+          ],
+          "image_path": "panos/pano_172.jpg",
+          "neighbors": [
+            "pano_137",
+            "pano_173",
+            "pano_136",
+            "pano_179"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_173",
+          "position": [
+            9.18224,
+            -22.895724,
+            2.036285
+          ],
+          "rotation": [
+            0.011677,
+            0.051266,
+            -0.633961,
+            0.771575
+          ],
+          "image_path": "panos/pano_173.jpg",
+          "neighbors": [
+            "pano_136",
+            "pano_178",
+            "pano_172",
+            "pano_174"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_174",
+          "position": [
+            9.44793,
+            -24.357596,
+            2.036712
+          ],
+          "rotation": [
+            0.016723,
+            0.053124,
+            -0.642157,
+            0.764547
+          ],
+          "image_path": "panos/pano_174.jpg",
+          "neighbors": [
+            "pano_135",
+            "pano_177",
+            "pano_134",
+            "pano_178"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_175",
+          "position": [
+            9.643973,
+            -25.936368,
+            2.038757
+          ],
+          "rotation": [
+            -0.005587,
+            0.051753,
+            -0.63428,
+            0.771349
+          ],
+          "image_path": "panos/pano_175.jpg",
+          "neighbors": [
+            "pano_264",
+            "pano_133",
+            "pano_134",
+            "pano_176"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_176",
+          "position": [
+            10.800099,
+            -26.55577,
+            2.03895
+          ],
+          "rotation": [
+            -0.051054,
+            0.019893,
+            0.753562,
+            0.655089
+          ],
+          "image_path": "panos/pano_176.jpg",
+          "neighbors": [
+            "pano_214",
+            "pano_175",
+            "pano_264",
+            "pano_177"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_177",
+          "position": [
+            10.683374,
+            -24.755962,
+            2.040194
+          ],
+          "rotation": [
+            -0.054394,
+            0.015905,
+            0.759519,
+            0.648012
+          ],
+          "image_path": "panos/pano_177.jpg",
+          "neighbors": [
+            "pano_213",
+            "pano_174",
+            "pano_178",
+            "pano_214"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_178",
+          "position": [
+            10.415756,
+            -23.279498,
+            2.035482
+          ],
+          "rotation": [
+            -0.05367,
+            0.016559,
+            0.764865,
+            0.641738
+          ],
+          "image_path": "panos/pano_178.jpg",
+          "neighbors": [
+            "pano_212",
+            "pano_173",
+            "pano_179",
+            "pano_174"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_179",
+          "position": [
+            10.343127,
+            -21.948056,
+            2.033554
+          ],
+          "rotation": [
+            -0.051372,
+            0.022855,
+            0.765013,
+            0.641556
+          ],
+          "image_path": "panos/pano_179.jpg",
+          "neighbors": [
+            "pano_211",
+            "pano_178",
+            "pano_180",
+            "pano_172"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_180",
+          "position": [
+            10.262475,
+            -20.579341,
+            2.02878
+          ],
+          "rotation": [
+            -0.049718,
+            0.01728,
+            0.74744,
+            0.662241
+          ],
+          "image_path": "panos/pano_180.jpg",
+          "neighbors": [
+            "pano_210",
+            "pano_211",
+            "pano_181",
+            "pano_179"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_181",
+          "position": [
+            9.953531,
+            -19.260577,
+            2.033966
+          ],
+          "rotation": [
+            -0.037063,
+            0.01127,
+            0.746704,
+            0.664027
+          ],
+          "image_path": "panos/pano_181.jpg",
+          "neighbors": [
+            "pano_209",
+            "pano_171",
+            "pano_180",
+            "pano_170"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_182",
+          "position": [
+            9.871543,
+            -17.686807,
+            2.053396
+          ],
+          "rotation": [
+            -0.058402,
+            0.010655,
+            0.731605,
+            0.679139
+          ],
+          "image_path": "panos/pano_182.jpg",
+          "neighbors": [
+            "pano_208",
+            "pano_169",
+            "pano_183",
+            "pano_170"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_183",
+          "position": [
+            9.768254,
+            -16.263355,
+            2.051397
+          ],
+          "rotation": [
+            -0.043085,
+            0.014304,
+            0.741115,
+            0.669841
+          ],
+          "image_path": "panos/pano_183.jpg",
+          "neighbors": [
+            "pano_207",
+            "pano_169",
+            "pano_182",
+            "pano_184"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_184",
+          "position": [
+            9.702438,
+            -14.763459,
+            2.049852
+          ],
+          "rotation": [
+            -0.047222,
+            0.018349,
+            0.735861,
+            0.675235
+          ],
+          "image_path": "panos/pano_184.jpg",
+          "neighbors": [
+            "pano_206",
+            "pano_168",
+            "pano_167",
+            "pano_183"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_185",
+          "position": [
+            9.612735,
+            -13.153672,
+            2.052962
+          ],
+          "rotation": [
+            -0.040206,
+            0.007992,
+            0.759638,
+            0.649052
+          ],
+          "image_path": "panos/pano_185.jpg",
+          "neighbors": [
+            "pano_205",
+            "pano_167",
+            "pano_166",
+            "pano_184"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_186",
+          "position": [
+            9.663321,
+            -11.333063,
+            2.049674
+          ],
+          "rotation": [
+            -0.038824,
+            0.018056,
+            0.758152,
+            0.65067
+          ],
+          "image_path": "panos/pano_186.jpg",
+          "neighbors": [
+            "pano_204",
+            "pano_165",
+            "pano_187",
+            "pano_166"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_187",
+          "position": [
+            9.447794,
+            -9.759178,
+            2.053627
+          ],
+          "rotation": [
+            -0.032211,
+            0.004616,
+            0.74703,
+            0.663993
+          ],
+          "image_path": "panos/pano_187.jpg",
+          "neighbors": [
+            "pano_203",
+            "pano_164",
+            "pano_188",
+            "pano_186"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_188",
+          "position": [
+            9.323914,
+            -8.311251,
+            2.047352
+          ],
+          "rotation": [
+            -0.050894,
+            0.023007,
+            0.748611,
+            0.660653
+          ],
+          "image_path": "panos/pano_188.jpg",
+          "neighbors": [
+            "pano_202",
+            "pano_163",
+            "pano_189",
+            "pano_187"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_189",
+          "position": [
+            9.216962,
+            -7.068911,
+            2.027099
+          ],
+          "rotation": [
+            -0.048557,
+            0.012199,
+            0.767979,
+            0.638516
+          ],
+          "image_path": "panos/pano_189.jpg",
+          "neighbors": [
+            "pano_162",
+            "pano_188",
+            "pano_202",
+            "pano_201"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_190",
+          "position": [
+            8.98703,
+            -5.637575,
+            2.021688
+          ],
+          "rotation": [
+            -0.028494,
+            0.004319,
+            0.757171,
+            0.65258
+          ],
+          "image_path": "panos/pano_190.jpg",
+          "neighbors": [
+            "pano_201",
+            "pano_161",
+            "pano_189",
+            "pano_191"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_191",
+          "position": [
+            8.70366,
+            -4.166702,
+            2.031861
+          ],
+          "rotation": [
+            -0.045862,
+            0.018752,
+            0.753583,
+            0.655483
+          ],
+          "image_path": "panos/pano_191.jpg",
+          "neighbors": [
+            "pano_160",
+            "pano_232",
+            "pano_192",
+            "pano_190"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_192",
+          "position": [
+            8.494479,
+            -2.728799,
+            2.03152
+          ],
+          "rotation": [
+            -0.046007,
+            0.021174,
+            0.734367,
+            0.67686
+          ],
+          "image_path": "panos/pano_192.jpg",
+          "neighbors": [
+            "pano_159",
+            "pano_158",
+            "pano_191",
+            "pano_193"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_193",
+          "position": [
+            8.397651,
+            -1.164985,
+            2.031463
+          ],
+          "rotation": [
+            -0.054385,
+            0.010018,
+            0.74497,
+            0.664802
+          ],
+          "image_path": "panos/pano_193.jpg",
+          "neighbors": [
+            "pano_158",
+            "pano_200",
+            "pano_194",
+            "pano_192"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_194",
+          "position": [
+            8.248698,
+            0.326358,
+            2.022234
+          ],
+          "rotation": [
+            -0.037347,
+            0.002142,
+            0.746196,
+            0.664675
+          ],
+          "image_path": "panos/pano_194.jpg",
+          "neighbors": [
+            "pano_157",
+            "pano_199",
+            "pano_195",
+            "pano_193"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_195",
+          "position": [
+            8.584872,
+            1.782533,
+            2.024571
+          ],
+          "rotation": [
+            -0.0641,
+            0.002626,
+            0.73806,
+            0.671678
+          ],
+          "image_path": "panos/pano_195.jpg",
+          "neighbors": [
+            "pano_198",
+            "pano_236",
+            "pano_156",
+            "pano_194"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_196",
+          "position": [
+            8.585885,
+            3.434722,
+            2.031733
+          ],
+          "rotation": [
+            -0.072467,
+            0.006867,
+            0.768966,
+            0.635132
+          ],
+          "image_path": "panos/pano_196.jpg",
+          "neighbors": [
+            "pano_064",
+            "pano_197",
+            "pano_155",
+            "pano_237"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_197",
+          "position": [
+            7.683102,
+            4.141368,
+            2.036115
+          ],
+          "rotation": [
+            0.040488,
+            0.048754,
+            -0.85473,
+            0.515189
+          ],
+          "image_path": "panos/pano_197.jpg",
+          "neighbors": [
+            "pano_063",
+            "pano_155",
+            "pano_064",
+            "pano_196"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_198",
+          "position": [
+            8.99062,
+            2.044703,
+            2.035653
+          ],
+          "rotation": [
+            -0.001776,
+            0.04881,
+            -0.626636,
+            0.77778
+          ],
+          "image_path": "panos/pano_198.jpg",
+          "neighbors": [
+            "pano_236",
+            "pano_195",
+            "pano_196",
+            "pano_237"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_199",
+          "position": [
+            9.278566,
+            0.272857,
+            2.031312
+          ],
+          "rotation": [
+            0.001547,
+            0.041104,
+            -0.645744,
+            0.762446
+          ],
+          "image_path": "panos/pano_199.jpg",
+          "neighbors": [
+            "pano_235",
+            "pano_200",
+            "pano_194",
+            "pano_242"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_200",
+          "position": [
+            9.3001,
+            -0.749808,
+            2.029933
+          ],
+          "rotation": [
+            0.026811,
+            0.04502,
+            -0.665859,
+            0.744235
+          ],
+          "image_path": "panos/pano_200.jpg",
+          "neighbors": [
+            "pano_193",
+            "pano_199",
+            "pano_234",
+            "pano_235"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_201",
+          "position": [
+            9.936169,
+            -5.928893,
+            2.021373
+          ],
+          "rotation": [
+            -0.011881,
+            0.057405,
+            -0.609133,
+            0.790899
+          ],
+          "image_path": "panos/pano_201.jpg",
+          "neighbors": [
+            "pano_228",
+            "pano_190",
+            "pano_189",
+            "pano_227"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_202",
+          "position": [
+            10.240717,
+            -7.905328,
+            2.031518
+          ],
+          "rotation": [
+            0.013066,
+            0.069919,
+            -0.670082,
+            0.738872
+          ],
+          "image_path": "panos/pano_202.jpg",
+          "neighbors": [
+            "pano_188",
+            "pano_189",
+            "pano_226",
+            "pano_227"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_203",
+          "position": [
+            10.600366,
+            -9.598758,
+            2.049942
+          ],
+          "rotation": [
+            0.009022,
+            0.04467,
+            -0.667326,
+            0.74337
+          ],
+          "image_path": "panos/pano_203.jpg",
+          "neighbors": [
+            "pano_225",
+            "pano_187",
+            "pano_226",
+            "pano_204"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_204",
+          "position": [
+            10.608668,
+            -11.243322,
+            2.049496
+          ],
+          "rotation": [
+            0.010584,
+            0.053106,
+            -0.655271,
+            0.75345
+          ],
+          "image_path": "panos/pano_204.jpg",
+          "neighbors": [
+            "pano_186",
+            "pano_224",
+            "pano_205",
+            "pano_203"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_205",
+          "position": [
+            10.737239,
+            -12.695088,
+            2.042367
+          ],
+          "rotation": [
+            0.006039,
+            0.041532,
+            -0.66371,
+            0.746811
+          ],
+          "image_path": "panos/pano_205.jpg",
+          "neighbors": [
+            "pano_223",
+            "pano_185",
+            "pano_204",
+            "pano_206"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_206",
+          "position": [
+            10.801913,
+            -14.316544,
+            2.054247
+          ],
+          "rotation": [
+            0.009591,
+            0.048215,
+            -0.64664,
+            0.76121
+          ],
+          "image_path": "panos/pano_206.jpg",
+          "neighbors": [
+            "pano_222",
+            "pano_184",
+            "pano_207",
+            "pano_205"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_207",
+          "position": [
+            10.880447,
+            -15.771156,
+            2.041453
+          ],
+          "rotation": [
+            0.024713,
+            0.062593,
+            -0.596266,
+            0.799961
+          ],
+          "image_path": "panos/pano_207.jpg",
+          "neighbors": [
+            "pano_221",
+            "pano_183",
+            "pano_208",
+            "pano_206"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_208",
+          "position": [
+            11.02554,
+            -17.171444,
+            2.039889
+          ],
+          "rotation": [
+            0.015364,
+            0.056374,
+            -0.643944,
+            0.762838
+          ],
+          "image_path": "panos/pano_208.jpg",
+          "neighbors": [
+            "pano_220",
+            "pano_182",
+            "pano_207",
+            "pano_209"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_209",
+          "position": [
+            11.05612,
+            -18.647614,
+            2.03449
+          ],
+          "rotation": [
+            0.012719,
+            0.047407,
+            -0.647868,
+            0.760169
+          ],
+          "image_path": "panos/pano_209.jpg",
+          "neighbors": [
+            "pano_219",
+            "pano_181",
+            "pano_210",
+            "pano_208"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_210",
+          "position": [
+            11.130606,
+            -20.016962,
+            2.033896
+          ],
+          "rotation": [
+            -0.002268,
+            0.038113,
+            -0.635804,
+            0.770906
+          ],
+          "image_path": "panos/pano_210.jpg",
+          "neighbors": [
+            "pano_180",
+            "pano_218",
+            "pano_209",
+            "pano_211"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_211",
+          "position": [
+            11.220832,
+            -21.387339,
+            2.03257
+          ],
+          "rotation": [
+            -0.014424,
+            0.034512,
+            -0.654708,
+            0.754956
+          ],
+          "image_path": "panos/pano_211.jpg",
+          "neighbors": [
+            "pano_179",
+            "pano_180",
+            "pano_210",
+            "pano_218"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_212",
+          "position": [
+            11.553426,
+            -23.117953,
+            2.036794
+          ],
+          "rotation": [
+            0.020564,
+            0.06809,
+            -0.649408,
+            0.757106
+          ],
+          "image_path": "panos/pano_212.jpg",
+          "neighbors": [
+            "pano_178",
+            "pano_217",
+            "pano_213",
+            "pano_179"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_213",
+          "position": [
+            11.717904,
+            -24.483322,
+            2.031712
+          ],
+          "rotation": [
+            0.008436,
+            0.059578,
+            -0.646258,
+            0.760743
+          ],
+          "image_path": "panos/pano_213.jpg",
+          "neighbors": [
+            "pano_177",
+            "pano_216",
+            "pano_212",
+            "pano_214"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_214",
+          "position": [
+            11.671254,
+            -25.961251,
+            2.032535
+          ],
+          "rotation": [
+            0.008216,
+            0.052496,
+            -0.609015,
+            0.791377
+          ],
+          "image_path": "panos/pano_214.jpg",
+          "neighbors": [
+            "pano_176",
+            "pano_215",
+            "pano_213",
+            "pano_177"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_215",
+          "position": [
+            12.761778,
+            -26.253222,
+            2.037357
+          ],
+          "rotation": [
+            -0.043706,
+            0.052866,
+            0.217772,
+            0.973586
+          ],
+          "image_path": "panos/pano_215.jpg",
+          "neighbors": [
+            "pano_263",
+            "pano_214",
+            "pano_216",
+            "pano_262"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_216",
+          "position": [
+            12.811857,
+            -24.481197,
+            2.040662
+          ],
+          "rotation": [
+            -0.047864,
+            0.005791,
+            0.741769,
+            0.66892
+          ],
+          "image_path": "panos/pano_216.jpg",
+          "neighbors": [
+            "pano_213",
+            "pano_262",
+            "pano_261",
+            "pano_215"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_217",
+          "position": [
+            12.681778,
+            -22.417153,
+            2.038511
+          ],
+          "rotation": [
+            -0.066666,
+            0.003783,
+            0.759604,
+            0.646949
+          ],
+          "image_path": "panos/pano_217.jpg",
+          "neighbors": [
+            "pano_260",
+            "pano_212",
+            "pano_261",
+            "pano_211"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_218",
+          "position": [
+            12.196805,
+            -20.105472,
+            2.037385
+          ],
+          "rotation": [
+            -0.04381,
+            0.001234,
+            0.751566,
+            0.658201
+          ],
+          "image_path": "panos/pano_218.jpg",
+          "neighbors": [
+            "pano_210",
+            "pano_219",
+            "pano_258",
+            "pano_211"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_219",
+          "position": [
+            12.295989,
+            -18.620161,
+            2.037426
+          ],
+          "rotation": [
+            -0.057896,
+            0.007914,
+            0.768701,
+            0.636933
+          ],
+          "image_path": "panos/pano_219.jpg",
+          "neighbors": [
+            "pano_257",
+            "pano_209",
+            "pano_218",
+            "pano_220"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_220",
+          "position": [
+            12.085879,
+            -17.115795,
+            2.027736
+          ],
+          "rotation": [
+            -0.04925,
+            0.002152,
+            0.751226,
+            0.658202
+          ],
+          "image_path": "panos/pano_220.jpg",
+          "neighbors": [
+            "pano_208",
+            "pano_256",
+            "pano_221",
+            "pano_219"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_221",
+          "position": [
+            11.96414,
+            -15.760683,
+            2.047042
+          ],
+          "rotation": [
+            -0.05119,
+            0.01626,
+            0.722574,
+            0.689204
+          ],
+          "image_path": "panos/pano_221.jpg",
+          "neighbors": [
+            "pano_207",
+            "pano_255",
+            "pano_222",
+            "pano_220"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_222",
+          "position": [
+            11.859125,
+            -14.511007,
+            2.040614
+          ],
+          "rotation": [
+            -0.047914,
+            0.004368,
+            0.73998,
+            0.670906
+          ],
+          "image_path": "panos/pano_222.jpg",
+          "neighbors": [
+            "pano_206",
+            "pano_254",
+            "pano_221",
+            "pano_255"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_223",
+          "position": [
+            11.732915,
+            -12.834748,
+            2.052046
+          ],
+          "rotation": [
+            -0.041539,
+            -0.006997,
+            0.726891,
+            0.68546
+          ],
+          "image_path": "panos/pano_223.jpg",
+          "neighbors": [
+            "pano_205",
+            "pano_253",
+            "pano_254",
+            "pano_222"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_224",
+          "position": [
+            11.769575,
+            -10.902054,
+            2.041571
+          ],
+          "rotation": [
+            -0.048053,
+            0.010001,
+            0.768716,
+            0.637704
+          ],
+          "image_path": "panos/pano_224.jpg",
+          "neighbors": [
+            "pano_252",
+            "pano_204",
+            "pano_225",
+            "pano_251"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_225",
+          "position": [
+            11.683904,
+            -9.641808,
+            2.042848
+          ],
+          "rotation": [
+            -0.047678,
+            0.010446,
+            0.772287,
+            0.633396
+          ],
+          "image_path": "panos/pano_225.jpg",
+          "neighbors": [
+            "pano_251",
+            "pano_203",
+            "pano_224",
+            "pano_226"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_226",
+          "position": [
+            11.535397,
+            -8.292069,
+            2.0293
+          ],
+          "rotation": [
+            -0.042086,
+            -0.010374,
+            0.76807,
+            0.638897
+          ],
+          "image_path": "panos/pano_226.jpg",
+          "neighbors": [
+            "pano_250",
+            "pano_202",
+            "pano_225",
+            "pano_227"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_227",
+          "position": [
+            11.222255,
+            -6.953395,
+            2.029238
+          ],
+          "rotation": [
+            -0.048901,
+            0.003981,
+            0.725939,
+            0.686006
+          ],
+          "image_path": "panos/pano_227.jpg",
+          "neighbors": [
+            "pano_228",
+            "pano_249",
+            "pano_248",
+            "pano_202"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_228",
+          "position": [
+            10.667825,
+            -5.995832,
+            2.0277
+          ],
+          "rotation": [
+            -0.052665,
+            0.00218,
+            0.758304,
+            0.649766
+          ],
+          "image_path": "panos/pano_228.jpg",
+          "neighbors": [
+            "pano_201",
+            "pano_227",
+            "pano_229",
+            "pano_248"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_229",
+          "position": [
+            11.417814,
+            -4.896758,
+            2.032429
+          ],
+          "rotation": [
+            -0.050534,
+            0.007565,
+            0.781712,
+            0.621543
+          ],
+          "image_path": "panos/pano_229.jpg",
+          "neighbors": [
+            "pano_247",
+            "pano_230",
+            "pano_246",
+            "pano_228"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_230",
+          "position": [
+            10.831303,
+            -4.461152,
+            2.023573
+          ],
+          "rotation": [
+            -0.045193,
+            0.006338,
+            0.783311,
+            0.619952
+          ],
+          "image_path": "panos/pano_230.jpg",
+          "neighbors": [
+            "pano_229",
+            "pano_247",
+            "pano_231",
+            "pano_232"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_231",
+          "position": [
+            10.857954,
+            -3.610086,
+            2.030098
+          ],
+          "rotation": [
+            -0.054074,
+            0.009072,
+            0.793637,
+            0.605916
+          ],
+          "image_path": "panos/pano_231.jpg",
+          "neighbors": [
+            "pano_230",
+            "pano_247",
+            "pano_232",
+            "pano_233"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_232",
+          "position": [
+            9.863053,
+            -3.612668,
+            2.02544
+          ],
+          "rotation": [
+            -0.056418,
+            0.00381,
+            0.754706,
+            0.653621
+          ],
+          "image_path": "panos/pano_232.jpg",
+          "neighbors": [
+            "pano_233",
+            "pano_231",
+            "pano_191",
+            "pano_230"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_233",
+          "position": [
+            10.267005,
+            -2.75878,
+            2.022815
+          ],
+          "rotation": [
+            -0.042171,
+            0.023734,
+            0.732038,
+            0.679543
+          ],
+          "image_path": "panos/pano_233.jpg",
+          "neighbors": [
+            "pano_232",
+            "pano_231",
+            "pano_244",
+            "pano_234"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_234",
+          "position": [
+            10.313393,
+            -1.431399,
+            2.034283
+          ],
+          "rotation": [
+            -0.034171,
+            0.006698,
+            0.724883,
+            0.687992
+          ],
+          "image_path": "panos/pano_234.jpg",
+          "neighbors": [
+            "pano_200",
+            "pano_233",
+            "pano_243",
+            "pano_244"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_235",
+          "position": [
+            10.068771,
+            0.403176,
+            2.029275
+          ],
+          "rotation": [
+            -0.042986,
+            0.003382,
+            0.727045,
+            0.685235
+          ],
+          "image_path": "panos/pano_235.jpg",
+          "neighbors": [
+            "pano_242",
+            "pano_199",
+            "pano_200",
+            "pano_241"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_236",
+          "position": [
+            9.407962,
+            1.918758,
+            2.026906
+          ],
+          "rotation": [
+            -0.060698,
+            0.034438,
+            0.726873,
+            0.683217
+          ],
+          "image_path": "panos/pano_236.jpg",
+          "neighbors": [
+            "pano_198",
+            "pano_195",
+            "pano_237",
+            "pano_240"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_237",
+          "position": [
+            9.82934,
+            3.311682,
+            2.028373
+          ],
+          "rotation": [
+            -0.045293,
+            -0.004244,
+            0.689695,
+            0.72267
+          ],
+          "image_path": "panos/pano_237.jpg",
+          "neighbors": [
+            "pano_065",
+            "pano_238",
+            "pano_196",
+            "pano_240"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_238",
+          "position": [
+            10.200333,
+            4.283481,
+            2.039773
+          ],
+          "rotation": [
+            -0.060439,
+            0.021603,
+            0.708545,
+            0.70274
+          ],
+          "image_path": "panos/pano_238.jpg",
+          "neighbors": [
+            "pano_065",
+            "pano_237",
+            "pano_066",
+            "pano_077"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_239",
+          "position": [
+            11.301106,
+            3.183869,
+            2.033854
+          ],
+          "rotation": [
+            0.015518,
+            0.054275,
+            -0.672085,
+            0.73832
+          ],
+          "image_path": "panos/pano_239.jpg",
+          "neighbors": [
+            "pano_240",
+            "pano_066",
+            "pano_237",
+            "pano_238"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_240",
+          "position": [
+            10.817537,
+            2.401242,
+            2.033832
+          ],
+          "rotation": [
+            0.019693,
+            0.051033,
+            -0.654898,
+            0.753735
+          ],
+          "image_path": "panos/pano_240.jpg",
+          "neighbors": [
+            "pano_239",
+            "pano_237",
+            "pano_241",
+            "pano_236"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_241",
+          "position": [
+            11.468425,
+            1.078645,
+            2.024807
+          ],
+          "rotation": [
+            0.006371,
+            0.036167,
+            -0.660298,
+            0.750105
+          ],
+          "image_path": "panos/pano_241.jpg",
+          "neighbors": [
+            "pano_242",
+            "pano_240",
+            "pano_235",
+            "pano_239"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_242",
+          "position": [
+            10.832705,
+            0.337348,
+            2.030758
+          ],
+          "rotation": [
+            0.000104,
+            0.030692,
+            -0.674215,
+            0.737897
+          ],
+          "image_path": "panos/pano_242.jpg",
+          "neighbors": [
+            "pano_235",
+            "pano_241",
+            "pano_199",
+            "pano_243"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_243",
+          "position": [
+            11.717419,
+            -1.063796,
+            1.99807
+          ],
+          "rotation": [
+            0.005356,
+            0.051945,
+            -0.765179,
+            0.641696
+          ],
+          "image_path": "panos/pano_243.jpg",
+          "neighbors": [
+            "pano_245",
+            "pano_244",
+            "pano_234",
+            "pano_242"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_244",
+          "position": [
+            11.5611,
+            -2.493395,
+            2.0324
+          ],
+          "rotation": [
+            -0.002316,
+            0.048002,
+            -0.642427,
+            0.764839
+          ],
+          "image_path": "panos/pano_244.jpg",
+          "neighbors": [
+            "pano_245",
+            "pano_231",
+            "pano_233",
+            "pano_243"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_245",
+          "position": [
+            12.244582,
+            -2.37902,
+            2.023552
+          ],
+          "rotation": [
+            0.009768,
+            0.031723,
+            -0.612499,
+            0.789774
+          ],
+          "image_path": "panos/pano_245.jpg",
+          "neighbors": [
+            "pano_244",
+            "pano_243",
+            "pano_246",
+            "pano_231"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_246",
+          "position": [
+            12.368512,
+            -4.092266,
+            2.020582
+          ],
+          "rotation": [
+            0.02168,
+            0.048724,
+            -0.659247,
+            0.750033
+          ],
+          "image_path": "panos/pano_246.jpg",
+          "neighbors": [
+            "pano_247",
+            "pano_229",
+            "pano_230",
+            "pano_231"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_247",
+          "position": [
+            11.602802,
+            -4.25523,
+            2.018797
+          ],
+          "rotation": [
+            0.016256,
+            0.055624,
+            -0.645066,
+            0.761926
+          ],
+          "image_path": "panos/pano_247.jpg",
+          "neighbors": [
+            "pano_229",
+            "pano_246",
+            "pano_230",
+            "pano_231"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_248",
+          "position": [
+            12.166802,
+            -6.146403,
+            2.027567
+          ],
+          "rotation": [
+            -0.007893,
+            0.062746,
+            -0.618367,
+            0.783341
+          ],
+          "image_path": "panos/pano_248.jpg",
+          "neighbors": [
+            "pano_249",
+            "pano_227",
+            "pano_229",
+            "pano_228"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_249",
+          "position": [
+            12.366993,
+            -7.021445,
+            2.021481
+          ],
+          "rotation": [
+            0.008124,
+            0.059875,
+            -0.635441,
+            0.769782
+          ],
+          "image_path": "panos/pano_249.jpg",
+          "neighbors": [
+            "pano_248",
+            "pano_227",
+            "pano_250",
+            "pano_226"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_250",
+          "position": [
+            12.737465,
+            -8.348218,
+            2.019958
+          ],
+          "rotation": [
+            -0.004465,
+            0.045455,
+            -0.664792,
+            0.745631
+          ],
+          "image_path": "panos/pano_250.jpg",
+          "neighbors": [
+            "pano_226",
+            "pano_251",
+            "pano_249",
+            "pano_225"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_251",
+          "position": [
+            12.722471,
+            -9.618946,
+            2.047893
+          ],
+          "rotation": [
+            0.004872,
+            0.050142,
+            -0.63968,
+            0.766989
+          ],
+          "image_path": "panos/pano_251.jpg",
+          "neighbors": [
+            "pano_225",
+            "pano_250",
+            "pano_252",
+            "pano_224"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_252",
+          "position": [
+            12.855932,
+            -10.983182,
+            2.03331
+          ],
+          "rotation": [
+            0.000653,
+            0.045457,
+            -0.65531,
+            0.753991
+          ],
+          "image_path": "panos/pano_252.jpg",
+          "neighbors": [
+            "pano_224",
+            "pano_251",
+            "pano_253",
+            "pano_225"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_253",
+          "position": [
+            12.952547,
+            -12.377117,
+            2.039817
+          ],
+          "rotation": [
+            0.007848,
+            0.049995,
+            -0.651855,
+            0.756653
+          ],
+          "image_path": "panos/pano_253.jpg",
+          "neighbors": [
+            "pano_223",
+            "pano_252",
+            "pano_254",
+            "pano_224"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_254",
+          "position": [
+            12.852673,
+            -13.923389,
+            2.050893
+          ],
+          "rotation": [
+            0.00373,
+            0.053583,
+            -0.660736,
+            0.748694
+          ],
+          "image_path": "panos/pano_254.jpg",
+          "neighbors": [
+            "pano_222",
+            "pano_255",
+            "pano_253",
+            "pano_223"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_255",
+          "position": [
+            13.100948,
+            -15.325414,
+            2.051563
+          ],
+          "rotation": [
+            -0.004531,
+            0.046917,
+            -0.622149,
+            0.781479
+          ],
+          "image_path": "panos/pano_255.jpg",
+          "neighbors": [
+            "pano_221",
+            "pano_254",
+            "pano_222",
+            "pano_256"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_256",
+          "position": [
+            13.308065,
+            -16.865597,
+            2.040334
+          ],
+          "rotation": [
+            0.016034,
+            0.049495,
+            -0.659592,
+            0.749821
+          ],
+          "image_path": "panos/pano_256.jpg",
+          "neighbors": [
+            "pano_220",
+            "pano_257",
+            "pano_255",
+            "pano_221"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_257",
+          "position": [
+            13.291141,
+            -18.34069,
+            2.036253
+          ],
+          "rotation": [
+            0.016009,
+            0.070758,
+            -0.64667,
+            0.759312
+          ],
+          "image_path": "panos/pano_257.jpg",
+          "neighbors": [
+            "pano_219",
+            "pano_256",
+            "pano_258",
+            "pano_220"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_258",
+          "position": [
+            13.770189,
+            -19.808102,
+            2.029441
+          ],
+          "rotation": [
+            0.002278,
+            0.058094,
+            -0.657773,
+            0.750969
+          ],
+          "image_path": "panos/pano_258.jpg",
+          "neighbors": [
+            "pano_259",
+            "pano_257",
+            "pano_218",
+            "pano_219"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_259",
+          "position": [
+            13.731909,
+            -20.845014,
+            2.033623
+          ],
+          "rotation": [
+            0.014363,
+            0.010652,
+            -0.675758,
+            0.736906
+          ],
+          "image_path": "panos/pano_259.jpg",
+          "neighbors": [
+            "pano_258",
+            "pano_260",
+            "pano_218",
+            "pano_217"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_260",
+          "position": [
+            13.466961,
+            -22.228602,
+            2.02731
+          ],
+          "rotation": [
+            0.014076,
+            0.037003,
+            -0.60542,
+            0.794921
+          ],
+          "image_path": "panos/pano_260.jpg",
+          "neighbors": [
+            "pano_217",
+            "pano_261",
+            "pano_259",
+            "pano_212"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_261",
+          "position": [
+            13.774285,
+            -23.458161,
+            2.034264
+          ],
+          "rotation": [
+            0.018418,
+            0.031296,
+            -0.619961,
+            0.783792
+          ],
+          "image_path": "panos/pano_261.jpg",
+          "neighbors": [
+            "pano_260",
+            "pano_262",
+            "pano_216",
+            "pano_217"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_262",
+          "position": [
+            13.855036,
+            -24.828545,
+            2.034465
+          ],
+          "rotation": [
+            0.009778,
+            0.043752,
+            -0.630957,
+            0.774521
+          ],
+          "image_path": "panos/pano_262.jpg",
+          "neighbors": [
+            "pano_216",
+            "pano_263",
+            "pano_261",
+            "pano_215"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_263",
+          "position": [
+            13.876817,
+            -26.126481,
+            2.041922
+          ],
+          "rotation": [
+            -0.04269,
+            -0.02725,
+            0.997647,
+            -0.046217
+          ],
+          "image_path": "panos/pano_263.jpg",
+          "neighbors": [
+            "pano_215",
+            "pano_262",
+            "pano_216",
+            "pano_214"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_264",
+          "position": [
+            9.033923,
+            -26.514663,
+            2.033555
+          ],
+          "rotation": [
+            -0.033919,
+            -0.009974,
+            0.998319,
+            -0.045928
+          ],
+          "image_path": "panos/pano_264.jpg",
+          "neighbors": [
+            "pano_133",
+            "pano_175",
+            "pano_134",
+            "pano_176"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_265",
+          "position": [
+            6.408276,
+            -26.762043,
+            2.033139
+          ],
+          "rotation": [
+            -0.047516,
+            -0.012472,
+            0.996782,
+            -0.063341
+          ],
+          "image_path": "panos/pano_265.jpg",
+          "neighbors": [
+            "pano_131",
+            "pano_277",
+            "pano_132",
+            "pano_266"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_266",
+          "position": [
+            4.380381,
+            -26.847598,
+            2.031546
+          ],
+          "rotation": [
+            -0.043066,
+            -0.014872,
+            0.996457,
+            -0.070694
+          ],
+          "image_path": "panos/pano_266.jpg",
+          "neighbors": [
+            "pano_276",
+            "pano_267",
+            "pano_275",
+            "pano_265"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_267",
+          "position": [
+            2.998232,
+            -27.597399,
+            2.032789
+          ],
+          "rotation": [
+            -0.054124,
+            -0.033319,
+            0.995998,
+            -0.062834
+          ],
+          "image_path": "panos/pano_267.jpg",
+          "neighbors": [
+            "pano_327",
+            "pano_268",
+            "pano_274",
+            "pano_329"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_268",
+          "position": [
+            1.770604,
+            -27.910135,
+            2.025074
+          ],
+          "rotation": [
+            -0.025422,
+            -0.021434,
+            0.998277,
+            0.048342
+          ],
+          "image_path": "panos/pano_268.jpg",
+          "neighbors": [
+            "pano_327",
+            "pano_274",
+            "pano_328",
+            "pano_267"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_269",
+          "position": [
+            0.670025,
+            -26.988401,
+            2.031437
+          ],
+          "rotation": [
+            -0.07671,
+            -0.019644,
+            0.995007,
+            -0.060749
+          ],
+          "image_path": "panos/pano_269.jpg",
+          "neighbors": [
+            "pano_274",
+            "pano_273",
+            "pano_268",
+            "pano_272"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_270",
+          "position": [
+            -1.341069,
+            -27.320645,
+            2.034369
+          ],
+          "rotation": [
+            -0.030017,
+            -0.028534,
+            0.998484,
+            -0.036256
+          ],
+          "image_path": "panos/pano_270.jpg",
+          "neighbors": [
+            "pano_271",
+            "pano_269",
+            "pano_347",
+            "pano_272"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_271",
+          "position": [
+            -1.567129,
+            -25.882723,
+            2.039455
+          ],
+          "rotation": [
+            -0.040879,
+            0.021234,
+            0.7022,
+            0.710488
+          ],
+          "image_path": "panos/pano_271.jpg",
+          "neighbors": [
+            "pano_284",
+            "pano_270",
+            "pano_272",
+            "pano_283"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_272",
+          "position": [
+            -0.054793,
+            -25.65111,
+            2.042105
+          ],
+          "rotation": [
+            -0.010865,
+            0.029195,
+            0.053971,
+            0.998057
+          ],
+          "image_path": "panos/pano_272.jpg",
+          "neighbors": [
+            "pano_283",
+            "pano_273",
+            "pano_282",
+            "pano_269"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_273",
+          "position": [
+            1.191617,
+            -25.687847,
+            2.036653
+          ],
+          "rotation": [
+            -0.013705,
+            0.048775,
+            0.08125,
+            0.995405
+          ],
+          "image_path": "panos/pano_273.jpg",
+          "neighbors": [
+            "pano_282",
+            "pano_272",
+            "pano_274",
+            "pano_269"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_274",
+          "position": [
+            1.981787,
+            -26.805014,
+            2.030351
+          ],
+          "rotation": [
+            0.005748,
+            0.033925,
+            0.156176,
+            0.98713
+          ],
+          "image_path": "panos/pano_274.jpg",
+          "neighbors": [
+            "pano_327",
+            "pano_268",
+            "pano_267",
+            "pano_269"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_275",
+          "position": [
+            2.79314,
+            -25.684898,
+            2.033255
+          ],
+          "rotation": [
+            -0.004885,
+            0.026064,
+            0.069821,
+            0.997207
+          ],
+          "image_path": "panos/pano_275.jpg",
+          "neighbors": [
+            "pano_281",
+            "pano_274",
+            "pano_276",
+            "pano_280"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_276",
+          "position": [
+            4.337842,
+            -25.405768,
+            2.038585
+          ],
+          "rotation": [
+            -0.017766,
+            0.057987,
+            0.018104,
+            0.997995
+          ],
+          "image_path": "panos/pano_276.jpg",
+          "neighbors": [
+            "pano_280",
+            "pano_279",
+            "pano_266",
+            "pano_277"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_277",
+          "position": [
+            5.888835,
+            -25.4864,
+            2.032806
+          ],
+          "rotation": [
+            -0.019081,
+            0.040368,
+            0.063455,
+            0.996985
+          ],
+          "image_path": "panos/pano_277.jpg",
+          "neighbors": [
+            "pano_132",
+            "pano_265",
+            "pano_278",
+            "pano_276"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_278",
+          "position": [
+            6.201953,
+            -24.043433,
+            2.033119
+          ],
+          "rotation": [
+            -0.057029,
+            -0.02063,
+            0.996074,
+            -0.064495
+          ],
+          "image_path": "panos/pano_278.jpg",
+          "neighbors": [
+            "pano_130",
+            "pano_279",
+            "pano_129",
+            "pano_291"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_279",
+          "position": [
+            4.90097,
+            -24.227286,
+            2.032552
+          ],
+          "rotation": [
+            -0.03438,
+            -0.007452,
+            0.998337,
+            -0.045662
+          ],
+          "image_path": "panos/pano_279.jpg",
+          "neighbors": [
+            "pano_280",
+            "pano_276",
+            "pano_278",
+            "pano_290"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_280",
+          "position": [
+            3.633504,
+            -24.350446,
+            2.031916
+          ],
+          "rotation": [
+            -0.025973,
+            -0.025843,
+            0.999061,
+            -0.023117
+          ],
+          "image_path": "panos/pano_280.jpg",
+          "neighbors": [
+            "pano_276",
+            "pano_279",
+            "pano_281",
+            "pano_290"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_281",
+          "position": [
+            2.294242,
+            -24.488961,
+            2.031182
+          ],
+          "rotation": [
+            -0.040927,
+            -0.022962,
+            0.998422,
+            -0.030853
+          ],
+          "image_path": "panos/pano_281.jpg",
+          "neighbors": [
+            "pano_275",
+            "pano_280",
+            "pano_282",
+            "pano_289"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_282",
+          "position": [
+            0.887328,
+            -24.707938,
+            2.034065
+          ],
+          "rotation": [
+            -0.029285,
+            -0.02809,
+            0.998248,
+            -0.043064
+          ],
+          "image_path": "panos/pano_282.jpg",
+          "neighbors": [
+            "pano_273",
+            "pano_283",
+            "pano_272",
+            "pano_281"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_283",
+          "position": [
+            -0.258296,
+            -24.783694,
+            2.037485
+          ],
+          "rotation": [
+            -0.042183,
+            -0.017466,
+            0.995906,
+            -0.078024
+          ],
+          "image_path": "panos/pano_283.jpg",
+          "neighbors": [
+            "pano_272",
+            "pano_282",
+            "pano_284",
+            "pano_286"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_284",
+          "position": [
+            -1.746112,
+            -24.989551,
+            2.032961
+          ],
+          "rotation": [
+            -0.035981,
+            -0.032359,
+            0.998249,
+            -0.034029
+          ],
+          "image_path": "panos/pano_284.jpg",
+          "neighbors": [
+            "pano_271",
+            "pano_285",
+            "pano_283",
+            "pano_272"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_285",
+          "position": [
+            -2.314975,
+            -23.825361,
+            2.031614
+          ],
+          "rotation": [
+            -0.026689,
+            0.040699,
+            0.239075,
+            0.969781
+          ],
+          "image_path": "panos/pano_285.jpg",
+          "neighbors": [
+            "pano_284",
+            "pano_286",
+            "pano_298",
+            "pano_271"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_286",
+          "position": [
+            -1.037118,
+            -23.307161,
+            2.029669
+          ],
+          "rotation": [
+            -0.025653,
+            0.053374,
+            0.019242,
+            0.99806
+          ],
+          "image_path": "panos/pano_286.jpg",
+          "neighbors": [
+            "pano_287",
+            "pano_297",
+            "pano_285",
+            "pano_298"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_287",
+          "position": [
+            0.165514,
+            -23.164341,
+            2.032632
+          ],
+          "rotation": [
+            -0.024524,
+            0.036757,
+            0.040868,
+            0.998187
+          ],
+          "image_path": "panos/pano_287.jpg",
+          "neighbors": [
+            "pano_286",
+            "pano_296",
+            "pano_288",
+            "pano_297"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_288",
+          "position": [
+            1.425421,
+            -23.304764,
+            2.028861
+          ],
+          "rotation": [
+            -0.00056,
+            0.029771,
+            0.051198,
+            0.998245
+          ],
+          "image_path": "panos/pano_288.jpg",
+          "neighbors": [
+            "pano_287",
+            "pano_289",
+            "pano_281",
+            "pano_295"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_289",
+          "position": [
+            2.740078,
+            -23.110625,
+            2.027825
+          ],
+          "rotation": [
+            -0.003269,
+            0.050161,
+            0.072549,
+            0.996097
+          ],
+          "image_path": "panos/pano_289.jpg",
+          "neighbors": [
+            "pano_288",
+            "pano_290",
+            "pano_281",
+            "pano_294"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_290",
+          "position": [
+            4.095114,
+            -22.928847,
+            2.033217
+          ],
+          "rotation": [
+            -0.007959,
+            0.04925,
+            0.073013,
+            0.996082
+          ],
+          "image_path": "panos/pano_290.jpg",
+          "neighbors": [
+            "pano_289",
+            "pano_280",
+            "pano_294",
+            "pano_279"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_291",
+          "position": [
+            5.612062,
+            -22.697711,
+            2.036715
+          ],
+          "rotation": [
+            -0.022013,
+            0.041872,
+            0.1109,
+            0.992705
+          ],
+          "image_path": "panos/pano_291.jpg",
+          "neighbors": [
+            "pano_129",
+            "pano_292",
+            "pano_278",
+            "pano_290"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_292",
+          "position": [
+            5.540394,
+            -21.234712,
+            2.032148
+          ],
+          "rotation": [
+            -0.062451,
+            -0.024008,
+            0.995616,
+            -0.06536
+          ],
+          "image_path": "panos/pano_292.jpg",
+          "neighbors": [
+            "pano_305",
+            "pano_128",
+            "pano_293",
+            "pano_291"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_293",
+          "position": [
+            4.302703,
+            -21.393559,
+            2.028839
+          ],
+          "rotation": [
+            -0.022898,
+            -0.014861,
+            0.997789,
+            -0.060589
+          ],
+          "image_path": "panos/pano_293.jpg",
+          "neighbors": [
+            "pano_294",
+            "pano_304",
+            "pano_292",
+            "pano_305"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_294",
+          "position": [
+            3.195984,
+            -21.7306,
+            2.026401
+          ],
+          "rotation": [
+            -0.020315,
+            -0.019614,
+            0.997857,
+            -0.059025
+          ],
+          "image_path": "panos/pano_294.jpg",
+          "neighbors": [
+            "pano_293",
+            "pano_295",
+            "pano_289",
+            "pano_304"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_295",
+          "position": [
+            1.88652,
+            -21.878849,
+            2.024755
+          ],
+          "rotation": [
+            -0.034129,
+            -0.024885,
+            0.999055,
+            -0.010217
+          ],
+          "image_path": "panos/pano_295.jpg",
+          "neighbors": [
+            "pano_294",
+            "pano_296",
+            "pano_289",
+            "pano_288"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_296",
+          "position": [
+            0.529347,
+            -21.985632,
+            2.033992
+          ],
+          "rotation": [
+            -0.043984,
+            -0.026338,
+            0.998097,
+            0.034261
+          ],
+          "image_path": "panos/pano_296.jpg",
+          "neighbors": [
+            "pano_287",
+            "pano_297",
+            "pano_295",
+            "pano_288"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_297",
+          "position": [
+            -0.808919,
+            -22.058815,
+            2.026809
+          ],
+          "rotation": [
+            -0.028283,
+            -0.037698,
+            0.998287,
+            -0.034683
+          ],
+          "image_path": "panos/pano_297.jpg",
+          "neighbors": [
+            "pano_286",
+            "pano_296",
+            "pano_298",
+            "pano_300"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_298",
+          "position": [
+            -2.176705,
+            -22.134649,
+            2.030018
+          ],
+          "rotation": [
+            -0.015222,
+            -0.028197,
+            0.997649,
+            0.06058
+          ],
+          "image_path": "panos/pano_298.jpg",
+          "neighbors": [
+            "pano_297",
+            "pano_299",
+            "pano_286",
+            "pano_285"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_299",
+          "position": [
+            -2.548786,
+            -20.794685,
+            2.036099
+          ],
+          "rotation": [
+            -0.03368,
+            0.03,
+            0.139406,
+            0.989208
+          ],
+          "image_path": "panos/pano_299.jpg",
+          "neighbors": [
+            "pano_313",
+            "pano_300",
+            "pano_298",
+            "pano_312"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_300",
+          "position": [
+            -1.180118,
+            -20.656539,
+            2.033441
+          ],
+          "rotation": [
+            -0.023408,
+            0.027648,
+            0.016087,
+            0.999214
+          ],
+          "image_path": "panos/pano_300.jpg",
+          "neighbors": [
+            "pano_301",
+            "pano_312",
+            "pano_299",
+            "pano_297"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_301",
+          "position": [
+            0.021445,
+            -20.457252,
+            2.029271
+          ],
+          "rotation": [
+            -0.018068,
+            0.025184,
+            -0.000384,
+            0.999519
+          ],
+          "image_path": "panos/pano_301.jpg",
+          "neighbors": [
+            "pano_311",
+            "pano_300",
+            "pano_302",
+            "pano_312"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_302",
+          "position": [
+            1.25148,
+            -20.485182,
+            2.02905
+          ],
+          "rotation": [
+            -0.027184,
+            0.031028,
+            0.022113,
+            0.998904
+          ],
+          "image_path": "panos/pano_302.jpg",
+          "neighbors": [
+            "pano_301",
+            "pano_303",
+            "pano_310",
+            "pano_295"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_303",
+          "position": [
+            2.480327,
+            -20.39207,
+            2.027244
+          ],
+          "rotation": [
+            -0.020483,
+            0.030554,
+            0.043011,
+            0.998397
+          ],
+          "image_path": "panos/pano_303.jpg",
+          "neighbors": [
+            "pano_309",
+            "pano_304",
+            "pano_302",
+            "pano_310"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_304",
+          "position": [
+            3.710231,
+            -20.32421,
+            2.023969
+          ],
+          "rotation": [
+            -0.023828,
+            0.0452,
+            0.034898,
+            0.998084
+          ],
+          "image_path": "panos/pano_304.jpg",
+          "neighbors": [
+            "pano_308",
+            "pano_309",
+            "pano_293",
+            "pano_303"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_305",
+          "position": [
+            4.970145,
+            -20.289268,
+            2.032841
+          ],
+          "rotation": [
+            -0.022763,
+            0.023891,
+            0.01309,
+            0.99937
+          ],
+          "image_path": "panos/pano_305.jpg",
+          "neighbors": [
+            "pano_292",
+            "pano_307",
+            "pano_308",
+            "pano_304"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_306",
+          "position": [
+            6.170172,
+            -19.707313,
+            2.02998
+          ],
+          "rotation": [
+            -0.049652,
+            -0.012566,
+            0.810667,
+            0.583263
+          ],
+          "image_path": "panos/pano_306.jpg",
+          "neighbors": [
+            "pano_127",
+            "pano_307",
+            "pano_126",
+            "pano_305"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_307",
+          "position": [
+            5.308806,
+            -19.095212,
+            2.0295
+          ],
+          "rotation": [
+            -0.055063,
+            -0.027824,
+            0.997821,
+            -0.023393
+          ],
+          "image_path": "panos/pano_307.jpg",
+          "neighbors": [
+            "pano_306",
+            "pano_126",
+            "pano_308",
+            "pano_305"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_308",
+          "position": [
+            4.18498,
+            -19.327415,
+            2.018503
+          ],
+          "rotation": [
+            -0.053372,
+            -0.029177,
+            0.996637,
+            -0.054909
+          ],
+          "image_path": "panos/pano_308.jpg",
+          "neighbors": [
+            "pano_304",
+            "pano_307",
+            "pano_309",
+            "pano_305"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_309",
+          "position": [
+            2.985261,
+            -19.354384,
+            2.034074
+          ],
+          "rotation": [
+            -0.022889,
+            -0.03828,
+            0.999,
+            -0.003125
+          ],
+          "image_path": "panos/pano_309.jpg",
+          "neighbors": [
+            "pano_303",
+            "pano_308",
+            "pano_304",
+            "pano_310"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_310",
+          "position": [
+            1.553208,
+            -19.19745,
+            2.029844
+          ],
+          "rotation": [
+            -0.038369,
+            -0.028238,
+            0.996204,
+            -0.072857
+          ],
+          "image_path": "panos/pano_310.jpg",
+          "neighbors": [
+            "pano_317",
+            "pano_302",
+            "pano_311",
+            "pano_309"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_311",
+          "position": [
+            0.225977,
+            -19.283151,
+            2.02761
+          ],
+          "rotation": [
+            -0.03022,
+            -0.0153,
+            0.996661,
+            -0.074299
+          ],
+          "image_path": "panos/pano_311.jpg",
+          "neighbors": [
+            "pano_301",
+            "pano_312",
+            "pano_310",
+            "pano_316"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_312",
+          "position": [
+            -1.025936,
+            -19.353432,
+            2.028588
+          ],
+          "rotation": [
+            -0.044014,
+            -0.020041,
+            0.994993,
+            -0.087469
+          ],
+          "image_path": "panos/pano_312.jpg",
+          "neighbors": [
+            "pano_311",
+            "pano_300",
+            "pano_316",
+            "pano_315"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_313",
+          "position": [
+            -2.606923,
+            -19.582258,
+            2.03666
+          ],
+          "rotation": [
+            -0.027122,
+            -0.001668,
+            0.997239,
+            0.069112
+          ],
+          "image_path": "panos/pano_313.jpg",
+          "neighbors": [
+            "pano_314",
+            "pano_299",
+            "pano_312",
+            "pano_315"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_314",
+          "position": [
+            -2.741648,
+            -18.57609,
+            2.030132
+          ],
+          "rotation": [
+            -0.049625,
+            0.012059,
+            0.736061,
+            0.674986
+          ],
+          "image_path": "panos/pano_314.jpg",
+          "neighbors": [
+            "pano_313",
+            "pano_315",
+            "pano_320",
+            "pano_319"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_315",
+          "position": [
+            -1.76769,
+            -18.199065,
+            2.027108
+          ],
+          "rotation": [
+            -0.01954,
+            0.029334,
+            0.008047,
+            0.999346
+          ],
+          "image_path": "panos/pano_315.jpg",
+          "neighbors": [
+            "pano_319",
+            "pano_314",
+            "pano_316",
+            "pano_312"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_316",
+          "position": [
+            -0.485521,
+            -18.106104,
+            2.016184
+          ],
+          "rotation": [
+            -0.030692,
+            0.028106,
+            0.035344,
+            0.998508
+          ],
+          "image_path": "panos/pano_316.jpg",
+          "neighbors": [
+            "pano_318",
+            "pano_319",
+            "pano_315",
+            "pano_312"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_317",
+          "position": [
+            1.292592,
+            -18.113125,
+            2.027739
+          ],
+          "rotation": [
+            -0.01514,
+            0.016277,
+            0.0796,
+            0.996579
+          ],
+          "image_path": "panos/pano_317.jpg",
+          "neighbors": [
+            "pano_310",
+            "pano_042",
+            "pano_311",
+            "pano_318"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_318",
+          "position": [
+            -0.134541,
+            -17.367994,
+            2.035762
+          ],
+          "rotation": [
+            -0.026854,
+            0.009128,
+            0.748114,
+            0.662963
+          ],
+          "image_path": "panos/pano_318.jpg",
+          "neighbors": [
+            "pano_316",
+            "pano_319",
+            "pano_323",
+            "pano_042"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_319",
+          "position": [
+            -1.395065,
+            -17.368112,
+            2.027353
+          ],
+          "rotation": [
+            -0.027393,
+            -0.029122,
+            0.997928,
+            -0.050404
+          ],
+          "image_path": "panos/pano_319.jpg",
+          "neighbors": [
+            "pano_315",
+            "pano_316",
+            "pano_318",
+            "pano_320"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_320",
+          "position": [
+            -2.723904,
+            -17.156308,
+            2.025524
+          ],
+          "rotation": [
+            -0.042371,
+            -0.000728,
+            0.777955,
+            0.62689
+          ],
+          "image_path": "panos/pano_320.jpg",
+          "neighbors": [
+            "pano_321",
+            "pano_319",
+            "pano_315",
+            "pano_314"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_321",
+          "position": [
+            -2.974777,
+            -16.06033,
+            2.027897
+          ],
+          "rotation": [
+            -0.048634,
+            0.005091,
+            0.644004,
+            0.763458
+          ],
+          "image_path": "panos/pano_321.jpg",
+          "neighbors": [
+            "pano_320",
+            "pano_322",
+            "pano_326",
+            "pano_325"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_322",
+          "position": [
+            -1.694424,
+            -15.763362,
+            2.027907
+          ],
+          "rotation": [
+            -0.015596,
+            0.038761,
+            0.033446,
+            0.998567
+          ],
+          "image_path": "panos/pano_322.jpg",
+          "neighbors": [
+            "pano_325",
+            "pano_323",
+            "pano_321",
+            "pano_319"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_323",
+          "position": [
+            -0.462331,
+            -16.111363,
+            2.037214
+          ],
+          "rotation": [
+            -0.01421,
+            0.034032,
+            0.148653,
+            0.988202
+          ],
+          "image_path": "panos/pano_323.jpg",
+          "neighbors": [
+            "pano_322",
+            "pano_318",
+            "pano_324",
+            "pano_319"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_324",
+          "position": [
+            -0.342245,
+            -14.640769,
+            2.033478
+          ],
+          "rotation": [
+            -0.037718,
+            -0.019179,
+            0.966637,
+            0.252631
+          ],
+          "image_path": "panos/pano_324.jpg",
+          "neighbors": [
+            "pano_325",
+            "pano_323",
+            "pano_040",
+            "pano_041"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_325",
+          "position": [
+            -1.703639,
+            -14.648316,
+            2.033034
+          ],
+          "rotation": [
+            -0.037883,
+            -0.011016,
+            0.995348,
+            -0.087894
+          ],
+          "image_path": "panos/pano_325.jpg",
+          "neighbors": [
+            "pano_322",
+            "pano_326",
+            "pano_324",
+            "pano_321"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_326",
+          "position": [
+            -2.975024,
+            -14.713835,
+            2.041663
+          ],
+          "rotation": [
+            0.024101,
+            0.059542,
+            -0.71522,
+            0.695942
+          ],
+          "image_path": "panos/pano_326.jpg",
+          "neighbors": [
+            "pano_325",
+            "pano_321",
+            "pano_322",
+            "pano_320"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_327",
+          "position": [
+            1.915569,
+            -27.870286,
+            2.029655
+          ],
+          "rotation": [
+            0.012423,
+            0.022847,
+            -0.644831,
+            0.763883
+          ],
+          "image_path": "panos/pano_327.jpg",
+          "neighbors": [
+            "pano_268",
+            "pano_274",
+            "pano_267",
+            "pano_328"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_328",
+          "position": [
+            2.213036,
+            -29.065107,
+            2.080864
+          ],
+          "rotation": [
+            0.012402,
+            0.046462,
+            -0.629763,
+            0.775297
+          ],
+          "image_path": "panos/pano_328.jpg",
+          "neighbors": [
+            "pano_327",
+            "pano_268",
+            "pano_329",
+            "pano_346"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_329",
+          "position": [
+            3.525376,
+            -28.979391,
+            2.082096
+          ],
+          "rotation": [
+            -0.022024,
+            0.053659,
+            0.085959,
+            0.994609
+          ],
+          "image_path": "panos/pano_329.jpg",
+          "neighbors": [
+            "pano_328",
+            "pano_330",
+            "pano_334",
+            "pano_267"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_330",
+          "position": [
+            4.894891,
+            -28.833203,
+            2.102519
+          ],
+          "rotation": [
+            -0.033613,
+            0.044081,
+            0.065279,
+            0.996326
+          ],
+          "image_path": "panos/pano_330.jpg",
+          "neighbors": [
+            "pano_329",
+            "pano_331",
+            "pano_333",
+            "pano_334"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_331",
+          "position": [
+            6.325466,
+            -28.823354,
+            2.098626
+          ],
+          "rotation": [
+            0.007001,
+            0.050194,
+            -0.411637,
+            0.909938
+          ],
+          "image_path": "panos/pano_331.jpg",
+          "neighbors": [
+            "pano_332",
+            "pano_330",
+            "pano_333",
+            "pano_265"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_332",
+          "position": [
+            6.615153,
+            -29.995978,
+            2.098037
+          ],
+          "rotation": [
+            -0.023772,
+            -0.058384,
+            0.865701,
+            -0.496576
+          ],
+          "image_path": "panos/pano_332.jpg",
+          "neighbors": [
+            "pano_331",
+            "pano_345",
+            "pano_333",
+            "pano_344"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_333",
+          "position": [
+            5.181866,
+            -30.256889,
+            2.121534
+          ],
+          "rotation": [
+            -0.060542,
+            -0.042437,
+            0.99593,
+            -0.051543
+          ],
+          "image_path": "panos/pano_333.jpg",
+          "neighbors": [
+            "pano_344",
+            "pano_334",
+            "pano_330",
+            "pano_332"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_334",
+          "position": [
+            3.747511,
+            -30.346054,
+            2.103427
+          ],
+          "rotation": [
+            -0.034517,
+            -0.028468,
+            0.996463,
+            -0.071135
+          ],
+          "image_path": "panos/pano_334.jpg",
+          "neighbors": [
+            "pano_329",
+            "pano_343",
+            "pano_333",
+            "pano_335"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_335",
+          "position": [
+            2.274856,
+            -30.480752,
+            2.09047
+          ],
+          "rotation": [
+            -0.030881,
+            -0.033851,
+            0.998284,
+            -0.036453
+          ],
+          "image_path": "panos/pano_335.jpg",
+          "neighbors": [
+            "pano_336",
+            "pano_328",
+            "pano_342",
+            "pano_334"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_336",
+          "position": [
+            0.913035,
+            -30.537185,
+            2.088047
+          ],
+          "rotation": [
+            -0.047352,
+            -0.03945,
+            0.997207,
+            -0.042194
+          ],
+          "image_path": "panos/pano_336.jpg",
+          "neighbors": [
+            "pano_346",
+            "pano_335",
+            "pano_337",
+            "pano_341"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_337",
+          "position": [
+            -0.499865,
+            -30.455557,
+            2.108937
+          ],
+          "rotation": [
+            -0.044847,
+            -0.036974,
+            0.996346,
+            -0.062573
+          ],
+          "image_path": "panos/pano_337.jpg",
+          "neighbors": [
+            "pano_347",
+            "pano_338",
+            "pano_336",
+            "pano_348"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_338",
+          "position": [
+            -1.446357,
+            -31.175678,
+            2.106457
+          ],
+          "rotation": [
+            0.017247,
+            0.069828,
+            -0.650837,
+            0.755803
+          ],
+          "image_path": "panos/pano_338.jpg",
+          "neighbors": [
+            "pano_339",
+            "pano_337",
+            "pano_348",
+            "pano_340"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_339",
+          "position": [
+            -1.303625,
+            -32.330837,
+            2.112356
+          ],
+          "rotation": [
+            -0.042517,
+            0.051758,
+            0.018342,
+            0.997586
+          ],
+          "image_path": "panos/pano_339.jpg",
+          "neighbors": [
+            "pano_338",
+            "pano_340",
+            "pano_337",
+            "pano_341"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_340",
+          "position": [
+            -0.07075,
+            -32.232491,
+            2.113171
+          ],
+          "rotation": [
+            -0.035131,
+            0.056689,
+            0.091403,
+            0.993578
+          ],
+          "image_path": "panos/pano_340.jpg",
+          "neighbors": [
+            "pano_339",
+            "pano_341",
+            "pano_338",
+            "pano_337"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_341",
+          "position": [
+            1.26601,
+            -31.995016,
+            2.09916
+          ],
+          "rotation": [
+            -0.030478,
+            0.039449,
+            0.046037,
+            0.997695
+          ],
+          "image_path": "panos/pano_341.jpg",
+          "neighbors": [
+            "pano_342",
+            "pano_340",
+            "pano_336",
+            "pano_335"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_342",
+          "position": [
+            2.610383,
+            -31.880795,
+            2.09751
+          ],
+          "rotation": [
+            -0.02934,
+            0.047474,
+            0.015598,
+            0.99832
+          ],
+          "image_path": "panos/pano_342.jpg",
+          "neighbors": [
+            "pano_341",
+            "pano_343",
+            "pano_335",
+            "pano_334"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_343",
+          "position": [
+            4.025942,
+            -31.736392,
+            2.117034
+          ],
+          "rotation": [
+            -0.028634,
+            0.048479,
+            0.053478,
+            0.99698
+          ],
+          "image_path": "panos/pano_343.jpg",
+          "neighbors": [
+            "pano_344",
+            "pano_334",
+            "pano_342",
+            "pano_333"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_344",
+          "position": [
+            5.384963,
+            -31.556908,
+            2.133015
+          ],
+          "rotation": [
+            -0.022617,
+            0.051671,
+            0.041854,
+            0.99753
+          ],
+          "image_path": "panos/pano_344.jpg",
+          "neighbors": [
+            "pano_345",
+            "pano_333",
+            "pano_343",
+            "pano_332"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_345",
+          "position": [
+            6.478795,
+            -31.424228,
+            2.112622
+          ],
+          "rotation": [
+            -0.034514,
+            0.029706,
+            0.120379,
+            0.991683
+          ],
+          "image_path": "panos/pano_345.jpg",
+          "neighbors": [
+            "pano_344",
+            "pano_332",
+            "pano_333",
+            "pano_343"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_346",
+          "position": [
+            0.874307,
+            -29.205311,
+            2.099226
+          ],
+          "rotation": [
+            -0.026621,
+            -0.039728,
+            0.996343,
+            -0.070811
+          ],
+          "image_path": "panos/pano_346.jpg",
+          "neighbors": [
+            "pano_336",
+            "pano_328",
+            "pano_347",
+            "pano_268"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_347",
+          "position": [
+            -0.56931,
+            -29.272632,
+            2.098248
+          ],
+          "rotation": [
+            -0.056126,
+            -0.045518,
+            0.995811,
+            -0.056019
+          ],
+          "image_path": "panos/pano_347.jpg",
+          "neighbors": [
+            "pano_348",
+            "pano_337",
+            "pano_346",
+            "pano_336"
+          ],
+          "floor_id": 1
+        },
+        {
+          "id": "pano_348",
+          "position": [
+            -1.562844,
+            -29.512601,
+            2.119141
+          ],
+          "rotation": [
+            -0.040969,
+            -0.049056,
+            0.993345,
+            -0.095822
+          ],
+          "image_path": "panos/pano_348.jpg",
+          "neighbors": [
+            "pano_347",
+            "pano_337",
+            "pano_338",
+            "pano_270"
+          ],
+          "floor_id": 1
+        }
+      ]
+    }
+  ],
+  "schema_version": "1.0",
+  "application_version": "1.0.0",
+  "bookmarks": [],
+  "settings": {
+    "max_autostack_distance": 10.0,
+    "default_unit": "metric"
+  }
+}

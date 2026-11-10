@@ -1,0 +1,41 @@
+{
+  "name": "av_walkthrough",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "vite & electron .",
+    "build:web": "vite build",
+    "build:python": "cd backend && python -m PyInstaller --onefile --collect-all pye57 --collect-all scipy --collect-all sklearn --collect-all numpy app.py --distpath ./dist",
+    "build:electron": "cmd /c \"if exist release-final-31-2 rmdir /s /q release-final-31-2\" && npx @electron/packager . AV_Walkthrough --platform=win32 --arch=x64 --out=release-final-31-2/ --asar=false --overwrite --ignore=\"release-final-1[0-9]|release-final-2[0-9]|release-final-3[0-1]|backend/build|backend/app.spec|node_modules/.bin\"",
+    "build": "npm run build:web && npm run build:python && npm run build:electron"
+  },
+  "build": {
+    "appId": "com.av.walkthrough",
+    "productName": "AV Walkthrough",
+    "win": {
+      "target": "nsis"
+    },
+    "extraResources": [
+      {
+        "from": "backend/dist/app.exe",
+        "to": "app.exe"
+      }
+    ]
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "electron": "^34.3.0",
+    "electron-builder": "^25.1.8",
+    "vite": "^6.2.0"
+  },
+  "dependencies": {
+    "@types/three": "^0.174.0",
+    "gsap": "^3.12.7",
+    "three": "^0.174.0"
+  }
+}
