@@ -3,3 +3,4 @@ scipy>=1.10.0
 scikit-learn>=1.2.0
 pye57>=0.4.0
 laspy>=2.4.0
+Pillow>=9.0.0
