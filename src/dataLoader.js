@@ -1,6 +1,8 @@
 export class DataLoader {
     /**
-     * Loads downsampled point cloud positions and colors from the binary cache.
+     * Loads downsampled point cloud positions and colors from the binary cache (lod0.bin).
+     * Maps canonical coordinates (px, py, pz) into Three.js space (px, pz, -py) to preserve det=+1.
+     *
      * @param {string} cachePath - Path to cache/lod0.bin
      * @returns {Promise<{ positions: Float32Array, colors: Float32Array }|null>}
      */
@@ -28,13 +30,13 @@ export class DataLoader {
                 const py = dataView.getFloat32(offset + 4, true);
                 const pz = dataView.getFloat32(offset + 8, true);
                 
-                // Map to Three.js coordinates inline for high speed:
-                // Three.js X = Python X (px)
-                // Three.js Y = Python Z (pz - vertical height)
-                // Three.js Z = Python Y (py - horizontal depth)
+                // Map to Three.js right-handed coordinates (det = +1):
+                // Three.js X =  Python X (px)
+                // Three.js Y =  Python Z (pz - vertical height)
+                // Three.js Z = -Python Y (-py - horizontal depth)
                 positions[i * 3]     = px;
                 positions[i * 3 + 1] = pz;
-                positions[i * 3 + 2] = py;
+                positions[i * 3 + 2] = -py;
                 
                 // Read colors (uint8, 0-255) and normalize to float32 (0.0 - 1.0)
                 colors[i * 3]     = dataView.getUint8(offset + 12) / 255.0;

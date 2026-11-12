@@ -10,7 +10,9 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1280,
         height: 720,
-        icon: path.join(__dirname, 'assets', 'av-walkthrough-logo.png'),
+        title: 'AV Showcase',
+        icon: path.join(__dirname, 'assets', 'av-showcase-logo.png'),
+        backgroundColor: '#0d0d12',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: false,
@@ -20,16 +22,15 @@ function createWindow() {
         autoHideMenuBar: true
     });
 
-    // In production we would load from Vite build dir
-    // During dev we load from localhost or standard Vite build.
     mainWindow.loadFile(path.join(__dirname, 'index.html'));
 
     mainWindow.webContents.on('console-message', (event, level, message, line, sourceId) => {
         console.log(`[Renderer] ${message} (Source: ${sourceId}, Line: ${line})`);
     });
     
-    // Open devtools to force the renderer to load properly or display errors
-    mainWindow.webContents.openDevTools();
+    if (process.env.AV_SHOWCASE_DEVTOOLS === '1') {
+        mainWindow.webContents.openDevTools();
+    }
 }
 
 function startPythonBackend() {

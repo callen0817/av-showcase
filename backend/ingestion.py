@@ -2,11 +2,14 @@ import os
 import json
 import shutil
 import math
+import uuid
 from pathlib import Path
 import traceback
 import struct
 import numpy as np
 import logging
+
+import walkthrough_synth as ws
 
 logger = logging.getLogger("import")
 
@@ -90,23 +93,7 @@ def setup_import_log(project_dir):
     return logger
 
 def save_point_cloud_bin(filepath, points, colors):
-    Path(filepath).parent.mkdir(parents=True, exist_ok=True)
-    num_points = len(points)
-    dt = np.dtype([
-        ('x', 'f4'), ('y', 'f4'), ('z', 'f4'),
-        ('r', 'u1'), ('g', 'u1'), ('b', 'u1')
-    ])
-    arr = np.zeros(num_points, dtype=dt)
-    arr['x'] = points[:, 0]
-    arr['y'] = points[:, 1]
-    arr['z'] = points[:, 2]
-    arr['r'] = colors[:, 0]
-    arr['g'] = colors[:, 1]
-    arr['b'] = colors[:, 2]
-    
-    with open(filepath, 'wb') as f:
-        f.write(struct.pack('<I', num_points))
-        f.write(arr.tobytes())
+    return ws.save_lod0(filepath, points, colors)
 
 def validate_scan_contract(panos, poses, pano_files=None):
     if len(panos) == 0:
@@ -139,7 +126,7 @@ def write_import_report(scan_dir, report_data):
     txt_path = os.path.join(scan_dir, "import_report.txt")
     with open(txt_path, "w", encoding="utf-8") as f:
         f.write("=========================================\n")
-        f.write("         AV WALKTHROUGH IMPORT REPORT     \n")
+        f.write("         AV SHOWCASE IMPORT REPORT       \n")
         f.write("=========================================\n")
         for k, v in report_data.items():
             f.write(f"{k.upper().replace('_', ' ')}: {v}\n")
@@ -157,19 +144,14 @@ def _load_poses_from_csv(csv_path, logger=None):
         if not lines:
             return poses
             
-        # Detect delimiter
         header_line = lines[0]
         delim = ';' if ';' in header_line else ','
         
-        # Parse header to find column indices
         header_cols = [c.strip().lower() for c in header_line.replace('#', '').split(delim)]
         
-        # Default fallback indices based on the NavVis pano-poses.csv standard:
-        # ID; filename; timestamp; x; y; z; qw; qx; qy; qz
         idx_x, idx_y, idx_z = 3, 4, 5
         idx_qw, idx_qx, idx_qy, idx_qz = 6, 7, 8, 9
         
-        # Try to find columns by name in header
         for idx, col in enumerate(header_cols):
             if 'pos_x' in col or col == 'x':
                 idx_x = idx
@@ -205,7 +187,7 @@ def _load_poses_from_csv(csv_path, logger=None):
                         "position": [x, y, z],
                         "rotation": [qx, qy, qz, qw]
                     })
-                except Exception as e:
+                except Exception:
                     continue
     except Exception as e:
         if logger:
@@ -214,28 +196,10 @@ def _load_poses_from_csv(csv_path, logger=None):
     return poses
 
 def transform_points(points, translation, rotation):
-    qx, qy, qz, qw = rotation
-    r00 = 1 - 2*(qy**2 + qz**2)
-    r01 = 2*(qx*qy - qz*qw)
-    r02 = 2*(qx*qz + qy*qw)
-    
-    r10 = 2*(qx*qy + qz*qw)
-    r11 = 1 - 2*(qx**2 + qz**2)
-    r12 = 2*(qy*qz - qx*qw)
-    
-    r20 = 2*(qx*qz - qy*qw)
-    r21 = 2*(qy*qz + qx*qw)
-    r22 = 1 - 2*(qx**2 + qy**2)
-    
-    R = np.array([
-        [r00, r01, r02],
-        [r10, r11, r12],
-        [r20, r21, r22]
-    ])
-    
-    return np.dot(points, R.T) + np.array(translation)
+    return ws.transform_pts(points, ws.make_transform(0, translation)) if len(rotation) == 4 and rotation == [0,0,0,1] else np.dot(points, ws.quat_to_matrix(rotation).T) + np.array(translation)
 
 def extract_e57_pointcloud(e57_path, target_points_per_scan=10000, logger=None):
+    """Extracts downsampled points and colors from E57, filtering invalid states and (0,0,0)."""
     if logger is None:
         logger = logging.getLogger("import")
     logger.info(f"Extracting point cloud from E57: {e57_path}")
@@ -248,54 +212,26 @@ def extract_e57_pointcloud(e57_path, target_points_per_scan=10000, logger=None):
             return np.zeros((0, 3), dtype=np.float32), np.zeros((0, 3), dtype=np.uint8)
         
         scan_count = data3d_root.childCount() if hasattr(data3d_root, 'childCount') else 0
-        
         all_points = []
         all_colors = []
         
         for i in range(scan_count):
             try:
                 logger.info(f"Reading scan points {i+1} of {scan_count}...")
-                scan_data = e57.read_scan(i, colors=True, ignore_missing_fields=True)
-                if 'cartesianX' not in scan_data:
-                    logger.warning(f"Scan {i} does not contain cartesian points. Skipping.")
+                pts_local, cols_local, _ = ws.read_e57_scan_local(e57, i)
+                if len(pts_local) == 0:
                     continue
                 
-                x = scan_data['cartesianX']
-                y = scan_data['cartesianY']
-                z = scan_data['cartesianZ']
-                pts = np.column_stack((x, y, z))
-                
-                if 'colorRed' in scan_data and 'colorGreen' in scan_data and 'colorBlue' in scan_data:
-                    r = scan_data['colorRed']
-                    g = scan_data['colorGreen']
-                    b = scan_data['colorBlue']
-                    max_val = max(np.max(r), np.max(g), np.max(b)) if len(r) > 0 else 0
-                    if max_val > 255:
-                        r = (r / max_val * 255.0).astype(np.uint8)
-                        g = (g / max_val * 255.0).astype(np.uint8)
-                        b = (b / max_val * 255.0).astype(np.uint8)
-                    cols = np.column_stack((r, g, b)).astype(np.uint8)
-                elif 'intensity' in scan_data:
-                    intensity = scan_data['intensity']
-                    max_int = np.max(intensity) if len(intensity) > 0 else 1
-                    grey = (intensity / max_int * 255.0).astype(np.uint8) if max_int > 0 else np.full(len(pts), 200, dtype=np.uint8)
-                    cols = np.column_stack((grey, grey, grey))
-                else:
-                    cols = np.full((len(pts), 3), 200, dtype=np.uint8)
-                
                 scan_node = data3d_root[i]
-                if "pose" in scan_node:
-                    pose_node = scan_node["pose"]
-                    translation = pose_node["translation"]
-                    rotation = pose_node["rotation"]
-                    tx, ty, tz = translation["x"].value(), translation["y"].value(), translation["z"].value()
-                    qw, qx, qy, qz = rotation["w"].value(), rotation["x"].value(), rotation["y"].value(), rotation["z"].value()
-                    pts = transform_points(pts, [tx, ty, tz], [qx, qy, qz, qw])
+                pos, rot = ws._e57_pose(scan_node)
+                pts_world = pts_local @ ws.quat_to_matrix(rot).T + np.asarray(pos)
                 
-                num_pts = len(pts)
+                cols = cols_local if cols_local is not None else np.full((len(pts_world), 3), 200, dtype=np.uint8)
+                
+                num_pts = len(pts_world)
                 if num_pts > 0:
                     step = max(1, num_pts // target_points_per_scan)
-                    all_points.append(pts[::step])
+                    all_points.append(pts_world[::step])
                     all_colors.append(cols[::step])
             except Exception as scan_err:
                 logger.error(f"Error extracting points from scan {i}: {scan_err}")
@@ -309,83 +245,15 @@ def extract_e57_pointcloud(e57_path, target_points_per_scan=10000, logger=None):
         return np.zeros((0, 3), dtype=np.float32), np.zeros((0, 3), dtype=np.uint8)
 
 def load_xyz_points(xyz_path, target_points=100000, logger=None):
-    if logger is None:
-        logger = logging.getLogger("import")
-    logger.info(f"Parsing XYZ point cloud: {xyz_path}")
-    points = []
-    colors = []
-    
-    try:
-        with open(xyz_path, 'r') as f:
-            num_lines = sum(1 for _ in f)
-        
-        step = max(1, num_lines // target_points)
-        logger.info(f"XYZ file has {num_lines} points. Downsampling step: {step}")
-        
-        with open(xyz_path, 'r') as f:
-            for idx, line in enumerate(f):
-                if idx % step != 0:
-                    continue
-                parts = line.strip().split()
-                if len(parts) >= 3:
-                    try:
-                        x, y, z = float(parts[0]), float(parts[1]), float(parts[2])
-                        r, g, b = 200, 200, 200
-                        if len(parts) >= 6:
-                            r, g, b = float(parts[3]), float(parts[4]), float(parts[5])
-                            if r <= 1.0 and g <= 1.0 and b <= 1.0:
-                                r, g, b = r * 255.0, g * 255.0, b * 255.0
-                        points.append([x, y, z])
-                        colors.append([r, g, b])
-                    except ValueError:
-                        continue
-    except Exception as e:
-        logger.error(f"Error parsing XYZ: {e}")
-        
-    return np.array(points, dtype=np.float32), np.array(colors, dtype=np.uint8)
+    pc = ws.load_ascii_points(xyz_path, max_points=target_points)
+    cols = pc.cols if pc.cols is not None else np.full((len(pc.pts), 3), 200, dtype=np.uint8)
+    return pc.pts, cols
 
 def load_las_points(las_path, target_points=100000, logger=None):
-    if logger is None:
-        logger = logging.getLogger("import")
-    logger.info(f"Parsing LAS/LAZ point cloud: {las_path}")
-    try:
-        import laspy
-        las = laspy.read(las_path)
-        num_points = len(las.points)
-        step = max(1, num_points // target_points)
-        logger.info(f"LAS file has {num_points} points. Downsampling step: {step}")
-        
-        x = np.array(las.x)[::step]
-        y = np.array(las.y)[::step]
-        z = np.array(las.z)[::step]
-        pts = np.column_stack((x, y, z))
-        
-        if hasattr(las, 'red') and hasattr(las, 'green') and hasattr(las, 'blue'):
-            r = np.array(las.red)[::step]
-            g = np.array(las.green)[::step]
-            b = np.array(las.blue)[::step]
-            
-            max_val = max(np.max(r), np.max(g), np.max(b)) if len(r) > 0 else 0
-            if max_val > 255:
-                r = (r / max_val * 255.0).astype(np.uint8)
-                g = (g / max_val * 255.0).astype(np.uint8)
-                b = (b / max_val * 255.0).astype(np.uint8)
-            else:
-                r, g, b = r.astype(np.uint8), g.astype(np.uint8), b.astype(np.uint8)
-            cols = np.column_stack((r, g, b))
-        else:
-            if hasattr(las, 'intensity'):
-                intensity = np.array(las.intensity)[::step]
-                max_int = np.max(intensity) if len(intensity) > 0 else 1
-                grey = (intensity / max_int * 255.0).astype(np.uint8) if max_int > 0 else np.full(len(pts), 200, dtype=np.uint8)
-                cols = np.column_stack((grey, grey, grey))
-            else:
-                cols = np.full((len(pts), 3), 200, dtype=np.uint8)
-                
-        return pts.astype(np.float32), cols.astype(np.uint8)
-    except Exception as e:
-        logger.error(f"Error parsing LAS/LAZ: {e}")
-        return np.zeros((0, 3), dtype=np.float32), np.zeros((0, 3), dtype=np.uint8)
+    pc = ws.load_las(las_path, max_points=target_points)
+    cols = pc.cols if pc.cols is not None else np.full((len(pc.pts), 3), 200, dtype=np.uint8)
+    return pc.pts, cols
+
 
 class IngestionManager:
     def __init__(self, project_dir, project_name, floor_threshold=0.25, floor_heights=''):
@@ -403,24 +271,26 @@ class IngestionManager:
             old_path = self.project_dir / "project.json"
             if old_path.exists():
                 try:
-                    with open(old_path, 'r') as f:
+                    with open(old_path, 'r', encoding='utf-8') as f:
                         old_data = json.load(f)
-                    old_data["schema_version"] = "1.0"
-                    old_data["application_version"] = "1.0.0"
-                    old_data["bookmarks"] = []
-                    old_data["settings"] = {"max_autostack_distance": 10.0, "default_unit": "metric"}
-                    with open(self.project_json_path, 'w') as f:
+                    old_data["schema_version"] = "1.1"
+                    old_data["application_version"] = "2.0.0"
+                    old_data.setdefault("project_id", str(uuid.uuid4()))
+                    old_data.setdefault("bookmarks", [])
+                    old_data.setdefault("settings", {"max_autostack_distance": 10.0, "default_unit": "metric"})
+                    with open(self.project_json_path, 'w', encoding='utf-8') as f:
                         json.dump(old_data, f, indent=2)
                     os.remove(old_path)
-                    logging.info("Migrated project.json to project.avproj")
+                    logging.info("Migrated project.json to project.avproj v1.1")
                 except Exception as e:
                     logging.error(f"Migration error: {e}")
             
             if not self.project_json_path.exists():
-                with open(self.project_json_path, "w") as f:
+                with open(self.project_json_path, "w", encoding='utf-8') as f:
                     json.dump({
-                        "schema_version": "1.0",
-                        "application_version": "1.0.0",
+                        "schema_version": "1.1",
+                        "application_version": "2.0.0",
+                        "project_id": str(uuid.uuid4()),
                         "name": self.project_name,
                         "description": "",
                         "settings": {
@@ -431,11 +301,27 @@ class IngestionManager:
                         "scans": []
                     }, f, indent=2)
 
-    def _handle_source_import(self, source_path, scan_date, import_mode):
+    def _resolve_scan_ids(self, scan_date, scan_label=None):
+        """Generates a stable, unique scan_id to avoid collisions between same-day datasets."""
+        base_id = (scan_label.strip() if scan_label else scan_date).replace(" ", "_")
+        scan_id = base_id
+        with open(self.project_json_path, "r", encoding="utf-8") as f:
+            proj = json.load(f)
+        existing_ids = {s.get("scan_id", s.get("scan_date")) for s in proj.get("scans", [])}
+        suffix = 1
+        while scan_id in existing_ids:
+            scan_id = f"{base_id}_{suffix}"
+            suffix += 1
+        scan_dir_rel = f"Scans/{scan_id}"
+        scan_dir = self.project_dir / scan_dir_rel
+        scan_dir.mkdir(parents=True, exist_ok=True)
+        return scan_id, scan_dir_rel, scan_dir
+
+    def _handle_source_import(self, source_path, scan_id, import_mode):
         if not source_path or not os.path.exists(source_path):
             return ""
         
-        scan_dir = self.project_dir / "Scans" / scan_date
+        scan_dir = self.project_dir / "Scans" / scan_id
         scan_dir.mkdir(parents=True, exist_ok=True)
         
         if import_mode == "managed":
@@ -444,12 +330,13 @@ class IngestionManager:
             dest_path = scan_dir / dest_name
             logging.info(f"Managed Mode: Copying {source_path} to {dest_path}")
             shutil.copy2(source_path, dest_path)
-            return f"Scans/{scan_date}/{dest_name}"
+            return f"Scans/{scan_id}/{dest_name}"
         else:
             logging.info(f"Linked Mode: Storing link reference to {source_path}")
             return str(Path(source_path).resolve())
 
-    def _write_scan_to_project(self, scan_date, description, panos, floors, import_mode, source_path, cache_rel_path):
+    def _write_scan_to_project(self, scan_date, description, panos, floors, import_mode, source_path, cache_rel_path,
+                               scan_id=None, scan_dir_rel=None, transform_to_project=None, nav_graph="sector8_v1", extra_meta=None):
         if len(panos) == 0:
             raise RuntimeError("CONTRACT VIOLATION: Refusing to write empty scan to project config.")
             
@@ -459,45 +346,64 @@ class IngestionManager:
             source_hash = calculate_file_hash(source_path)
             source_modified = os.path.getmtime(source_path)
         
-        with open(self.project_json_path, "r") as f:
+        with open(self.project_json_path, "r", encoding="utf-8") as f:
             proj_data = json.load(f)
             
-        existing_scans = [s for s in proj_data['scans'] if s['scan_date'] != scan_date]
+        proj_data.setdefault("schema_version", "1.1")
+        proj_data.setdefault("project_id", str(uuid.uuid4()))
+        if "baseline_scan_id" not in proj_data and proj_data.get("scans"):
+            proj_data["baseline_scan_id"] = proj_data["scans"][0].get("scan_id", proj_data["scans"][0].get("scan_date"))
+
+        final_scan_id = scan_id or scan_date
+        final_scan_dir = scan_dir_rel or f"Scans/{final_scan_id}"
+        
+        existing_scans = [s for s in proj_data['scans'] if s.get('scan_id', s.get('scan_date')) != final_scan_id]
         
         new_scan = {
+            "scan_id": final_scan_id,
             "scan_date": scan_date,
+            "scan_dir": final_scan_dir,
             "description": description,
             "import_mode": import_mode,
             "source_path": source_path or "",
             "source_hash": source_hash,
             "source_modified": source_modified,
             "point_cloud_cache": cache_rel_path,
+            "transform_to_project": transform_to_project if (transform_to_project and len(transform_to_project) == 16) else [1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1],
+            "nav_graph": nav_graph,
             "floors": floors,
             "panos": panos
         }
+        if extra_meta:
+            new_scan.update(extra_meta)
+            
         proj_data['scans'] = existing_scans + [new_scan]
-        proj_data['scans'].sort(key=lambda x: x['scan_date'], reverse=True)
+        proj_data['scans'].sort(key=lambda x: x.get('scan_date', ''), reverse=True)
+        if "baseline_scan_id" not in proj_data or not proj_data["baseline_scan_id"]:
+            proj_data["baseline_scan_id"] = final_scan_id
         
-        with open(self.project_json_path, "w") as f:
+        with open(self.project_json_path, "w", encoding="utf-8") as f:
             json.dump(proj_data, f, indent=2)
+
+        # Write matching av_walkthrough_bundle.json inside the scan directory
+        scan_dir_abs = self.project_dir / final_scan_dir
+        ws.write_bundle_manifest(scan_dir_abs, new_scan, project_id=proj_data.get("project_id"), producer="AV Showcase")
 
     def _get_z_floors(self, z_values):
         if not z_values:
             return {}, []
             
         custom_names = []
-        # Option 1: User specified exact floor elevations or floor labels
         if self.floor_heights:
             raw_tokens = [h.strip() for h in str(self.floor_heights).split(",") if h.strip()]
             heights = []
             try:
                 parsed = [float(t) for t in raw_tokens]
-                # Only treat as explicit Z-elevations if at least 2 heights are given, or a decimal height is given
                 if len(parsed) >= 2 or (len(parsed) == 1 and "." in raw_tokens[0]):
                     heights = parsed
                 else:
                     custom_names = raw_tokens
-            except Exception as e:
+            except Exception:
                 custom_names = raw_tokens
                 logger.info(f"Interpreting floor_heights '{self.floor_heights}' as custom floor labels ({custom_names}); using multi-level clustering.")
                 
@@ -507,7 +413,6 @@ class IngestionManager:
                 assigned_scans = {i+1: [] for i in range(len(sorted_heights))}
                 
                 for z in z_values:
-                    # Assign to closest specified floor elevation
                     closest_idx = int(np.argmin([abs(z - h) for h in sorted_heights]))
                     floor_id = closest_idx + 1
                     floor_mapping[z] = floor_id
@@ -525,13 +430,13 @@ class IngestionManager:
                         max_z = h + 0.5
                     floors.append({
                         "id": fid,
-                        "min_z": min_z,
-                        "max_z": max_z
+                        "min_z": float(min_z),
+                        "max_z": float(max_z),
+                        "mean_z": float(h),
+                        "floor_elevation": float(h - ws.EYE_HEIGHT)
                     })
                 return floor_mapping, floors
 
-        # Option 1B: If user provided K >= 2 custom floor labels (e.g. '1, mezz' or '1, 2, 3, 4, 5')
-        # Partition into exactly K levels using 1D clustering with midpoint stair boundaries
         if len(custom_names) >= 2:
             k = len(custom_names)
             z_arr = np.array(z_values)
@@ -572,13 +477,13 @@ class IngestionManager:
                     "name": custom_names[idx],
                     "min_z": float(min(scans_z)),
                     "max_z": float(max(scans_z)),
-                    "mean_z": float(c)
+                    "mean_z": float(c),
+                    "floor_elevation": float(c - ws.EYE_HEIGHT)
                 }
                 final_floors.append(fl_entry)
                 
             return final_floor_mapping, final_floors
 
-        # Option 2: Dynamic plateau detection and inter-floor midpoint stair partition
         thresh = float(self.floor_threshold) if self.floor_threshold is not None else 0.25
         fine_thresh = min(thresh, 0.30)
         sorted_z = sorted(list(set(z_values)))
@@ -605,43 +510,38 @@ class IngestionManager:
             "max_z": sorted_z[-1]
         })
         
-        # Single-level fast path (preserves 100% backwards compatibility for 1-level scans)
         if len(floors) <= 1:
             fl_obj = {
                 "id": 1,
+                "name": custom_names[0] if len(custom_names) == 1 else "Level 1",
                 "min_z": float(sorted_z[0]),
-                "max_z": float(sorted_z[-1])
+                "max_z": float(sorted_z[-1]),
+                "mean_z": float(np.mean(sorted_z)),
+                "floor_elevation": float(np.mean(sorted_z) - ws.EYE_HEIGHT)
             }
-            if len(custom_names) == 1:
-                fl_obj["name"] = custom_names[0]
             return floor_mapping, [fl_obj]
 
-        # Populate Z values and count for each fine candidate cluster
         for f in floors:
             f["scans"] = [z for z in z_values if f["min_z"] <= z <= f["max_z"]]
             f["count"] = len(f["scans"])
             f["mean_z"] = float(np.mean(f["scans"])) if len(f["scans"]) > 0 else (f["min_z"] + f["max_z"]) / 2.0
             
-        # Classify candidate clusters into Major Floors (plateaus) vs Stairs/Transitions
         major_floors = []
         stairs_floors = []
         major_count_thresh = max(12, int(0.06 * len(z_values)))
         
         for idx, f in enumerate(floors):
             is_major = f["count"] >= major_count_thresh
-            
             if not is_major:
                 left_count = floors[idx-1]["count"] if idx > 0 else 0
                 right_count = floors[idx+1]["count"] if idx < len(floors) - 1 else 0
                 if f["count"] >= 4 and f["count"] > left_count and f["count"] > right_count:
                     is_major = True
-                    
             if not is_major:
                 left_gap = (f["mean_z"] - floors[idx-1]["mean_z"]) if idx > 0 else 999.0
                 right_gap = (floors[idx+1]["mean_z"] - f["mean_z"]) if idx < len(floors) - 1 else 999.0
                 if min(left_gap, right_gap) > 0.60:
                     is_major = True
-                    
             if is_major:
                 f["plateau_mean_z"] = f["mean_z"]
                 major_floors.append(f)
@@ -654,7 +554,6 @@ class IngestionManager:
             major_floors = floors
             stairs_floors = []
             
-        # Distribute scans in stairs clusters using the TRUE inter-floor midpoint
         for sf in stairs_floors:
             below_majors = [mf for mf in major_floors if mf["plateau_mean_z"] < sf["mean_z"]]
             above_majors = [mf for mf in major_floors if mf["plateau_mean_z"] > sf["mean_z"]]
@@ -676,25 +575,22 @@ class IngestionManager:
                     
         final_floor_mapping = {}
         final_floors = []
-        
         major_floors.sort(key=lambda x: x["plateau_mean_z"])
         
         for idx, mf in enumerate(major_floors):
             fid = idx + 1
             if not mf["scans"]:
                 continue
-            
             for z in mf["scans"]:
                 final_floor_mapping[z] = fid
-                
             fl_entry = {
                 "id": fid,
+                "name": custom_names[idx] if idx < len(custom_names) else f"Level {fid}",
                 "min_z": float(min(mf["scans"])),
                 "max_z": float(max(mf["scans"])),
-                "mean_z": float(mf["plateau_mean_z"])
+                "mean_z": float(mf["plateau_mean_z"]),
+                "floor_elevation": float(mf["plateau_mean_z"] - ws.EYE_HEIGHT)
             }
-            if idx < len(custom_names):
-                fl_entry["name"] = custom_names[idx]
             final_floors.append(fl_entry)
             
         return final_floor_mapping, final_floors
@@ -710,8 +606,6 @@ class IngestionManager:
                 floors_dict[fid] = []
             floors_dict[fid].append(p)
             
-        # 1. Smart Multi-Directional Same-Floor Navigation Graph
-        # Uses 8 directional sectors (every 45 deg) + trajectory continuity + redundancy suppression
         for floor_id, floor_panos in floors_dict.items():
             n = len(floor_panos)
             if n < 2:
@@ -721,21 +615,18 @@ class IngestionManager:
                 continue
                 
             pts = np.array([p['position'] for p in floor_panos])
-            diff = pts[:, None, :2] - pts[None, :, :2] # 2D horizontal vector
+            diff = pts[:, None, :2] - pts[None, :, :2]
             dists = np.linalg.norm(diff, axis=-1)
-            angles = np.arctan2(diff[..., 1], diff[..., 0]) # [-pi, pi]
+            angles = np.arctan2(diff[..., 1], diff[..., 0])
             
             for i, p in enumerate(floor_panos):
                 nbr_set = set()
                 
-                # Rule 1: Sequential trajectory continuity (walk forward and backward along scan path)
                 for offset in [-1, 1]:
                     adj = i + offset
                     if 0 <= adj < n and dists[i, adj] <= NEIGHBOR_DISTANCE_THRESHOLD:
                         nbr_set.add(floor_panos[adj]['id'])
                         
-                # Rule 2: 8 Directional Sectors (every 45 degrees around scanner)
-                # Guarantees forward, backward, left, right, and diagonal navigation
                 num_sectors = 8
                 sector_step = 2.0 * math.pi / num_sectors
                 
@@ -754,8 +645,6 @@ class IngestionManager:
                             continue
                         s_dists = cand_dists[in_sector]
                         s_indices = valid_indices[in_sector]
-                        
-                        # Prioritize candidates >= 0.5m away to escape stationary duplicate clusters
                         far_enough = s_dists >= 0.5
                         if np.any(far_enough):
                             best_idx = s_indices[far_enough][np.argmin(s_dists[far_enough])]
@@ -763,7 +652,6 @@ class IngestionManager:
                             best_idx = s_indices[np.argmin(s_dists)]
                         nbr_set.add(floor_panos[best_idx]['id'])
                         
-                # Rule 3: Add closest remaining neighbors within 2.0m up to 8 max
                 sorted_by_dist = np.argsort(dists[i])
                 for idx in sorted_by_dist[1:]:
                     if len(nbr_set) >= 8:
@@ -775,8 +663,6 @@ class IngestionManager:
                         
                 p['neighbors'] = list(nbr_set)
 
-        # 2. Multi-level Cross-Floor Staircase Navigation Links
-        # Connects the top of the bottom-half stairs (Floor F) to the bottom of the top-half stairs (Floor F+1)
         if len(floors_dict) > 1:
             sorted_fids = sorted(floors_dict.keys())
             for i in range(len(sorted_fids)):
@@ -793,15 +679,11 @@ class IngestionManager:
                             bx, by, bz = pb['position']
                             dz = abs(bz - az)
                             dxy = math.hypot(bx - ax, by - ay)
-                            # Stair step/landing transition criteria:
-                            # Vertical separation <= 2.2m (avoids linking through full room ceilings >= 2.8m)
-                            # Horizontal proximity <= 5.5m
                             if 0.10 <= dz <= 2.20 and dxy <= 5.50:
                                 d3d = math.sqrt(dxy * dxy + dz * dz)
                                 stair_links.append((d3d, pa, pb))
                                 
                     stair_links.sort(key=lambda x: x[0])
-                    # Connect up to 4 closest stair boundary transitions between the two floors
                     linked_a = set()
                     linked_b = set()
                     for d3d, pa, pb in stair_links:
@@ -814,8 +696,9 @@ class IngestionManager:
                                 pb['neighbors'].append(pa['id'])
                             linked_a.add(pa['id'])
                             linked_b.add(pb['id'])
+                            pa['stair_link'] = True
+                            pb['stair_link'] = True
 
-        # Ensure symmetric edges (if A -> B then B -> A)
         pano_map = {p['id']: p for p in panos}
         for p in panos:
             for nid in list(p.get('neighbors', [])):
@@ -824,11 +707,9 @@ class IngestionManager:
                     np_target['neighbors'].append(p['id'])
                 
         return panos
-                
-        return panos
 
     def recluster_project(self):
-        """Re-computes floors and navigation graph for all scans in project.avproj in <50ms without re-ingesting E57."""
+        """Re-computes floors and navigation graph for all scans in project.avproj, skipping synthesized ones."""
         if not self.project_json_path.exists():
             return False, "project.avproj not found"
             
@@ -836,19 +717,20 @@ class IngestionManager:
             proj_data = json.load(f)
             
         for scan in proj_data.get("scans", []):
+            if scan.get("nav_graph") == "los_v1":
+                continue  # synthesized scan with ground-truth LOS graph; preserve it
             panos = scan.get("panos", [])
             if not panos:
                 continue
             z_values = [p["position"][2] for p in panos]
             floor_mapping, new_floors = self._get_z_floors(z_values)
             
-            # Preserve existing floorplan calibration (fpOffset, fpScale, floorplan_path) if floor IDs match
             old_floors_by_id = {fl["id"]: fl for fl in scan.get("floors", [])}
             for nf in new_floors:
                 old_fl = old_floors_by_id.get(nf["id"])
                 if old_fl:
-                    for key in ["fpOffset", "fpScale", "floorplan_path"]:
-                        if key in old_fl:
+                    for key in ["fpOffset", "fpScale", "floorplan_path", "keyplan_path", "world_bounds", "floor_elevation", "name"]:
+                        if key in old_fl and key not in nf:
                             nf[key] = old_fl[key]
                             
             for p in panos:
@@ -863,7 +745,161 @@ class IngestionManager:
             
         return True, proj_data
 
-    def process_structured_e57(self, e57_path, scan_date, import_mode="linked", description="", progress_cb=None):
+    def _maybe_auto_align(self, pts, scan_dir, auto_align=False, progress_cb=None):
+        """Registers a new scan to the project's baseline scan using 4-DOF ICP if requested."""
+        if not auto_align:
+            return ws.make_transform(), None
+        try:
+            with open(self.project_json_path, "r", encoding="utf-8") as f:
+                proj = json.load(f)
+            scans = proj.get("scans", [])
+            if not scans:
+                return ws.make_transform(), None
+            baseline_id = proj.get("baseline_scan_id") or scans[0].get("scan_id", scans[0].get("scan_date"))
+            base_scan = next((s for s in scans if s.get("scan_id", s.get("scan_date")) == baseline_id), scans[0])
+            cache_rel = base_scan.get("point_cloud_cache")
+            if not cache_rel:
+                return ws.make_transform(), None
+            base_cache_path = self.project_dir / cache_rel
+            if not base_cache_path.exists():
+                return ws.make_transform(), None
+            if progress_cb: progress_cb(18, f"Aligning to baseline scan '{baseline_id}' (4-DOF ICP)...")
+            base_pts, _ = ws.load_lod0(base_cache_path)
+            T, info = ws.register_4dof(pts, base_pts, log=logger)
+            return T, info
+        except Exception as e:
+            logger.warning(f"Auto-alignment to baseline failed: {e}; proceeding without transform.")
+            return ws.make_transform(), None
+
+    def process_point_cloud(self, cloud_path, scan_date, scan_label=None, import_mode="linked",
+                            description="Universal Point Cloud Walkthrough", auto_align=False,
+                            station_spacing=ws.DEFAULT_SPACING, up_axis="z", pano_width=2048,
+                            progress_cb=None):
+        """Universal point cloud pipeline (.ply, .pcd, .las, .laz, .xyz, .obj, unstructured .e57)."""
+        logger = setup_import_log(self.project_dir)
+        logger.info(f"--- Universal Point Cloud Ingestion: {cloud_path} ---")
+        progress_cb = progress_cb or ws._noop_progress
+        
+        try:
+            if not os.path.exists(cloud_path):
+                raise FileNotFoundError(f"File not found: {cloud_path}")
+            
+            scan_id, scan_dir_rel, scan_dir = self._resolve_scan_ids(scan_date, scan_label)
+            source_import_path = self._handle_source_import(cloud_path, scan_id, import_mode)
+            
+            progress_cb(10, f"Loading point cloud ({Path(cloud_path).suffix})...")
+            pc = ws.load_point_cloud(cloud_path, max_points=8_000_000, up_axis=up_axis)
+            logger.info(f"Loaded {len(pc)} points from {cloud_path}")
+
+            T, align_info = self._maybe_auto_align(pc.pts, scan_dir, auto_align=auto_align, progress_cb=progress_cb)
+            if not np.allclose(T, np.eye(4)):
+                pc.pts = ws.transform_pts(pc.pts, T)
+                logger.info(f"Applied baseline alignment: yaw={align_info.get('yaw_deg'):.2f} deg, t={align_info.get('translation')}")
+
+            floor_labels = [h.strip() for h in str(self.floor_heights).split(",") if h.strip()] if self.floor_heights else None
+
+            synth = ws.synthesize_walkthrough(
+                pc, scan_dir, spacing=station_spacing, pano_width=pano_width,
+                progress_cb=progress_cb, log=logger, floor_names=floor_labels
+            )
+            panos = synth["panos"]
+            floors = synth["floors"]
+            lod0_rel = f"{scan_dir_rel}/{synth['lod0_rel']}"
+
+            validate_scan_contract(panos, [p["position"] for p in panos])
+            num_edges = sum(len(p.get("neighbors", [])) for p in panos)
+            report = {
+                "scan_type": "Universal Point Cloud",
+                "source_file": os.path.basename(cloud_path),
+                "stations_synthesized": len(panos),
+                "floors_generated": len(floors),
+                "navigation_edges_generated": num_edges,
+                "point_count_written": synth["report"]["lod0_points"],
+                "alignment": align_info or "identity",
+            }
+            write_import_report(str(scan_dir), report)
+
+            extra_meta = {
+                "transform_to_project": ws.matrix_to_list(T),
+                "nav_graph": "los_v1",
+                "up_axis": up_axis,
+                "synth_report": synth["report"]
+            }
+            progress_cb(96, "Saving project configuration...")
+            self._write_scan_to_project(
+                scan_date, description, panos, floors, import_mode, source_import_path, lod0_rel,
+                scan_id=scan_id, scan_dir_rel=scan_dir_rel, transform_to_project=ws.matrix_to_list(T),
+                nav_graph="los_v1", extra_meta=extra_meta
+            )
+            logger.info("Universal Point Cloud Ingestion Successful!")
+            return True
+        except Exception as e:
+            logger.error(f"Universal Point Cloud Ingestion Failed: {e}\n{traceback.format_exc()}")
+            raise
+
+    def process_matterpak(self, pak_path, scan_date, scan_label=None, import_mode="linked",
+                          description="Matterport MatterPak Import", auto_align=False,
+                          station_spacing=ws.DEFAULT_SPACING, pano_width=2048, progress_cb=None):
+        """Matterport MatterPak folder or .zip (.xyz/.ply/.obj + floorplans)."""
+        logger = setup_import_log(self.project_dir)
+        logger.info(f"--- Matterport MatterPak Ingestion: {pak_path} ---")
+        progress_cb = progress_cb or ws._noop_progress
+        try:
+            scan_id, scan_dir_rel, scan_dir = self._resolve_scan_ids(scan_date, scan_label)
+            progress_cb(8, "Resolving MatterPak contents...")
+            cloud_file, floorplans, manifest = ws.resolve_matterpak(pak_path, str(scan_dir))
+            logger.info(f"MatterPak resolved: cloud={cloud_file}, {len(floorplans)} floorplans")
+            
+            # Use point cloud pipeline on the resolved cloud
+            ok = self.process_point_cloud(
+                cloud_file, scan_date, scan_label=scan_id, import_mode="linked",
+                description=description, auto_align=auto_align,
+                station_spacing=station_spacing, up_axis="z", pano_width=pano_width,
+                progress_cb=progress_cb
+            )
+            return ok
+        except Exception as e:
+            logger.error(f"MatterPak Ingestion Failed: {e}\n{traceback.format_exc()}")
+            raise
+
+    def import_spatial_bundle(self, bundle_path, scan_date=None, scan_label=None, import_mode="managed",
+                              description="AV Spatial Bundle Import", progress_cb=None):
+        """Imports an AV Spatial Bundle v1.1 in <1s (copies panos, floor keyplans, and cache/lod0.bin)."""
+        logger = setup_import_log(self.project_dir)
+        logger.info(f"--- AV Spatial Bundle Import: {bundle_path} ---")
+        progress_cb = progress_cb or ws._noop_progress
+        try:
+            progress_cb(10, "Reading bundle manifest...")
+            bpath, bdata = ws.read_bundle_manifest(bundle_path)
+            
+            eff_date = scan_date or bdata.get("scan_date") or "2026-01-01"
+            eff_label = scan_label or bdata.get("scan_id") or Path(bundle_path).stem
+            scan_id, scan_dir_rel, scan_dir = self._resolve_scan_ids(eff_date, eff_label)
+            
+            progress_cb(30, "Importing bundle assets...")
+            imported = ws.import_bundle_into(bpath, scan_dir)
+            panos = imported["panos"]
+            floors = imported["floors"]
+            lod0_rel = f"{scan_dir_rel}/{imported['lod0_rel']}" if imported["lod0_rel"] else ""
+            
+            validate_scan_contract(panos, [p["position"] for p in panos])
+            
+            progress_cb(80, "Writing project manifest...")
+            self._write_scan_to_project(
+                eff_date, description, panos, floors, import_mode, str(bpath), lod0_rel,
+                scan_id=scan_id, scan_dir_rel=scan_dir_rel,
+                transform_to_project=imported.get("transform_to_project"),
+                nav_graph=imported.get("nav_graph", "bundle"),
+                extra_meta={"imported_from_bundle": True, "producer": imported.get("producer")}
+            )
+            logger.info("Spatial Bundle Import Successful!")
+            return True
+        except Exception as e:
+            logger.error(f"Spatial Bundle Import Failed: {e}\n{traceback.format_exc()}")
+            raise
+
+    def process_structured_e57(self, e57_path, scan_date, scan_label=None, import_mode="linked",
+                               description="", auto_align=False, progress_cb=None):
         logger = setup_import_log(self.project_dir)
         logger.info(f"--- Structured E57 Ingestion ---")
         logger.info(f"e57_path: {e57_path}, import_mode: {import_mode}")
@@ -872,11 +908,11 @@ class IngestionManager:
             if not os.path.exists(e57_path):
                 raise FileNotFoundError(f"E57 file not found: {e57_path}")
             
+            scan_id, scan_dir_rel, scan_dir = self._resolve_scan_ids(scan_date, scan_label)
             if progress_cb: progress_cb(5, "Resolving import modes...")
-            source_import_path = self._handle_source_import(e57_path, scan_date, import_mode)
+            source_import_path = self._handle_source_import(e57_path, scan_id, import_mode)
             actual_import_path = str(self.project_dir / source_import_path) if import_mode == "managed" else e57_path
             
-            scan_dir = self.project_dir / "Scans" / scan_date
             panos_dir = scan_dir / "panos"
             panos_dir.mkdir(parents=True, exist_ok=True)
             
@@ -886,7 +922,6 @@ class IngestionManager:
             if progress_cb: progress_cb(10, "Opening E57 metadata...")
             e57 = pye57.E57(actual_import_path)
             
-            # Find scans and images
             try:
                 data3d_root = e57.root["data3D"]
                 num_scans = data3d_root.childCount()
@@ -901,19 +936,35 @@ class IngestionManager:
                 total_images = 0
             
             logger.info(f"Scans found: {num_scans}, Images found: {total_images}")
+
+            # Fallback: if E57 has ZERO images2D, synthesize panoramas directly from the point cloud
+            if total_images == 0:
+                logger.info("Structured E57 has 0 images2D -> falling back to universal point cloud synthesis at scan poses.")
+                pc = ws.load_e57(actual_import_path, max_points=6_000_000)
+                poses = pc.scan_poses if (pc.scan_poses and len(pc.scan_poses) > 1) else None
+                synth = ws.synthesize_walkthrough(
+                    pc, scan_dir, fixed_stations=poses, progress_cb=progress_cb, log=logger
+                )
+                panos = synth["panos"]
+                floors = synth["floors"]
+                lod0_rel = f"{scan_dir_rel}/{synth['lod0_rel']}"
+                self._write_scan_to_project(
+                    scan_date, description or "E57 Synthesized Walkthrough", panos, floors,
+                    import_mode, source_import_path, lod0_rel,
+                    scan_id=scan_id, scan_dir_rel=scan_dir_rel, nav_graph="los_v1"
+                )
+                logger.info("Structured E57 zero-image synthesis successful!")
+                return True
             
-            # Check if we have images and what representation type they use
             is_cubemap = False
-            if total_images > 0:
-                first_img = image2D_node[0]
-                if first_img.isDefined("pinholeRepresentation"):
-                    is_cubemap = True
-                    logger.info("Detected pinhole cubemap representation images (e.g. Matterport).")
-                else:
-                    logger.info("Detected standard representation images.")
+            first_img = image2D_node[0]
+            if first_img.isDefined("pinholeRepresentation"):
+                is_cubemap = True
+                logger.info("Detected pinhole cubemap representation images (e.g. Matterport).")
+            else:
+                logger.info("Detected standard representation images.")
 
             if is_cubemap:
-                # Group images by associatedData3DGuid
                 guid_to_images = {}
                 for i in range(total_images):
                     im = image2D_node[i]
@@ -922,7 +973,6 @@ class IngestionManager:
                         guid_to_images[guid] = []
                     guid_to_images[guid].append(im)
                 
-                # Traverse scans
                 for i in range(num_scans):
                     if progress_cb:
                         progress_cb(10 + int(70 * i / num_scans), f"Stitching scan panorama {i+1} of {num_scans}...")
@@ -930,19 +980,15 @@ class IngestionManager:
                     scan_node = data3d_root[i]
                     scan_guid = scan_node["guid"].value()
                     
-                    # Get pose translation and rotation
                     pose_node = scan_node["pose"]
                     translation = pose_node["translation"]
                     rotation = pose_node["rotation"]
                     
                     x, y, z = translation["x"].value(), translation["y"].value(), translation["z"].value()
-                    qw, qx, qy, qz = rotation["w"].value(), rotation["x"].value(), rotation["y"].value(), rotation["z"].value()
                     z_values.append(z)
                     
-                    # Match images
                     matching_images = guid_to_images.get(scan_guid, [])
                     if len(matching_images) == 6:
-                        # Stitch
                         pano_bytes = self._stitch_cubemap_faces(matching_images)
                         pano_id = f"pano_{i:03d}"
                         image_filename = f"{pano_id}.jpg"
@@ -950,10 +996,12 @@ class IngestionManager:
                         with open(panos_dir / image_filename, "wb") as f:
                             f.write(pano_bytes)
                             
+                        # Matterport cubemap stitching bakes orientation into the equirectangular pixels.
+                        # Rotation is therefore identity in world space to avoid double-rotation bug.
                         panos.append({
                             "id": pano_id,
                             "position": [x, y, z],
-                            "rotation": [qx, qy, qz, qw],
+                            "rotation": [0.0, 0.0, 0.0, 1.0],
                             "z_exact": z,
                             "image_path": f"panos/{image_filename}",
                             "neighbors": []
@@ -961,8 +1009,6 @@ class IngestionManager:
                     else:
                         logger.warning(f"Scan {i} GUID {scan_guid} does not have exactly 6 cubemap faces (found {len(matching_images)}). Skipping.")
             else:
-                # Standard spherical panoramas
-                # Sort images naturally by embedded name to preserve chronological walkthrough sequence
                 import re
                 def natural_sort_key(idx):
                     node = image2D_node[idx]
@@ -1021,7 +1067,6 @@ class IngestionManager:
                         logger.warning(f"Image extract failed for node {i}: {node_err}")
                         continue
             
-            # Floor clustering and graph linking
             floor_mapping, floors = self._get_z_floors(z_values)
             for p in panos:
                 p['floor_id'] = floor_mapping[p.get('z_exact', 0)]
@@ -1029,7 +1074,6 @@ class IngestionManager:
                 
             panos = self._generate_navigation_graph(panos)
             
-            # Point cloud extraction
             if progress_cb: progress_cb(80, "Extracting and downsampling 3D points...")
             pts, cols = extract_e57_pointcloud(actual_import_path, logger=logger)
             
@@ -1039,13 +1083,14 @@ class IngestionManager:
                 cache_dir.mkdir(exist_ok=True)
                 cache_file = cache_dir / "lod0.bin"
                 save_point_cloud_bin(cache_file, pts, cols)
-                cache_rel = f"Scans/{scan_date}/cache/lod0.bin"
+                cache_rel = f"{scan_dir_rel}/cache/lod0.bin"
                 logger.info(f"Saved cache of {len(pts)} points to {cache_rel}")
+                # Auto-generate calibrated top-down 2D keyplans for each floor
+                ws.slabs_for_station_floors(pts, floors, panos)
+                ws.generate_keyplans(pts, floors, scan_dir)
             
-            # Validate scan contract
             validate_scan_contract(panos, [p["position"] for p in panos])
 
-            # Write import report
             num_nav_edges = sum(len(p.get("neighbors", [])) for p in panos)
             report_data = {
                 "scan_type": "Structured E57",
@@ -1059,12 +1104,14 @@ class IngestionManager:
                 "floors_generated": len(floors),
                 "point_count_written": len(pts)
             }
-            write_import_report(scan_dir, report_data)
+            write_import_report(str(scan_dir), report_data)
             logger.info("CONTRACT: PASSED -> writing scan")
 
-            # Write to unified project
             if progress_cb: progress_cb(95, "Finalizing project config...")
-            self._write_scan_to_project(scan_date, description, panos, floors, import_mode, source_import_path, cache_rel)
+            self._write_scan_to_project(
+                scan_date, description, panos, floors, import_mode, source_import_path, cache_rel,
+                scan_id=scan_id, scan_dir_rel=scan_dir_rel
+            )
             
             logger.info("Structured E57 Ingestion Successful!")
             return True
@@ -1075,26 +1122,21 @@ class IngestionManager:
 
     def _stitch_cubemap_faces(self, images, out_w=2048, out_h=1024):
         from PIL import Image
-        from scipy.spatial.transform import Rotation
         import io
 
         faces = []
         for im in images:
             name = im["name"].value() if hasattr(im["name"], "value") else str(im["name"])
             pose = im["pose"]
-            translation = pose["translation"]
             rotation = pose["rotation"]
             
-            # Get rotation matrix (pye57 order is w,x,y,z, scipy expects x,y,z,w)
             qx = rotation["x"].value()
             qy = rotation["y"].value()
             qz = rotation["z"].value()
             qw = rotation["w"].value()
             
-            r = Rotation.from_quat([qx, qy, qz, qw])
-            rot_matrix = r.as_matrix()
+            rot_matrix = ws.quat_to_matrix([qx, qy, qz, qw])
             
-            # Load JPEG image
             jpeg_node = im["pinholeRepresentation"]["jpegImage"]
             arr = jpeg_node.read_buffer()
             img = Image.open(io.BytesIO(arr.tobytes())).convert("RGB")
@@ -1120,7 +1162,9 @@ class IngestionManager:
         ys, xs = np.mgrid[0:out_h, 0:out_w]
         
         phi = (0.5 - ys / out_h) * np.pi
-        theta = (xs / out_w - 0.5) * 2.0 * np.pi
+        # ASTM E2807 Section 6.5.4 clockwise sweep: az = pi - 2pi*(xs/out_w)
+        # -> theta = (0.5 - xs/out_w) * 2pi (fixes 180-deg reversal in original code)
+        theta = (0.5 - xs / out_w) * 2.0 * np.pi
         
         vx = np.cos(phi) * np.cos(theta)
         vy = np.cos(phi) * np.sin(theta)
@@ -1148,19 +1192,20 @@ class IngestionManager:
                 
         out_img = Image.fromarray(pano)
         img_byte_arr = io.BytesIO()
-        out_img.save(img_byte_arr, format='JPEG', quality=85)
+        out_img.save(img_byte_arr, format='JPEG', quality=88)
         return img_byte_arr.getvalue()
 
-    def process_e57_plus_panos(self, e57_path, panos_src_dir, scan_date, import_mode="linked", description="E57+Panos Import", csv_pose_file=None, progress_cb=None):
+    def process_e57_plus_panos(self, e57_path, panos_src_dir, scan_date, scan_label=None, import_mode="linked",
+                               description="E57+Panos Import", csv_pose_file=None, auto_align=False, progress_cb=None):
         logger = setup_import_log(self.project_dir)
         logger.info(f"--- E57 + Panos Ingestion ---")
         
         try:
+            scan_id, scan_dir_rel, scan_dir = self._resolve_scan_ids(scan_date, scan_label)
             if progress_cb: progress_cb(5, "Resolving import modes...")
-            source_import_path = self._handle_source_import(e57_path, scan_date, import_mode)
+            source_import_path = self._handle_source_import(e57_path, scan_id, import_mode)
             actual_import_path = str(self.project_dir / source_import_path) if import_mode == "managed" else e57_path
             
-            scan_dir = self.project_dir / "Scans" / scan_date
             panos_dir = scan_dir / "panos"
             panos_dir.mkdir(parents=True, exist_ok=True)
             
@@ -1168,7 +1213,6 @@ class IngestionManager:
             poses = []
             z_values = []
             
-            # Count E57 scans
             e57_scans_count = 0
             try:
                 e57 = pye57.E57(actual_import_path)
@@ -1176,7 +1220,6 @@ class IngestionManager:
             except Exception:
                 pass
 
-            # Resolve CSV pose file (checking parameter first, then falling back to automatic search in panoramas folder)
             resolved_csv = csv_pose_file
             if not resolved_csv or not os.path.exists(resolved_csv):
                 potential_csv = os.path.join(panos_src_dir, "pano-poses.csv")
@@ -1205,16 +1248,9 @@ class IngestionManager:
                     for i in range(data3d_root.childCount()):
                         try:
                             scan_node = data3d_root[i]
-                            try:
-                                pose_node = scan_node["pose"]
-                                translation = pose_node["translation"]
-                                rotation = pose_node["rotation"]
-                                x, y, z = translation["x"].value(), translation["y"].value(), translation["z"].value()
-                                qw, qx, qy, qz = rotation["w"].value(), rotation["x"].value(), rotation["y"].value(), rotation["z"].value()
-                                poses.append({"position": [x, y, z], "rotation": [qx, qy, qz, qw]})
-                                z_values.append(z)
-                            except (KeyError, ValueError, AttributeError):
-                                pass
+                            pos, rot = ws._e57_pose(scan_node)
+                            poses.append({"position": pos, "rotation": rot})
+                            z_values.append(pos[2])
                         except Exception as node_err:
                             logger.warning(f"Failed scan pose {i}: {node_err}")
                             continue
@@ -1222,7 +1258,6 @@ class IngestionManager:
                 except KeyError:
                     logger.warning("No data3D node found in E57.")
 
-            # Strict 1-to-1 Match Enforcement with minor tolerance trimming
             if len(poses) == 0:
                 raise RuntimeError("INGESTION FAILED: No camera poses found (E57 metadata is empty, or CSV was empty/missing). Walkthrough cannot be generated.")
             
@@ -1230,7 +1265,7 @@ class IngestionManager:
                 diff = abs(len(poses) - len(pano_files))
                 if diff <= 5:
                     min_len = min(len(poses), len(pano_files))
-                    logger.warning(f"Minor pose/image count mismatch detected: extracted {len(poses)} poses, found {len(pano_files)} images. Automatically trimming to {min_len} to match.")
+                    logger.warning(f"Minor pose/image count mismatch detected: extracted {len(poses)} poses, found {len(pano_files)} images. Trimming to {min_len}.")
                     poses = poses[:min_len]
                     pano_files = pano_files[:min_len]
                     if len(z_values) > min_len:
@@ -1238,8 +1273,7 @@ class IngestionManager:
                 else:
                     raise RuntimeError(
                         f"INGESTION FAILED: Pose/image count mismatch. "
-                        f"Extracted {len(poses)} poses, but found {len(pano_files)} panorama images. "
-                        f"A strict 1-to-1 match is required to generate a walkthrough."
+                        f"Extracted {len(poses)} poses, but found {len(pano_files)} panorama images."
                     )
 
             panos = []
@@ -1265,15 +1299,7 @@ class IngestionManager:
                 
             panos = self._generate_navigation_graph(panos)
             
-            # Debug hook before write
-            logger.info("=== CONTRACT CHECK ===")
-            logger.info(f"Panos: {len(panos)}")
-            logger.info(f"Poses: {len(poses)}")
-            logger.info(f"Images: {len(pano_files)}")
-            
-            # Enforce validation contract
             validate_scan_contract(panos, poses, pano_files)
-            logger.info("CONTRACT: PASSED")
             
             if progress_cb: progress_cb(80, "Extracting and downsampling E57 points...")
             pts, cols = extract_e57_pointcloud(actual_import_path, logger=logger)
@@ -1284,9 +1310,10 @@ class IngestionManager:
                 cache_dir.mkdir(exist_ok=True)
                 cache_file = cache_dir / "lod0.bin"
                 save_point_cloud_bin(cache_file, pts, cols)
-                cache_rel = f"Scans/{scan_date}/cache/lod0.bin"
+                cache_rel = f"{scan_dir_rel}/cache/lod0.bin"
+                ws.slabs_for_station_floors(pts, floors, panos)
+                ws.generate_keyplans(pts, floors, scan_dir)
             
-            # Write import report
             num_nav_edges = sum(len(p.get("neighbors", [])) for p in panos)
             report_data = {
                 "scan_type": "E57 + Panos",
@@ -1300,16 +1327,50 @@ class IngestionManager:
                 "floors_generated": len(floors),
                 "point_count_written": len(pts)
             }
-            write_import_report(scan_dir, report_data)
+            write_import_report(str(scan_dir), report_data)
             logger.info("CONTRACT: PASSED -> writing scan")
                 
-            self._write_scan_to_project(scan_date, description, panos, floors, import_mode, source_import_path, cache_rel)
+            self._write_scan_to_project(
+                scan_date, description, panos, floors, import_mode, source_import_path, cache_rel,
+                scan_id=scan_id, scan_dir_rel=scan_dir_rel
+            )
             logger.info("E57+Panos Ingestion Successful!")
             return True
         except Exception as e:
-            logger.error("CONTRACT: FAILED -> ingestion aborted")
             logger.error(f"E57+Panos Ingestion Failed: {e}")
             raise e
+
+    def set_scan_transform(self, scan_id, new_transform):
+        """Applies a manual or external 4x4 transform to an existing scan's stations, lod0 and keyplans."""
+        if not self.project_json_path.exists():
+            return False, "project.avproj not found"
+        with open(self.project_json_path, "r", encoding="utf-8") as f:
+            proj = json.load(f)
+        target = next((s for s in proj.get("scans", []) if s.get("scan_id", s.get("scan_date")) == scan_id), None)
+        if not target:
+            return False, f"Scan '{scan_id}' not found"
+        T_new = np.asarray(new_transform, dtype=np.float64).reshape(4, 4)
+        T_old = np.asarray(target.get("transform_to_project", np.eye(4)), dtype=np.float64).reshape(4, 4)
+        delta_T = T_new @ np.linalg.inv(T_old)
+
+        panos, floors = ws.apply_transform_to_scan(target.get("panos", []), target.get("floors", []), delta_T)
+        target["panos"] = panos
+        target["floors"] = floors
+        target["transform_to_project"] = ws.matrix_to_list(T_new)
+
+        scan_dir_rel = target.get("scan_dir") or f"Scans/{scan_id}"
+        scan_dir = self.project_dir / scan_dir_rel
+        cache_rel = target.get("point_cloud_cache")
+        if cache_rel and (self.project_dir / cache_rel).exists():
+            pts, cols = ws.load_lod0(self.project_dir / cache_rel)
+            pts_new = ws.transform_pts(pts, delta_T)
+            ws.save_lod0(self.project_dir / cache_rel, pts_new, cols)
+            ws.generate_keyplans(pts_new, floors, scan_dir)
+
+        with open(self.project_json_path, "w", encoding="utf-8") as f:
+            json.dump(proj, f, indent=2)
+        ws.write_bundle_manifest(scan_dir, target, project_id=proj.get("project_id"), producer="AV Showcase")
+        return True, target
 
     def launch_av_structure(self, slam_path=None):
         import subprocess
