@@ -12,6 +12,8 @@ export class WalkthroughNavigation {
         this.kpScale = 1.0;
         this.kpOffsetX = 0;
         this.kpOffsetY = 0;
+        this.cachedKeyplanBounds = null;
+        this.hoveredNode = null;
     }
 
     /**
@@ -33,9 +35,6 @@ export class WalkthroughNavigation {
         let yValues = [];
         const stride = Math.max(1, Math.floor(count / 50000));
         
-        // Note: positions buffer is already in Three.js world space (X, Y=height, Z=depth),
-        // matching pos (neighborThreePos). Restrict vertical search to [pos.y - 2.5m, pos.y - 0.8m]
-        // so multi-story point clouds never pick up floors from lower stories below.
         const minGroundY = pos.y - 2.5;
         const maxGroundY = pos.y - 0.8;
         
@@ -60,7 +59,6 @@ export class WalkthroughNavigation {
         }
         
         yValues.sort((a, b) => a - b);
-        // Take the median of floor slab candidates directly beneath the scanner
         const idx = Math.floor(yValues.length * 0.5);
         return yValues[idx];
     }
@@ -68,7 +66,7 @@ export class WalkthroughNavigation {
     /**
      * Updates 3D navigation rings inside the WebGL viewport relative to neighbors.
      * @param {Object} currentPano - The active panorama object
-     * @param {Object[]} allPanos - List of all panoramas in the active scan date
+     * @param {Object[]} allPanos - List of all panoramas in the active scan
      */
     updateNavMarkers(currentPano, allPanos) {
         this.renderer.navMarkersGroup.clear();
@@ -81,36 +79,33 @@ export class WalkthroughNavigation {
             if (!neighbor) return;
 
             const neighborThreePos = CoordsUtility.pythonToThree(neighbor.position, THREE);
-
-            // Resolve actual ground elevation at the neighbor position using the point cloud
             const groundY = this.findGroundHeight(neighborThreePos, this.renderer.pointCloud);
             
-            // Position the marker 5cm above the resolved ground level to prevent z-fighting
             const markerPos = new THREE.Vector3(
                 neighborThreePos.x - currentThreePos.x,
                 groundY - currentThreePos.y + 0.05,
                 neighborThreePos.z - currentThreePos.z
             );
 
-            const isCrossFloor = neighbor.floor_id !== currentPano.floor_id;
+            const isCrossFloor = neighbor.floor_id !== currentPano.floor_id || neighbor.stair_link === true;
 
-            // Frosted Glass Ring Mesh (Cross-floor stair links highlighted in Artificial Vision Gold)
+            // Glass Ring Mesh: normal is soft glass white; stair transitions use Artificial Vision Gold (#BAA164)
             const geometry = new THREE.RingGeometry(0.8, 1.2, 32);
             const material = new THREE.MeshBasicMaterial({ 
-                color: isCrossFloor ? 0xbfa365 : 0xffffff, 
+                color: isCrossFloor ? 0xbaa164 : 0xfcfbf8, 
                 transparent: true, 
-                opacity: isCrossFloor ? 0.85 : 0.55, 
+                opacity: isCrossFloor ? 0.90 : 0.65, 
                 side: THREE.DoubleSide,
                 depthWrite: false
             });
             const marker = new THREE.Mesh(geometry, material);
             marker.position.copy(markerPos);
-            marker.rotation.x = -Math.PI / 2; // Lay flat on the horizontal floor plane
+            marker.rotation.x = -Math.PI / 2; // Flat on the floor
 
-            marker.userData = { panoId: nid, type: 'nav' };
+            marker.userData = { panoId: nid, type: 'nav', isCrossFloor };
             this.renderer.navMarkersGroup.add(marker);
             
-            // Invisible larger hit-box for easier clicking interaction (Original size restored)
+            // Invisible larger hit-box for easy raycast selection
             const hitGeo = new THREE.CircleGeometry(2.0, 16);
             const hitMat = new THREE.MeshBasicMaterial({ visible: false });
             const hit = new THREE.Mesh(hitGeo, hitMat);
@@ -119,160 +114,258 @@ export class WalkthroughNavigation {
             hit.userData = { panoId: nid, type: 'nav' };
             this.renderer.navMarkersGroup.add(hit);
         });
+        this.renderer.requestRender();
     }
 
     /**
-     * Renders keyplan networks on the 2D canvas.
-     * @param {HTMLCanvasElement} canvas - Target drawing canvas
-     * @param {Object} currentPano - The active panorama object
-     * @param {Object[]} floorPanos - List of panoramas located on the current floor
-     * @param {HTMLImageElement} [fpImg] - Optional overlay floorplan image
-     * @param {Object} [fpOffset] - Calibration offset {x, y}
-     * @param {number} [fpScale] - Calibration scale factor
+     * Renders keyplan networks on the 2D canvas with DPR sharpness and North-up orientation.
+     * Supports both auto-generated metric wall-slice images (world_bounds) and legacy uploads.
+     *
+     * @param {HTMLCanvasElement} canvas
+     * @param {Object} currentPano
+     * @param {Object[]} floorPanos
+     * @param {HTMLImageElement} [fpImg]
+     * @param {Object} [fpOffset]
+     * @param {number} [fpScale]
+     * @param {number} [cameraYaw] - degrees compass azimuth (0 = +X East, 90 = +Y North)
+     * @param {Object} [worldBounds] - { min_x, max_x, min_y, max_y, meters_per_pixel }
      */
-    renderKeyplan(canvas, currentPano, floorPanos, fpImg, fpOffset, fpScale, cameraYaw) {
+    renderKeyplan(canvas, currentPano, floorPanos, fpImg, fpOffset, fpScale, cameraYaw, worldBounds) {
+        if (!canvas) return;
         const ctx = canvas.getContext('2d');
-        const w = canvas.parentElement.clientWidth;
-        const h = canvas.parentElement.clientHeight;
-        canvas.width = w;
-        canvas.height = h;
-        
+        const dpr = window.devicePixelRatio || 1;
+        const parent = canvas.parentElement;
+        const w = (parent ? parent.clientWidth : canvas.clientWidth) || 300;
+        const h = (parent ? parent.clientHeight : canvas.clientHeight) || 200;
+
+        canvas.width = Math.floor(w * dpr);
+        canvas.height = Math.floor(h * dpr);
+        canvas.style.width = `${w}px`;
+        canvas.style.height = `${h}px`;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
         ctx.clearRect(0, 0, w, h);
-        ctx.fillStyle = "#171717"; // Artificial Vision charcoal canvas surface
+        ctx.fillStyle = "#121218"; // Apple Glass dark base
         ctx.fillRect(0, 0, w, h);
 
-        // Render floorplan background image if uploaded
-        if (fpImg) {
-            const off = fpOffset || { x: 0, y: 0 };
-            const fsc = fpScale || 1.0;
-
-            const baseScale = Math.min(canvas.width / fpImg.width, canvas.height / fpImg.height) * 0.9 * fsc;
-            const drawX = (canvas.width - fpImg.width * baseScale) / 2 + off.x;
-            const drawY = (canvas.height - fpImg.height * baseScale) / 2 + off.y;
-            ctx.globalAlpha = 0.6;
-            ctx.drawImage(fpImg, drawX, drawY, fpImg.width * baseScale, fpImg.height * baseScale);
-            ctx.globalAlpha = 1.0;
-        }
-
-        if (floorPanos.length === 0) {
+        if (!floorPanos || floorPanos.length === 0) {
             this.kpNodes = [];
             return;
         }
 
-        // Calculate spatial bounds in Python space (X is index 0, Y is index 1)
+        // Compute coordinate transformation.
+        // North-up canvas orientation: +X points right, +Y points UP.
+        // Canvas pixel mapping:
+        //   px =  (X - min_x) * scale + marginX
+        //   py = -(Y - min_y) * scale + h - marginY   ==  -Y * scale + offsetY
         let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-        floorPanos.forEach(p => {
-            const px = p.position[0];
-            const py = p.position[1];
-            if (px < minX) minX = px;
-            if (px > maxX) maxX = px;
-            if (py < minY) minY = py;
-            if (py > maxY) maxY = py;
+        if (worldBounds && typeof worldBounds.min_x === 'number') {
+            minX = worldBounds.min_x;
+            maxX = worldBounds.max_x;
+            minY = worldBounds.min_y;
+            maxY = worldBounds.max_y;
+        } else {
+            floorPanos.forEach(p => {
+                const x = p.position[0];
+                const y = p.position[1];
+                if (x < minX) minX = x;
+                if (x > maxX) maxX = x;
+                if (y < minY) minY = y;
+                if (y > maxY) maxY = y;
+            });
+            // Ensure minimum padding around lone stations
+            if (maxX - minX < 2.0) { minX -= 2.0; maxX += 2.0; }
+            if (maxY - minY < 2.0) { minY -= 2.0; maxY += 2.0; }
+        }
+
+        const padding = 16;
+        const scaleX = (w - padding * 2) / Math.max(0.1, (maxX - minX));
+        const scaleY = (h - padding * 2) / Math.max(0.1, (maxY - minY));
+        this.kpScale = Math.min(scaleX, scaleY);
+
+        const spanW = (maxX - minX) * this.kpScale;
+        const spanH = (maxY - minY) * this.kpScale;
+        this.kpOffsetX = padding - minX * this.kpScale + (w - padding * 2 - spanW) / 2;
+        // With +Y up: py = -Y * s + offY. At Y = maxY, py = margin = (h - spanH)/2
+        // -> offY = margin + maxY * s
+        this.kpOffsetY = (h - spanH) / 2 + maxY * this.kpScale;
+
+        this.cachedKeyplanBounds = { minX, maxX, minY, maxY, w, h };
+
+        // Helper: Python (X, Y) -> Canvas (px, py)
+        const toCanvas = (x, y) => ({
+            x: x * this.kpScale + this.kpOffsetX,
+            y: -y * this.kpScale + this.kpOffsetY
         });
 
-        const padding = 20;
-        const scaleX = (w - padding * 2) / (maxX - minX || 1);
-        const scaleY = (h - padding * 2) / (maxY - minY || 1);
-        
-        this.kpScale = Math.min(scaleX, scaleY);
-        this.kpOffsetX = padding - minX * this.kpScale + (w - padding * 2 - (maxX - minX) * this.kpScale) / 2;
-        this.kpOffsetY = padding - minY * this.kpScale + (h - padding * 2 - (maxY - minY) * this.kpScale) / 2;
+        // 1. Draw calibrated floorplan image if available
+        if (fpImg) {
+            ctx.save();
+            if (worldBounds && typeof worldBounds.min_x === 'number') {
+                // Metric calibration: image bounds [min_x, max_x, min_y, max_y]
+                const tl = toCanvas(worldBounds.min_x, worldBounds.max_y);
+                const br = toCanvas(worldBounds.max_x, worldBounds.min_y);
+                ctx.globalAlpha = 0.85;
+                ctx.drawImage(fpImg, tl.x, tl.y, br.x - tl.x, br.y - tl.y);
+            } else {
+                // Legacy uncalibrated upload with fpOffset & fpScale
+                const off = fpOffset || { x: 0, y: 0 };
+                const fsc = fpScale || 1.0;
+                const baseScale = Math.min(w / fpImg.width, h / fpImg.height) * 0.9 * fsc;
+                const drawX = (w - fpImg.width * baseScale) / 2 + off.x;
+                const drawY = (h - fpImg.height * baseScale) / 2 + off.y;
+                ctx.globalAlpha = 0.65;
+                ctx.drawImage(fpImg, drawX, drawY, fpImg.width * baseScale, fpImg.height * baseScale);
+            }
+            ctx.restore();
+        }
 
-        // Draw node connection paths
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.18)";
+        // 2. Draw navigation edges
+        ctx.strokeStyle = "rgba(186, 161, 100, 0.28)";
         ctx.lineWidth = 1;
         floorPanos.forEach(p => {
-            const px = p.position[0] * this.kpScale + this.kpOffsetX;
-            const py = p.position[1] * this.kpScale + this.kpOffsetY;
+            const p1 = toCanvas(p.position[0], p.position[1]);
             if (p.neighbors) {
                 p.neighbors.forEach(nid => {
                     const np = floorPanos.find(x => x.id === nid);
-                    if (np) {
-                        const npx = np.position[0] * this.kpScale + this.kpOffsetX;
-                        const npy = np.position[1] * this.kpScale + this.kpOffsetY;
+                    if (np && np.id > p.id) { // draw each edge once
+                        const p2 = toCanvas(np.position[0], np.position[1]);
                         ctx.beginPath();
-                        ctx.moveTo(px, py);
-                        ctx.lineTo(npx, npy);
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
                         ctx.stroke();
                     }
                 });
             }
         });
 
-        // Draw individual nodes and capture canvas pixel targets
+        // 3. Draw stations
         this.kpNodes = [];
         floorPanos.forEach(p => {
-            const px = p.position[0] * this.kpScale + this.kpOffsetX;
-            const py = p.position[1] * this.kpScale + this.kpOffsetY;
-            
-            this.kpNodes.push({ id: p.id, x: px, y: py });
+            const pt = toCanvas(p.position[0], p.position[1]);
+            this.kpNodes.push({ id: p.id, x: pt.x, y: pt.y, world: p.position });
             const isCurrent = (currentPano && currentPano.id === p.id);
             const isNeighbor = (currentPano && currentPano.neighbors && currentPano.neighbors.includes(p.id));
-            
+            const isStair = p.stair_link === true;
+
             ctx.beginPath();
-            ctx.arc(px, py, isCurrent ? 6 : (isNeighbor ? 4.5 : 3.5), 0, Math.PI * 2);
-            ctx.fillStyle = isCurrent ? "#bfa365" : (isNeighbor ? "rgba(191, 163, 101, 0.85)" : "rgba(255, 255, 255, 0.45)");
+            const radius = isCurrent ? 6.5 : (isNeighbor ? 4.5 : 3.5);
+            ctx.arc(pt.x, pt.y, radius, 0, Math.PI * 2);
+            
+            if (isCurrent) {
+                ctx.fillStyle = "#BAA164"; // Gold active station
+            } else if (isStair) {
+                ctx.fillStyle = "#E5C983"; // Gold stair transition
+            } else if (isNeighbor) {
+                ctx.fillStyle = "rgba(229, 201, 131, 0.85)";
+            } else {
+                ctx.fillStyle = "rgba(252, 251, 248, 0.45)";
+            }
             ctx.fill();
-            if (isCurrent || isNeighbor) {
-                ctx.strokeStyle = isCurrent ? '#ffffff' : 'rgba(255, 255, 255, 0.6)';
+
+            if (isCurrent || isNeighbor || isStair) {
+                ctx.strokeStyle = isCurrent ? '#FCFBF8' : 'rgba(186, 161, 100, 0.75)';
                 ctx.lineWidth = isCurrent ? 2 : 1;
                 ctx.stroke();
+            }
 
-                if (isCurrent && cameraYaw !== undefined) {
-                    const angleRad = (cameraYaw) * Math.PI / 180;
-                    
-                    // Draw FOV Cone (Radar wedge)
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.moveTo(px, py);
-                    const fovHalf = 25 * Math.PI / 180;
-                    ctx.arc(px, py, 20, angleRad - fovHalf, angleRad + fovHalf);
-                    ctx.closePath();
-                    ctx.fillStyle = "rgba(191, 163, 101, 0.30)";
-                    ctx.fill();
-                    
-                    // Draw Directional Pointer Line
-                    ctx.beginPath();
-                    ctx.moveTo(px, py);
-                    const arrowLength = 15;
-                    const ax = px + arrowLength * Math.cos(angleRad);
-                    const ay = py + arrowLength * Math.sin(angleRad);
-                    ctx.lineTo(ax, ay);
-                    ctx.strokeStyle = "#bfa365";
-                    ctx.lineWidth = 3;
-                    ctx.stroke();
-                    
-                    // Draw Arrow Head
-                    const headLen = 6;
-                    ctx.beginPath();
-                    ctx.moveTo(ax, ay);
-                    ctx.lineTo(ax - headLen * Math.cos(angleRad - Math.PI/6), ay - headLen * Math.sin(angleRad - Math.PI/6));
-                    ctx.lineTo(ax - headLen * Math.cos(angleRad + Math.PI/6), ay - headLen * Math.sin(angleRad + Math.PI/6));
-                    ctx.closePath();
-                    ctx.fillStyle = "#bfa365";
-                    ctx.fill();
-                    ctx.restore();
-                }
+            // Radar viewing wedge on active station
+            // Compass azimuth: 0 = +X (East, right = 0 rad), 90 = +Y (North, up = -π/2 rad)
+            // Canvas standard: angle = -cameraYaw * π / 180
+            if (isCurrent && cameraYaw !== undefined) {
+                const angleRad = -cameraYaw * Math.PI / 180;
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(pt.x, pt.y);
+                const fovHalf = 28 * Math.PI / 180;
+                ctx.arc(pt.x, pt.y, 22, angleRad - fovHalf, angleRad + fovHalf);
+                ctx.closePath();
+                ctx.fillStyle = "rgba(186, 161, 100, 0.35)";
+                ctx.fill();
+
+                // Direction pointer
+                ctx.beginPath();
+                ctx.moveTo(pt.x, pt.y);
+                const arrowLength = 16;
+                const ax = pt.x + arrowLength * Math.cos(angleRad);
+                const ay = pt.y + arrowLength * Math.sin(angleRad);
+                ctx.lineTo(ax, ay);
+                ctx.strokeStyle = "#BAA164";
+                ctx.lineWidth = 2.5;
+                ctx.stroke();
+                ctx.restore();
             }
         });
+
+        // 4. Hover indicator ring
+        if (this.hoveredNode) {
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(this.hoveredNode.x, this.hoveredNode.y, 9, 0, Math.PI * 2);
+            ctx.strokeStyle = "rgba(186, 161, 100, 0.9)";
+            ctx.lineWidth = 1.5;
+            ctx.setLineDash([3, 3]);
+            ctx.stroke();
+            ctx.restore();
+        }
     }
 
     /**
-     * Resolves click inputs on the keyplan canvas.
-     * @param {number} clkX - click X pixel relative to canvas bounding box
-     * @param {number} clkY - click Y pixel relative to canvas bounding box
-     * @returns {string|null} The clicked node ID, or null
+     * Converts a canvas pixel click into world coordinates (X, Y) and finds the closest station
+     * on the active floor within maxWorldDist meters (default 8.0 m), enabling click-anywhere teleport.
+     *
+     * @param {number} clkX - click X in CSS pixels relative to canvas
+     * @param {number} clkY - click Y in CSS pixels relative to canvas
+     * @param {Object[]} [floorPanos] - panos on the current floor
+     * @param {number} [maxWorldDist=8.0] - maximum snap distance in meters
+     * @returns {string|null} The nearest node ID, or null if beyond threshold
      */
-    handleKeyplanClick(clkX, clkY) {
+    handleKeyplanClick(clkX, clkY, floorPanos = null, maxWorldDist = 8.0) {
+        if (!this.kpScale || this.kpScale <= 0) return null;
+
+        // Invert canvas projection to world space:
+        // px =  X * s + offX  ->  X = (px - offX) / s
+        // py = -Y * s + offY  ->  Y = (offY - py) / s
+        const worldX = (clkX - this.kpOffsetX) / this.kpScale;
+        const worldY = (this.kpOffsetY - clkY) / this.kpScale;
+
+        const panos = floorPanos || this.kpNodes.map(n => ({ id: n.id, position: n.world }));
+        if (!panos || panos.length === 0) return null;
+
         let closestId = null;
-        let minDist = 324; // 18px radius squared threshold for reliable point selection
-        this.kpNodes.forEach(node => {
-            const d = Math.pow(node.x - clkX, 2) + Math.pow(node.y - clkY, 2);
-            if (d < minDist) {
-                minDist = d;
-                closestId = node.id;
+        let minDistSq = maxWorldDist * maxWorldDist;
+
+        panos.forEach(p => {
+            const dx = p.position[0] - worldX;
+            const dy = p.position[1] - worldY;
+            const d2 = dx * dx + dy * dy;
+            if (d2 < minDistSq) {
+                minDistSq = d2;
+                closestId = p.id;
             }
         });
+
         return closestId;
+    }
+
+    /**
+     * Updates hover preview state when moving over the keyplan.
+     */
+    handleKeyplanHover(clkX, clkY) {
+        if (this.kpNodes.length === 0) {
+            this.hoveredNode = null;
+            return null;
+        }
+        let closest = null;
+        let minDistSq = 20 * 20; // 20px screen distance
+        this.kpNodes.forEach(node => {
+            const d2 = Math.pow(node.x - clkX, 2) + Math.pow(node.y - clkY, 2);
+            if (d2 < minDistSq) {
+                minDistSq = d2;
+                closest = node;
+            }
+        });
+        this.hoveredNode = closest;
+        return closest;
     }
 }

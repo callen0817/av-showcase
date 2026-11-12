@@ -3,42 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AV Walkthrough</title>
+    <title>AV Showcase</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
-    <link rel="icon" href="assets/av-walkthrough-logo.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+    <link rel="icon" href="assets/av-showcase-logo.png" type="image/png">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="app">
+        <!-- Toast Notification Stack -->
+        <div id="toast" class="toast"></div>
+
         <div id="ui-layer">
+            <!-- Apple Glass Boot Splash Modal (matches av-scan splash) -->
             <div id="splash-screen" style="display: none;">
-                <div class="brand-lockup" style="justify-content: center; margin-bottom: 16px;">
-                    <img src="assets/av-walkthrough-logo.png" alt="AV Walkthrough Logo" class="brand-logo-lg" />
-                    <div class="brand-text" style="text-align: left;">
-                        <span class="brand-title">AV Walkthrough</span>
-                        <span class="brand-subtitle">an Artificial Vision product</span>
+                <div class="glass-splash-card">
+                    <!-- Gold Top Accent Pill -->
+                    <div class="splash-top-pill"></div>
+                    <button id="btn-close-splash" class="splash-close-btn" title="Dismiss" type="button">&times;</button>
+                    
+                    <!-- Concentric Halo Rings & Center Emblem -->
+                    <div class="splash-emblem-area">
+                        <div class="splash-ring ring-48"></div>
+                        <div class="splash-ring ring-72"></div>
+                        <div class="splash-ring ring-96"></div>
+                        <div class="splash-ring ring-120"></div>
+                        <img src="assets/av-showcase-logo.png" alt="AV Showcase" class="splash-logo" />
                     </div>
-                </div>
-                <div id="splash-text" class="label-mono" style="margin-top: 8px;">Starting Engine...</div>
-                <div id="progress-container" style="display: none; width: 320px; height: 6px; background: var(--secondary); border-radius: 3px; margin: 20px auto 0 auto; overflow: hidden;">
-                    <div id="progress-fill" style="width: 0%; height: 100%; background: var(--primary); transition: width 0.3s ease;"></div>
+
+                    <div class="splash-brand-text">
+                        <div class="splash-tagline">VERIFY &middot; DIRECT &middot; CLARIFY</div>
+                        <h1 class="splash-title">AV SHOWCASE</h1>
+                        <div class="splash-subtitle">an Artificial Vision product</div>
+                    </div>
+
+                    <div id="splash-text" class="label-mono splash-status-text">Starting Engine...</div>
+                    <div id="progress-container" class="splash-progress-track" style="display: none;">
+                        <div id="progress-fill" class="splash-progress-fill"></div>
+                    </div>
                 </div>
             </div>
             
+            <!-- Home Screen Dashboard -->
             <div id="home-screen">
-                <header class="av-header">
-                    <div class="av-header-inner">
-                        <div class="brand-lockup">
-                            <img src="assets/av-walkthrough-logo.png" alt="AV Walkthrough" class="brand-logo" />
-                            <div class="brand-text">
-                                <span class="brand-title">AV Walkthrough</span>
-                                <span class="brand-subtitle">an Artificial Vision product</span>
+                <!-- Apple Glass Header -->
+                <header class="glass-header">
+                    <div class="glass-header-inner">
+                        <div class="header-left">
+                            <div class="emblem-badge">
+                                <img src="assets/av-showcase-logo.png" alt="AV" class="emblem-icon" />
+                            </div>
+                            <div class="brand-pill">
+                                <span class="brand-pill-title">AV SHOWCASE</span>
+                                <span class="brand-pill-divider"></span>
+                                <span class="brand-pill-tagline">VERIFY &middot; DIRECT &middot; CLARIFY</span>
                             </div>
                         </div>
-                        <div class="av-header-meta">
-                            <span class="label-mono">Spatial Intelligence &amp; 360° Walkthrough</span>
+
+                        <div class="header-right">
+                            <div class="glass-slider-pill" title="Adjust background glass translucency">
+                                <span class="glass-slider-label">GLASS</span>
+                                <input type="range" id="glass-opacity-slider" min="0" max="90" value="14" step="2" />
+                                <span id="glass-opacity-val" class="glass-slider-pct">14%</span>
+                            </div>
+                            <div class="status-pill status-ready">
+                                <span class="status-dot"></span>
+                                <span class="status-text">ENGINE READY</span>
+                            </div>
                         </div>
                     </div>
                 </header>
@@ -46,30 +78,41 @@
                 <div class="home-container">
                     <div class="home-hero">
                         <div class="home-hero-brand">
-                            <img src="assets/av-walkthrough-logo.png" alt="AV Walkthrough" class="hero-logo" />
+                            <div class="hero-logo-frame">
+                                <img src="assets/av-showcase-logo.png" alt="AV Showcase" class="hero-logo" />
+                            </div>
                             <div>
-                                <div class="label-mono">Artificial Vision · VDC Suite</div>
-                                <h1 class="home-title">AV Walkthrough</h1>
-                                <p class="home-subtitle">Select a project to begin or process a new scan dataset.</p>
+                                <div class="label-mono hero-kicker">Artificial Vision &middot; Spatial Intelligence Suite</div>
+                                <h1 class="home-title">AV Showcase</h1>
+                                <p class="home-subtitle">Spatial virtual tour platform and universal point cloud walkthrough engine.</p>
                             </div>
                         </div>
                     </div>
                     
                     <div class="action-cards">
-                        <div class="card" id="card-open">
-                            <div class="label-mono" style="margin-bottom: 8px;">Workspace</div>
+                        <div class="card glass-card" id="card-open">
+                            <div class="card-icon-pill">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+                            </div>
+                            <div class="label-mono">Workspace</div>
                             <h3>Open Project</h3>
-                            <p>Load an existing walkthrough environment.</p>
+                            <p>Load an existing walkthrough environment (.avproj).</p>
                         </div>
-                        <div class="card card-primary-accent" id="card-create">
-                            <div class="label-mono" style="margin-bottom: 8px;">Ingestion</div>
+                        <div class="card glass-card card-primary-accent" id="card-create">
+                            <div class="card-icon-pill accent-gold">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            </div>
+                            <div class="label-mono">Ingestion</div>
                             <h3>Create Walkthrough</h3>
-                            <p>Ingest a new E57 or Panos dataset natively.</p>
+                            <p>Ingest any point cloud, spatial bundle, E57, or MatterPak.</p>
                         </div>
-                        <div class="card" id="card-create-folder">
-                            <div class="label-mono" style="margin-bottom: 8px;">Organization</div>
+                        <div class="card glass-card" id="card-create-folder">
+                            <div class="card-icon-pill">
+                                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path><line x1="12" y1="11" x2="12" y2="17"></line><line x1="9" y1="14" x2="15" y2="14"></line></svg>
+                            </div>
+                            <div class="label-mono">Organization</div>
                             <h3>Create Folder</h3>
-                            <p>Create a folder to group and organize projects.</p>
+                            <p>Group projects by client, campus, or facility.</p>
                         </div>
                     </div>
 
@@ -86,11 +129,14 @@
                 </div>
             </div>
 
-            <!-- Create Modal -->
+            <!-- Create Modal (Apple Glass Sheet) -->
             <div id="create-modal" style="display: none;">
-                <div class="modal-content">
-                    <div class="label-mono" style="margin-bottom: 4px;">Dataset Ingestion</div>
+                <div class="modal-content glass-modal">
+                    <div class="modal-header-pill">
+                        <span class="label-mono">Dataset Ingestion &middot; AV Spatial Bundle v1.1</span>
+                    </div>
                     <h2>Create New Walkthrough</h2>
+                    
                     <div class="form-group">
                         <label>Existing Project (Optional)</label>
                         <select id="create-project-select">
@@ -112,100 +158,157 @@
                         <label>New Folder Name</label>
                         <input type="text" id="create-folder-new-name" placeholder="e.g. Client X" />
                     </div>
+
                     <div class="form-group">
                         <label>Dataset Type</label>
                         <select id="create-type">
+                            <option value="Auto-Detect" selected>Auto-Detect Input (Recommended)</option>
+                            <option value="AV Spatial Bundle">AV Spatial Bundle (av_walkthrough_bundle.json or .zip &mdash; &lt;1s import)</option>
+                            <option value="Raw Point Cloud">Universal Point Cloud (.ply, .pcd, .las, .laz, .xyz, .obj, unstructured .e57)</option>
+                            <option value="Matterport MatterPak">Matterport MatterPak (.zip or folder with .xyz/.obj + floorplans)</option>
                             <option value="Structured E57">Structured E57 (Embedded scan images &amp; poses)</option>
                             <option value="E57 + Panos Folder">E57 + Panos Folder (Walkthrough)</option>
                             <option value="E57 + Panos + CSV">E57 + Panos + CSV (NavVis / Advanced)</option>
+                            <option value="SLAM">AV Structure Native Bridge (av_structure.exe)</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Import Mode</label>
-                        <select id="create-import-mode">
-                            <option value="linked">Linked (Reference only - recommended for large files)</option>
-                            <option value="managed">Managed (Copy file into project folder)</option>
-                        </select>
+
+                    <!-- Unified Source Field for Auto-Detect / Bundle / Point Cloud / MatterPak -->
+                    <div class="form-group" id="fg-source">
+                        <label id="label-source-file">Scan Source File or Folder</label>
+                        <div style="display: flex; gap: 8px;">
+                            <input type="text" id="create-source-path" readonly placeholder="Select any supported scan source..." />
+                            <button id="btn-browse-source-file" type="button" class="btn-secondary">File&hellip;</button>
+                            <button id="btn-browse-source-folder" type="button" class="btn-secondary">Folder&hellip;</button>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Scan Date</label>
-                        <input type="date" id="create-date" />
-                    </div>
-                    <div class="form-group" id="fg-e57">
+
+                    <!-- E57 Specific Fields -->
+                    <div class="form-group" id="fg-e57" style="display: none;">
                         <label id="label-dataset-file">Dataset File (.e57)</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 8px;">
                             <input type="text" id="create-e57-path" readonly placeholder="Select file..." />
-                            <button id="btn-browse-e57" class="btn-secondary">Browse</button>
+                            <button id="btn-browse-e57" type="button" class="btn-secondary">Browse</button>
                         </div>
                     </div>
                     <div class="form-group" id="fg-panos" style="display: none;">
                         <label>Panoramas Directory</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 8px;">
                             <input type="text" id="create-panos-path" readonly placeholder="Select folder with JPGs..." />
-                            <button id="btn-browse-panos" class="btn-secondary">Browse</button>
+                            <button id="btn-browse-panos" type="button" class="btn-secondary">Browse</button>
                         </div>
                     </div>
                     <div class="form-group" id="fg-csv" style="display: none;">
                         <label>Pose CSV (Optional)</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 8px;">
                             <input type="text" id="create-csv-path" readonly placeholder="Select pano-poses.csv..." />
-                            <button id="btn-browse-csv" class="btn-secondary">Browse</button>
+                            <button id="btn-browse-csv" type="button" class="btn-secondary">Browse</button>
                         </div>
                     </div>
                     <div class="form-group" id="fg-slam" style="display: none;">
                         <label>AV Structure Executable (.exe)</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 8px;">
                             <input type="text" id="create-slam-path" readonly placeholder="Select av_structure.exe..." />
-                            <button id="btn-browse-slam" class="btn-secondary">Browse</button>
+                            <button id="btn-browse-slam" type="button" class="btn-secondary">Browse</button>
                         </div>
                     </div>
+
+                    <div class="form-row">
+                        <div class="form-group form-col">
+                            <label>Scan Date</label>
+                            <input type="date" id="create-date" />
+                        </div>
+                        <div class="form-group form-col">
+                            <label>Scan Label / ID (Optional)</label>
+                            <input type="text" id="create-scan-label" placeholder="e.g. 2026-12-04_1430 or Baseline" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Import Mode</label>
+                        <select id="create-import-mode">
+                            <option value="linked">Linked (Reference only &mdash; recommended for large point clouds)</option>
+                            <option value="managed">Managed (Copy file into project folder)</option>
+                        </select>
+                    </div>
+
+                    <!-- Universal Point Cloud / MatterPak Synthesizer Options -->
+                    <div id="fg-synth-options" class="glass-subpanel" style="display: none;">
+                        <div class="subpanel-title label-mono">Virtual Walkthrough Synthesis</div>
+                        <div class="form-row">
+                            <div class="form-group form-col">
+                                <label>Station Spacing (m)</label>
+                                <input type="number" id="create-station-spacing" value="2.5" min="1.0" max="10.0" step="0.5" />
+                            </div>
+                            <div class="form-group form-col">
+                                <label>Up Axis</label>
+                                <select id="create-up-axis">
+                                    <option value="z" selected>+Z Up (ASTM E57 / LAS / Standard)</option>
+                                    <option value="y">+Y Up (OBJ / glTF / CAD)</option>
+                                    <option value="auto">Auto-Detect</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="create-auto-align" checked />
+                            <span>Auto-Align to Baseline Scan (4-DOF ICP: coarse yaw + translation)</span>
+                        </label>
+                    </div>
+
                     <div class="form-group">
                         <label>Floor Separation Sensitivity</label>
                         <select id="create-floor-threshold">
-                            <option value="0.25" selected>Automatic Multi-Level &amp; Stairs (0.25m - Default)</option>
+                            <option value="0.25" selected>Automatic Multi-Level &amp; Stairs (0.25m &mdash; Default)</option>
                             <option value="0.45">Standard (0.45m)</option>
-                            <option value="0.65">Coarse (0.65m) - merges split levels</option>
-                            <option value="1.0">Very Coarse (1.0m) - large floor heights</option>
+                            <option value="0.65">Coarse (0.65m) &mdash; merges split levels</option>
+                            <option value="1.0">Very Coarse (1.0m) &mdash; large floor heights</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Floor Names or Elevations (Optional — leave blank for automatic detection)</label>
-                        <input type="text" id="create-floor-heights" placeholder="Leave blank for auto-detect, or enter names/heights (e.g. 1, Mezz, 2)" />
+                        <label>Floor Names or Elevations (Optional)</label>
+                        <input type="text" id="create-floor-heights" placeholder="e.g. Level 1, Mezzanine, Level 2" />
                     </div>
                     <div class="form-group">
                         <label>Output Directory</label>
-                        <div style="display: flex; gap: 10px;">
+                        <div style="display: flex; gap: 8px;">
                             <input type="text" id="create-dir-path" readonly placeholder="Select destination folder..." />
-                            <button id="btn-browse-dir" class="btn-secondary">Browse</button>
+                            <button id="btn-browse-dir" type="button" class="btn-secondary">Browse</button>
                         </div>
                     </div>
                     <div class="modal-actions">
-                        <button id="btn-cancel-create" class="btn-cancel">Cancel</button>
-                        <button id="btn-submit-create" class="btn-primary">Process</button>
+                        <button id="btn-cancel-create" type="button" class="btn-cancel">Cancel</button>
+                        <button id="btn-submit-create" type="button" class="btn-primary">Process</button>
                     </div>
                 </div>
             </div>
 
             <!-- Folder Modal -->
             <div id="folder-modal" style="display: none;">
-                <div class="modal-content" style="max-width: 400px;">
-                    <div class="label-mono" style="margin-bottom: 4px;">Organization</div>
+                <div class="modal-content glass-modal" style="max-width: 420px;">
+                    <div class="modal-header-pill">
+                        <span class="label-mono">Organization</span>
+                    </div>
                     <h2>Create Organizer Folder</h2>
                     <div class="form-group">
                         <label>Folder Name</label>
-                        <input type="text" id="folder-modal-name" placeholder="e.g. Client A / NavVis" />
+                        <input type="text" id="folder-modal-name" placeholder="e.g. Client A / Campus North" />
                     </div>
-                    <div class="modal-actions" style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; border-top: none; padding-top: 0;">
-                        <button id="btn-cancel-folder" class="btn-cancel" style="margin-right: 0;">Cancel</button>
-                        <button id="btn-submit-folder" class="btn-primary">Create</button>
+                    <div class="modal-actions">
+                        <button id="btn-cancel-folder" type="button" class="btn-cancel">Cancel</button>
+                        <button id="btn-submit-folder" type="button" class="btn-primary">Create</button>
                     </div>
                 </div>
             </div>
 
             <!-- Move Project Modal -->
             <div id="move-project-modal" style="display: none;">
-                <div class="modal-content" style="max-width: 400px;">
-                    <div class="label-mono" style="margin-bottom: 4px;">Organization</div>
+                <div class="modal-content glass-modal" style="max-width: 420px;">
+                    <div class="modal-header-pill">
+                        <span class="label-mono">Organization</span>
+                    </div>
                     <h2>Move Project to Folder</h2>
                     <p id="move-project-text" style="color: var(--muted-foreground); font-size: 0.875rem; margin-bottom: 15px;"></p>
                     <div class="form-group">
@@ -214,45 +317,67 @@
                             <option value="">-- No Folder (Root) --</option>
                         </select>
                     </div>
-                    <div class="modal-actions" style="display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px; border-top: none; padding-top: 0;">
-                        <button id="btn-cancel-move" class="btn-cancel" style="margin-right: 0;">Cancel</button>
-                        <button id="btn-submit-move" class="btn-primary">Move</button>
+                    <div class="modal-actions">
+                        <button id="btn-cancel-move" type="button" class="btn-cancel">Cancel</button>
+                        <button id="btn-submit-move" type="button" class="btn-primary">Move</button>
                     </div>
                 </div>
             </div>
+
+            <!-- Main 3D Viewer UI Overlay -->
             <div id="main-ui" style="display: none;">
-                <div class="top-bar">
+                <!-- Apple Glass Viewer Top Bar -->
+                <div class="top-bar glass-topbar">
                     <div class="project-info">
-                        <img src="assets/av-walkthrough-logo.png" alt="AV Walkthrough" class="brand-logo-sm" />
-                        <span class="viewer-brand-name">AV Walkthrough</span>
-                        <span class="viewer-divider"></span>
-                        <span id="project-name">No Project Loaded</span>
+                        <div class="emblem-badge small">
+                            <img src="assets/av-showcase-logo.png" alt="AV" class="emblem-icon" />
+                        </div>
+                        <div class="project-pill-label">
+                            <span class="project-dot">&bull;</span>
+                            <span class="project-pill-text">PROJECT:</span>
+                            <span id="project-name" class="project-pill-name">No Project Loaded</span>
+                        </div>
                     </div>
                     <div class="controls">
-                        <select id="scan-date-selector">
-                            <option value="">Select Scan Date</option>
-                        </select>
-                        <select id="floor-selector">
-                            <option value="">Select Floor</option>
-                        </select>
-                        <select id="bookmark-selector" style="width: auto;">
-                            <option value="">Select Bookmark</option>
-                        </select>
-                        <button id="btn-add-bookmark" class="btn-secondary" style="padding: 6px 12px; font-size: 0.85rem; cursor: pointer;">+ Bookmark</button>
-                        <button id="btn-home" class="btn-primary">Projects</button>
+                        <div class="control-select-wrap" title="Historical Dataset (Switch without losing viewpoint or orientation)">
+                            <select id="scan-date-selector">
+                                <option value="">Select Scan Date</option>
+                            </select>
+                        </div>
+                        <div class="control-select-wrap">
+                            <select id="floor-selector">
+                                <option value="">Select Floor</option>
+                            </select>
+                        </div>
+                        <div class="control-select-wrap">
+                            <select id="bookmark-selector" style="width: auto;">
+                                <option value="">Select Bookmark</option>
+                            </select>
+                        </div>
+                        <button id="btn-add-bookmark" class="btn-secondary btn-glass" type="button">+ Bookmark</button>
+                        <button id="btn-home" class="btn-primary btn-glass-gold" type="button">Projects</button>
                     </div>
                 </div>
-                <div class="side-panel">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; gap: 6px;">
-                        <h3 style="margin-bottom: 0;">Key Plan</h3>
-                        <div style="display: flex; gap: 6px;">
-                            <button id="btn-recluster-floors" class="btn-mini" title="Instantly recalculate floor levels &amp; staircase transitions">Auto-Levels</button>
-                            <button id="btn-upload-fp" class="btn-mini">Upload Floorplan</button>
+
+                <!-- Floating Vertical Floor Level Elevator Pill on Left -->
+                <div id="floor-level-bar" class="floor-level-bar"></div>
+
+                <!-- Floating Glass Keyplan Panel on Bottom-Right -->
+                <div class="side-panel glass-sidepanel">
+                    <div class="keyplan-header">
+                        <div class="keyplan-title-wrap">
+                            <span class="keyplan-title">2D Key Plan</span>
+                            <span class="keyplan-tag label-mono">North-Up</span>
+                        </div>
+                        <div class="keyplan-actions">
+                            <button id="btn-expand-kp" class="btn-mini btn-glass" title="Toggle Expanded Key Plan" type="button">&boxbox;</button>
+                            <button id="btn-recluster-floors" class="btn-mini btn-glass" title="Instantly recalculate floor levels &amp; staircase transitions" type="button">Auto-Levels</button>
+                            <button id="btn-upload-fp" class="btn-mini btn-glass" type="button">Upload Plan</button>
                         </div>
                     </div>
                     <div id="keyplan-container">
                         <canvas id="keyplan-canvas"></canvas>
-                        <div id="floor-level-bar" class="floor-level-bar"></div>
+                        <div class="keyplan-hint">Click anywhere to teleport &middot; Shift+WASD calibrate</div>
                     </div>
                     <input type="file" id="floorplan-upload" accept="image/*" style="display: none;" />
                 </div>

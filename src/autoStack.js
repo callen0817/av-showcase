@@ -1,23 +1,32 @@
 export class AutoStackManager {
     /**
      * Evaluates spatial proximity in the target scan pool to find the nearest match.
-     * Standardized signature permits future swap-ins of spatial indexes (e.g. KD-Tree)
-     * without modifications to the caller logic.
-     * 
-     * @param {Object} referencePano - Pano from the previous scan date
+     * Enforces strict 4D historical time-travel continuity:
+     *   - Priority 1: Same vertical story tolerance (|dz| <= 1.8m)
+     *   - Priority 2: Same floor_id
+     *   - Threshold: maxDistance meters
+     *
+     * @param {Object} referencePano - Pano from the current/previous scan date
      * @param {Object[]} targetScanPanos - Panos in the target scan date
-     * @param {number} maxDistance - Spatial distance threshold (read from project settings)
-     * @returns {Object|null} Nearest target panorama, or null if threshold exceeded (abort transit)
+     * @param {number} maxDistance - Spatial distance threshold (default 10.0m)
+     * @returns {Object|null} Nearest target panorama, or null if threshold exceeded
      */
     static findNearestPano(referencePano, targetScanPanos, maxDistance = 10.0) {
+        const res = this.findNearestPanoWithDistance(referencePano, targetScanPanos, maxDistance);
+        return res ? res.pano : null;
+    }
+
+    /**
+     * Finds nearest panorama and reports its distance (useful for threshold alerts).
+     */
+    static findNearestPanoWithDistance(referencePano, targetScanPanos, maxDistance = 10.0) {
         if (!referencePano || !targetScanPanos || targetScanPanos.length === 0) {
             return null;
         }
 
-        const refPos = referencePano.position; // Python space: [x, y, z]
+        const refPos = referencePano.position;
         const refFloor = referencePano.floor_id;
 
-        // Rule 1: Prioritize panoramas within vertical story tolerance (|dz| <= 1.8m) or matching floor_id
         const sameElevationPanos = targetScanPanos.filter(p => Math.abs(p.position[2] - refPos[2]) <= 1.8);
         const sameFloorPanos = targetScanPanos.filter(p => p.floor_id === refFloor);
         const searchPool = sameElevationPanos.length > 0
@@ -27,7 +36,6 @@ export class AutoStackManager {
         let closestPano = null;
         let minDist = Infinity;
 
-        // Abstracted search pool loops. Swappable with spatial indexes.
         searchPool.forEach(pano => {
             const dx = pano.position[0] - refPos[0];
             const dy = pano.position[1] - refPos[1];
@@ -40,13 +48,11 @@ export class AutoStackManager {
             }
         });
 
-        // Explicit fallback limit check to prevent jumping into unrelated scan sectors
         if (minDist > maxDistance) {
-            console.warn(`AutoStack target nearest node is ${minDist.toFixed(2)}m away (limit: ${maxDistance}m). Aborting.`);
-            return null;
+            return { pano: null, distance: minDist, bestOutOfRange: closestPano };
         }
 
-        return closestPano;
+        return { pano: closestPano, distance: minDist, bestOutOfRange: null };
     }
 
     /**

@@ -28,13 +28,15 @@ class WalkthroughApp {
 
         // Create Modal Input State
         this.appState = {
-            inputType: 'Structured E57',
+            inputType: 'Auto-Detect',
             importMode: 'linked',
             files: {
                 e57: null,
                 xyz: null,
                 panos: null,
-                slam: null
+                csv: null,
+                slam: null,
+                source: null
             }
         };
 
@@ -61,6 +63,27 @@ class WalkthroughApp {
 
         this.initControls();
         this.initUI();
+    }
+
+    
+    showToast(message, type = 'info', duration = 3000) {
+        const toast = document.getElementById('toast');
+        if (!toast) return;
+        toast.innerText = message;
+        toast.className = `toast toast-${type} show`;
+        clearTimeout(this._toastTimeout);
+        this._toastTimeout = setTimeout(() => {
+            toast.className = 'toast';
+        }, duration);
+    }
+
+    getScanKey(scan) {
+        return (scan && (scan.scan_id || scan.scan_date)) || '';
+    }
+
+    getScanDir(scan) {
+        if (!scan) return '';
+        return scan.scan_dir || ('Scans/' + this.getScanKey(scan));
     }
 
     initControls() {
@@ -106,11 +129,69 @@ class WalkthroughApp {
             if (el) el.addEventListener(event, callback);
         };
 
+        // Glass opacity slider binding
+        const slider = document.getElementById('glass-opacity-slider');
+        const sliderVal = document.getElementById('glass-opacity-val');
+        if (slider) {
+            slider.addEventListener('input', (e) => {
+                const val = e.target.value;
+                if (sliderVal) sliderVal.innerText = `${val}%`;
+                const alpha = (val / 100).toFixed(2);
+                document.documentElement.style.setProperty('--bg-card', `rgba(18, 18, 24, ${alpha})`);
+                document.documentElement.style.setProperty('--bg-panel', `rgba(18, 18, 24, ${alpha})`);
+            });
+        }
+
+        // Boot splash animation with 1650ms ease-out progress and dismiss
+        const splash = document.getElementById('splash-screen');
+        const splashClose = document.getElementById('btn-close-splash');
+        const splashProgress = document.getElementById('progress-container');
+        const splashFill = document.getElementById('progress-fill');
+        const splashText = document.getElementById('splash-text');
+
+        if (splash) {
+            splash.style.display = 'flex';
+            if (splashProgress) splashProgress.style.display = 'block';
+            if (splashText) splashText.innerText = 'Initializing Spatial Engine...';
+            
+            // Ease-out progress bar
+            let startTime = Date.now();
+            const bootDuration = 1650;
+            const bootAnim = setInterval(() => {
+                const elapsed = Date.now() - startTime;
+                const pct = Math.min(100, Math.round((1 - Math.pow(1 - elapsed / bootDuration, 2)) * 100));
+                if (splashFill) splashFill.style.width = `${pct}%`;
+                if (pct >= 50 && splashText && splashText.innerText === 'Initializing Spatial Engine...') {
+                    splashText.innerText = 'Calibrating Coordinate Systems...';
+                }
+                if (elapsed >= bootDuration) {
+                    clearInterval(bootAnim);
+                    if (splashText) splashText.innerText = 'Spatial Engine Ready';
+                    setTimeout(() => {
+                        splash.style.transition = 'opacity 0.42s ease';
+                        splash.style.opacity = '0';
+                        setTimeout(() => {
+                            splash.style.display = 'none';
+                            splash.style.opacity = '1';
+                            if (splashProgress) splashProgress.style.display = 'none';
+                        }, 420);
+                    }, 250);
+                }
+            }, 30);
+
+            if (splashClose) {
+                splashClose.addEventListener('click', () => {
+                    clearInterval(bootAnim);
+                    splash.style.display = 'none';
+                });
+            }
+        }
+
         this.showHome();
 
         // 1. Dashboard Context
         safeAddListener('card-open', 'click', async () => {
-            const paths = await window.electronAPI.selectFile([{ name: 'AV Walkthrough Project', extensions: ['avproj'] }]);
+            const paths = await window.electronAPI.selectFile([{ name: 'AV Showcase Project', extensions: ['avproj'] }]);
             if (paths && paths.length > 0) {
                 let p = paths[0];
                 if (p.endsWith('project.avproj')) {
@@ -245,6 +326,58 @@ class WalkthroughApp {
 
         safeAddListener('create-type', 'change', () => this.updateCreateModalVisibility());
 
+        safeAddListener('btn-browse-source-file', 'click', async () => {
+            const filters = [
+                { name: 'Scan Data', extensions: ['json', 'zip', 'e57', 'ply', 'las', 'laz', 'pcd', 'xyz', 'txt', 'pts', 'obj'] },
+                { name: 'All Files', extensions: ['*'] }
+            ];
+            const paths = await window.electronAPI.selectFile(filters);
+            if (paths && paths.length > 0) {
+                this.appState.files.source = paths[0];
+                const input = document.getElementById('create-source-path');
+                if (input) input.value = paths[0];
+            }
+        });
+
+        safeAddListener('btn-browse-source-folder', 'click', async () => {
+            const paths = await window.electronAPI.selectDirectory();
+            if (paths && paths.length > 0) {
+                this.appState.files.source = paths[0];
+                const input = document.getElementById('create-source-path');
+                if (input) input.value = paths[0];
+            }
+        });
+
+        safeAddListener('btn-expand-kp', 'click', () => {
+            const panel = document.querySelector('.side-panel');
+            if (panel) {
+                panel.classList.toggle('expanded');
+                setTimeout(() => this.renderKeyplan(), 180);
+            }
+        });
+
+        safeAddListener('keyplan-canvas', 'mousemove', (e) => {
+            const canvas = document.getElementById('keyplan-canvas');
+            if (!canvas) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const hovered = this.navigation.handleKeyplanHover(x, y);
+            if (hovered) {
+                canvas.style.cursor = 'pointer';
+                canvas.title = `Station ${hovered.id}`;
+            } else {
+                canvas.style.cursor = 'crosshair';
+                canvas.title = 'Click anywhere to teleport';
+            }
+            this.renderKeyplan();
+        });
+
+        safeAddListener('keyplan-canvas', 'mouseleave', () => {
+            this.navigation.hoveredNode = null;
+            this.renderKeyplan();
+        });
+
         safeAddListener('btn-browse-e57', 'click', async () => {
             const filters = [{ name: 'E57 Scan', extensions: ['e57'] }];
             const paths = await window.electronAPI.selectFile(filters);
@@ -328,11 +461,15 @@ class WalkthroughApp {
         
         safeAddListener('keyplan-canvas', 'click', (e) => {
             const canvas = document.getElementById('keyplan-canvas');
+            if (!canvas) return;
             const rect = canvas.getBoundingClientRect();
             const x = e.clientX - rect.left;
             const y = e.clientY - rect.top;
             
-            const clickedId = this.navigation.handleKeyplanClick(x, y);
+            const floorPanos = (this.sceneState.currentScan && this.sceneState.currentFloorId)
+                ? this.sceneState.currentScan.panos.filter(p => p.floor_id === this.sceneState.currentFloorId)
+                : null;
+            const clickedId = this.navigation.handleKeyplanClick(x, y, floorPanos, 8.0);
             if (clickedId) {
                 this.goToPano(clickedId);
             }
@@ -364,22 +501,41 @@ class WalkthroughApp {
         
         const val = typeEl.value;
         this.appState.inputType = val;
-        
         this.clearAllInputs();
         
+        const sourceEl = document.getElementById('fg-source');
         const e57El = document.getElementById('fg-e57');
         const panosEl = document.getElementById('fg-panos');
         const csvEl = document.getElementById('fg-csv');
         const slamEl = document.getElementById('fg-slam');
+        const advSynthEl = document.getElementById('fg-synth-options');
         const labelEl = document.getElementById('label-dataset-file');
         const inputEl = document.getElementById('create-e57-path');
 
-        if (e57El) e57El.style.display = 'none';
-        if (panosEl) panosEl.style.display = 'none';
-        if (csvEl) csvEl.style.display = 'none';
-        if (slamEl) slamEl.style.display = 'none';
+        [sourceEl, e57El, panosEl, csvEl, slamEl, advSynthEl].forEach(el => {
+            if (el) el.style.display = 'none';
+        });
 
-        if (val === 'Structured E57') {
+        if (val === 'Auto-Detect' || val === 'AV Spatial Bundle' || val === 'Raw Point Cloud' || val === 'Matterport MatterPak') {
+            if (sourceEl) sourceEl.style.display = 'block';
+            const srcLabel = document.getElementById('label-source-file');
+            const srcInput = document.getElementById('create-source-path');
+            if (val === 'Auto-Detect') {
+                if (srcLabel) srcLabel.innerText = 'Scan Source File or Folder';
+                if (srcInput) srcInput.placeholder = 'Select any .e57, bundle, .ply, .las, .xyz, or MatterPak...';
+            } else if (val === 'AV Spatial Bundle') {
+                if (srcLabel) srcLabel.innerText = 'Spatial Bundle (av_walkthrough_bundle.json or .zip)';
+                if (srcInput) srcInput.placeholder = 'Select bundle JSON or ZIP...';
+            } else if (val === 'Raw Point Cloud') {
+                if (srcLabel) srcLabel.innerText = 'Point Cloud (.ply, .pcd, .las, .laz, .xyz, .obj, .e57)';
+                if (srcInput) srcInput.placeholder = 'Select point cloud...';
+                if (advSynthEl) advSynthEl.style.display = 'block';
+            } else if (val === 'Matterport MatterPak') {
+                if (srcLabel) srcLabel.innerText = 'Matterport MatterPak (.zip or folder)';
+                if (srcInput) srcInput.placeholder = 'Select MatterPak ZIP or folder...';
+                if (advSynthEl) advSynthEl.style.display = 'block';
+            }
+        } else if (val === 'Structured E57') {
             if (e57El) e57El.style.display = 'block';
             if (labelEl) labelEl.innerText = 'Dataset File (.e57)';
             if (inputEl) inputEl.placeholder = 'Select .e57 file...';
@@ -394,12 +550,14 @@ class WalkthroughApp {
             if (inputEl) inputEl.placeholder = 'Select .e57 file...';
             if (panosEl) panosEl.style.display = 'block';
             if (csvEl) csvEl.style.display = 'block';
+        } else if (val === 'SLAM') {
+            if (slamEl) slamEl.style.display = 'block';
         }
     }
 
     clearAllInputs() {
-        this.appState.files = { e57: null, xyz: null, panos: null, csv: null, slam: null };
-        ['create-e57-path', 'create-panos-path', 'create-csv-path', 'create-slam-path'].forEach(id => {
+        this.appState.files = { e57: null, xyz: null, panos: null, csv: null, slam: null, source: null };
+        ['create-source-path', 'create-e57-path', 'create-panos-path', 'create-csv-path', 'create-slam-path'].forEach(id => {
             const el = document.getElementById(id);
             if (el) el.value = '';
         });
@@ -651,8 +809,10 @@ class WalkthroughApp {
             ? `${parentDirPath}/${project_name}`.replace(/\\/g, '/')
             : projSelect.replace(/\\/g, '/');
 
-        // Redesigned validation checks per walkthrough-only requirements
-        if (type === 'Structured E57') {
+        const sourcePath = this.appState.files.source;
+        if (['Auto-Detect', 'AV Spatial Bundle', 'Raw Point Cloud', 'Matterport MatterPak'].includes(type)) {
+            if (!sourcePath) return alert("Please select a source file or folder.");
+        } else if (type === 'Structured E57') {
             if (!this.appState.files.e57) return alert("E57 file selection is required.");
         } else if (type === 'E57 + Panos Folder') {
             if (!this.appState.files.e57) return alert("E57 file selection is required.");
@@ -663,23 +823,32 @@ class WalkthroughApp {
             if (!this.appState.files.csv) return alert("Pose CSV override file selection is required.");
         }
 
-        btn.innerText = "Starting...";
+        btn.innerText = "Processing...";
         btn.disabled = true;
 
         try {
-            const floorThreshold = parseFloat(document.getElementById('create-floor-threshold').value) || 0.25;
-            const floorHeightsRaw = document.getElementById('create-floor-heights').value.trim();
+            const floorThreshold = parseFloat(document.getElementById('create-floor-threshold')?.value) || 0.25;
+            const floorHeightsRaw = document.getElementById('create-floor-heights')?.value.trim() || '';
+            const scanLabel = document.getElementById('create-scan-label')?.value.trim() || '';
+            const autoAlign = !!document.getElementById('create-auto-align')?.checked;
+            const stationSpacing = parseFloat(document.getElementById('create-station-spacing')?.value) || 2.5;
+            const upAxis = document.getElementById('create-up-axis')?.value || 'z';
 
             const payload = {
                 project_dir: projectDirPath,
                 project_name: project_name,
                 scan_date: date,
+                scan_label: scanLabel,
                 type: type,
                 import_mode: importMode,
+                source_path: sourcePath,
                 e57_path: this.appState.files.e57,
                 panos_path: this.appState.files.panos,
                 csv_path: this.appState.files.csv,
                 slam_path: this.appState.files.slam,
+                auto_align: autoAlign,
+                station_spacing: stationSpacing,
+                up_axis: upAxis,
                 floor_threshold: floorThreshold,
                 floor_heights: floorHeightsRaw
             };
@@ -786,6 +955,7 @@ class WalkthroughApp {
             // Automatically upgrade legacy multi-level projects that have multiple floors but lack cross-floor stair links
             const scans = res.data.scans || [];
             const needsMultiLevelUpgrade = scans.some(sc => {
+                if (sc.nav_graph === 'los_v1' || sc.nav_graph === 'bundle') return false;
                 const floors = sc.floors || [];
                 if (floors.length < 2) return false;
                 const panos = sc.panos || [];
@@ -818,16 +988,20 @@ class WalkthroughApp {
             const select = document.getElementById('scan-date-selector');
             select.innerHTML = '<option value="">Select Scan Date</option>';
             this.sceneState.projectData.scans.forEach(scan => {
+                const key = this.getScanKey(scan);
                 const opt = document.createElement('option');
-                opt.value = scan.scan_date;
-                opt.innerText = scan.scan_date;
+                opt.value = key;
+                const label = scan.scan_id && scan.scan_id !== scan.scan_date
+                    ? `${scan.scan_date} (${scan.scan_id})`
+                    : scan.scan_date;
+                opt.innerText = label;
                 select.appendChild(opt);
             });
             
             this.updateBookmarksSelector();
             
             if (this.sceneState.projectData.scans.length > 0) {
-                const defaultScan = this.sceneState.projectData.scans[0].scan_date;
+                const defaultScan = this.getScanKey(this.sceneState.projectData.scans[0]);
                 select.value = defaultScan;
                 await this.loadScan(defaultScan);
             }
@@ -869,7 +1043,8 @@ class WalkthroughApp {
             }
             
             // Check if image file exists
-            const imgPath = `${projectPath}/Scans/${scan.scan_date}/${p.image_path}`.replace(/\\/g, '/');
+            const scanDirRel = this.getScanDir(scan);
+            const imgPath = `${projectPath}/${scanDirRel}/${p.image_path}`.replace(/\\/g, '/');
             const existsRes = await window.electronAPI.fileExists(imgPath);
             if (!existsRes.success || !existsRes.exists) {
                 errors.push(`Pano ${p.id} referenced image file does not exist: ${p.image_path}`);
@@ -907,17 +1082,27 @@ class WalkthroughApp {
         const bar = document.getElementById('floor-level-bar');
         if (!bar) return;
         bar.innerHTML = '';
-        if (!this.sceneState.currentScan || !this.sceneState.currentScan.floors) return;
+        const floors = (this.sceneState.currentScan && this.sceneState.currentScan.floors) || [];
+        if (floors.length < 2) {
+            bar.style.display = 'none';
+            return;
+        }
+        bar.style.display = 'flex';
 
-        // Sort floors highest-to-lowest vertically (Matterport / NavVis IVION elevator style)
-        const sortedFloors = [...this.sceneState.currentScan.floors].sort((a, b) => b.id - a.id);
+        // Sort floors highest-to-lowest vertically (Matterport / NavVis elevator style)
+        const sortedFloors = [...floors].sort((a, b) => {
+            const az = a.floor_elevation !== undefined ? a.floor_elevation : (a.mean_z || a.id);
+            const bz = b.floor_elevation !== undefined ? b.floor_elevation : (b.mean_z || b.id);
+            return bz - az;
+        });
         sortedFloors.forEach(f => {
             const btn = document.createElement('button');
             btn.className = `floor-level-btn${this.sceneState.currentFloorId === f.id ? ' active' : ''}`;
             btn.dataset.floorId = f.id;
-            btn.innerText = `F${f.id}`;
-            const zInfo = f.mean_z !== undefined ? `${f.mean_z.toFixed(1)}m` : (f.z_height !== undefined ? `${f.z_height.toFixed(1)}m` : '');
-            btn.title = `${f.name ? `Floor ${f.id} (${f.name})` : ('Floor ' + f.id)}${zInfo ? ` — ${zInfo}` : ''}`;
+            const shortLabel = f.name ? (f.name.length <= 4 ? f.name : `L${f.id}`) : `L${f.id}`;
+            btn.innerText = shortLabel;
+            const elev = f.floor_elevation !== undefined ? `${f.floor_elevation.toFixed(1)}m` : (f.mean_z !== undefined ? `${f.mean_z.toFixed(1)}m` : '');
+            btn.title = `${f.name || ('Level ' + f.id)}${elev ? ` (${elev})` : ''}`;
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 this.setFloor(f.id);
@@ -943,22 +1128,16 @@ class WalkthroughApp {
         }
     }
 
-    async loadScan(date) {
-        const prevDate = this.sceneState.currentScanDate;
+    async loadScan(scanKey) {
+        const prevKey = this.sceneState.currentScanKey;
         
-        let oldYawDeg = 0;
-        if (this.sceneState.currentPano) {
-            const oldPano = this.sceneState.currentPano;
-            const q = new THREE.Quaternion(oldPano.rotation[0], oldPano.rotation[2], -oldPano.rotation[1], oldPano.rotation[3]);
-            const euler = new THREE.Euler().setFromQuaternion(q, 'YXZ');
-            oldYawDeg = THREE.MathUtils.radToDeg(euler.y);
-        }
-        
-        // Query target scan metadata first
-        const targetScan = this.sceneState.projectData.scans.find(s => s.scan_date === date);
+        // Find scan by scan_id or scan_date
+        const targetScan = this.sceneState.projectData.scans.find(
+            s => (s.scan_id && s.scan_id === scanKey) || s.scan_date === scanKey
+        );
         if (!targetScan) return;
 
-        // Run Phase 4 - Runtime Validation
+        // Runtime Validation
         const validation = await this.validateScanRuntime(targetScan, this.sceneState.projectPath);
         if (!validation.valid) {
             this.showHome();
@@ -970,29 +1149,38 @@ class WalkthroughApp {
         if (targetScan.panos.length > 0) {
             targetPano = targetScan.panos[0];
             
-            // Auto-Stack comparisons if transit is from an existing panorama
+            // 4D Historical Switch: preserve exact world position & camera heading
             if (this.sceneState.currentPano) {
-                const maxDist = this.sceneState.projectData.settings.max_autostack_distance || 10.0;
-                const nearest = AutoStackManager.findNearestPano(
+                const maxDist = (this.sceneState.projectData.settings && this.sceneState.projectData.settings.max_autostack_distance) || 10.0;
+                const result = AutoStackManager.findNearestPanoWithDistance(
                     this.sceneState.currentPano,
                     targetScan.panos,
                     maxDist
                 );
                 
-                if (nearest) {
-                    targetPano = nearest;
+                if (result && result.pano) {
+                    targetPano = result.pano;
                 } else {
-                    // Abort Transit Fallback: revert select element in UI and exit
-                    alert(`No matching viewpoint coverage on this date within ${maxDist}m. Switch canceled.`);
-                    const dateSelect = document.getElementById('scan-date-selector');
-                    if (dateSelect) dateSelect.value = prevDate || '';
-                    return;
+                    const best = result ? result.bestOutOfRange : null;
+                    const distStr = result && result.distance !== Infinity ? `${result.distance.toFixed(1)}m` : 'far away';
+                    const allowFallback = this.sceneState.projectData.settings && this.sceneState.projectData.settings.autostack_fallback !== false;
+                    const proceed = allowFallback && best && confirm(
+                        `Nearest scan on this date is ${distStr} away (threshold: ${maxDist}m).\n\nJump to closest viewpoint on this floor anyway?`
+                    );
+                    if (proceed && best) {
+                        targetPano = best;
+                    } else {
+                        this.showToast(`No matching viewpoint within ${maxDist}m — switch canceled`, 'warn');
+                        const dateSelect = document.getElementById('scan-date-selector');
+                        if (dateSelect) dateSelect.value = prevKey || '';
+                        return;
+                    }
                 }
             }
         }
 
-        // Apply new scan state only after verification succeeds
-        this.sceneState.currentScanDate = date;
+        this.sceneState.currentScanKey = scanKey;
+        this.sceneState.currentScanDate = targetScan.scan_date;
         this.sceneState.currentScan = targetScan;
         
         const fSelect = document.getElementById('floor-selector');
@@ -1021,17 +1209,10 @@ class WalkthroughApp {
         if (targetPano) {
             this.sceneState.currentFloorId = targetPano.floor_id;
             this.syncFloorControlsUI(targetPano.floor_id);
-            
-            // Adjust cameraLon by the scanner yaw difference to align orientations
-            if (prevDate && this.sceneState.currentPano) {
-                const q = new THREE.Quaternion(targetPano.rotation[0], targetPano.rotation[2], -targetPano.rotation[1], targetPano.rotation[3]);
-                const euler = new THREE.Euler().setFromQuaternion(q, 'YXZ');
-                const newYawDeg = THREE.MathUtils.radToDeg(euler.y);
-                
-                const deltaYaw = newYawDeg - oldYawDeg;
-                this.sceneState.cameraLon += deltaYaw;
-            }
-            
+            // CRITICAL: We do NOT modify this.sceneState.cameraLon.
+            // Both the camera and the aligned panorama sphere operate in world coordinates.
+            // Leaving cameraLon and cameraLat untouched guarantees the user remains facing
+            // the exact same world direction (e.g. facing the bathroom vanity) across historical dates.
             this.goToPano(targetPano.id);
         }
     }
@@ -1070,7 +1251,8 @@ class WalkthroughApp {
         // Align panorama sphere and nav markers rotation to match scanner pose coordinates
         this.renderer.alignPanoSphere(pano.rotation);
         
-        const imgPath = `${this.sceneState.projectPath}/Scans/${this.sceneState.currentScanDate}/${pano.image_path}`.replace(/\\/g, '/');
+        const scanDirRel = this.getScanDir(this.sceneState.currentScan);
+        const imgPath = `${this.sceneState.projectPath}/${scanDirRel}/${pano.image_path}`.replace(/\\/g, '/');
         const res = await window.electronAPI.readFileBin(imgPath);
         if (res.success && res.data) {
             const blob = new Blob([res.data], { type: 'image/jpeg' });
@@ -1086,19 +1268,55 @@ class WalkthroughApp {
         
         // Preserve camera viewing direction orientation
         this.renderer.updateCamera(this.sceneState.cameraLat, this.sceneState.cameraLon);
+
+        // Efficiency: prefetch neighboring panorama images
+        if (pano.neighbors && pano.neighbors.length > 0) {
+            for (const nid of pano.neighbors.slice(0, 4)) {
+                const np = this.sceneState.currentScan.panos.find(p => p.id === nid);
+                if (np) {
+                    const nPath = `${this.sceneState.projectPath}/${scanDirRel}/${np.image_path}`.replace(/\\/g, '/');
+                    window.electronAPI.readFileBin(nPath).then(nRes => {
+                        if (nRes && nRes.success && nRes.data) {
+                            const nBlob = new Blob([nRes.data], { type: 'image/jpeg' });
+                            this.renderer.prefetchPanoTexture(URL.createObjectURL(nBlob));
+                        }
+                    }).catch(() => {});
+                }
+            }
+        }
     }
 
     renderKeyplan() {
         if (!this.sceneState.currentScan || !this.sceneState.currentFloorId) return;
         const canvas = document.getElementById('keyplan-canvas');
+        if (!canvas) return;
         const floorPanos = this.sceneState.currentScan.panos.filter(p => p.floor_id === this.sceneState.currentFloorId);
-        
-        const fpImg = this.floorplans[this.sceneState.currentFloorId];
         const floor = this.sceneState.currentScan.floors.find(f => f.id === this.sceneState.currentFloorId);
+        const floorId = this.sceneState.currentFloorId;
+
+        // Auto-load calibrated keyplan image if present on floor metadata
+        if (!this.floorplans[floorId] && floor && floor.keyplan_path) {
+            const scanDirRel = this.getScanDir(this.sceneState.currentScan);
+            const kpAbs = `${this.sceneState.projectPath}/${scanDirRel}/${floor.keyplan_path}`.replace(/\\/g, '/');
+            window.electronAPI.readFileBin(kpAbs).then(res => {
+                if (res && res.success && res.data) {
+                    const blob = new Blob([res.data], { type: 'image/png' });
+                    const img = new Image();
+                    img.onload = () => {
+                        this.floorplans[floorId] = img;
+                        this.renderKeyplan();
+                    };
+                    img.src = URL.createObjectURL(blob);
+                }
+            }).catch(() => {});
+        }
+
+        const fpImg = this.floorplans[floorId];
         const off = floor ? floor.fpOffset : null;
         const sc = floor ? floor.fpScale : null;
+        const wb = floor ? floor.world_bounds : null;
 
-        this.navigation.renderKeyplan(canvas, this.sceneState.currentPano, floorPanos, fpImg, off, sc, this.sceneState.cameraLon);
+        this.navigation.renderKeyplan(canvas, this.sceneState.currentPano, floorPanos, fpImg, off, sc, this.sceneState.cameraLon, wb);
     }
 
     updateBookmarksSelector() {
@@ -1177,7 +1395,8 @@ class WalkthroughApp {
                 y: event.clientY - this.controls.previousMousePosition.y
             };
 
-            this.sceneState.cameraLon -= deltaMove.x * 0.15;
+            // Grab-to-pan feel: dragging left pulls the scene left, moving camera view right (+lon)
+            this.sceneState.cameraLon += deltaMove.x * 0.15;
             this.sceneState.cameraLat += deltaMove.y * 0.15;
             this.sceneState.cameraLat = Math.max(-85, Math.min(85, this.sceneState.cameraLat));
 
